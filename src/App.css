@@ -1,0 +1,90 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+  /* --hex-container-size: calc(104px * 3+5px * 4); */
+  --hex-container-size: 332px;
+}
+
+.hex-container {
+  position: relative;
+  background-color: black;
+  width: var(--hex-container-size);
+  height: var(--hex-container-size);
+}
+
+.hex {
+  /* float: left;
+  margin-left: 3px;
+  margin-bottom: -26px; */
+  position: absolute;
+  /* top: 50%;
+  left: 50%; */
+  transform: translate(-50%, -50%);
+}
+.hex .top {
+  width: 0;
+  border-bottom: 30px solid var(--hexagon-color);
+  border-left: 52px solid transparent;
+  border-right: 52px solid transparent;
+}
+.hex .middle {
+  width: 104px;
+  height: 60px;
+  background: var(--hexagon-color);
+}
+.hex .bottom {
+  width: 0;
+  border-top: 30px solid var(--hexagon-color);
+  border-left: 52px solid transparent;
+  border-right: 52px solid transparent;
+}
+
+.hex-left {
+  top: 50%;
+  left: calc(5px + 52px);
+}
+
+.hex-right {
+  top: 50%;
+  left: calc(3 * 5px + 2 * 104px + 52px);
+}
+
+.hex-top-right {
+  top: 21.75%;
+  left: calc(2.5 * 5px + 2 * 104px);
+}
+
+.hex-top-left {
+  top: 21.75%;
+  left: calc(1.5 * 5px + 104px);
+}
+.hex-bottom-left {
+  top: 78.5%;
+  left: calc(1.5 * 5px + 104px);
+}
+.hex-bottom-right {
+  top: 78.5%;
+  left: calc(2.5 * 5px + 2 * 104px);
+}
+
+.hex-center {
+  top: 50%;
+  left: 50%;
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
