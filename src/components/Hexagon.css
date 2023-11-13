@@ -1,0 +1,51 @@
+.hex .top {
+  width: 0;
+  border-bottom: calc(var(--hex-height) / 2) solid var(--hexagon-color);
+  border-left: calc(var(--hex-width) / 2) solid transparent;
+  border-right: calc(var(--hex-width) / 2) solid transparent;
+}
+
+.hex .middle {
+  width: var(--hex-width);
+  height: var(--hex-height);
+  background: var(--hexagon-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.6em;
+  font-family: "Montserrat", "Open Sans", sans-serif;
+  font-weight: 700;
+}
+
+.hex .bottom {
+  width: 0;
+  border-top: calc(var(--hex-height) / 2) solid var(--hexagon-color);
+  border-left: calc(var(--hex-width) / 2) solid transparent;
+  border-right: calc(var(--hex-width) / 2) solid transparent;
+}
+
+/* override colors for middle hex in top, middle and bottom */
+
+.hex-center > .top {
+  border-bottom: calc(var(--hex-height) / 2) solid var(--yellow-secondary);
+}
+
+.hex-center > .middle {
+  background: var(--yellow-secondary);
+}
+
+.hex-center > .bottom {
+  border-top: calc(var(--hex-height) / 2) solid var(--yellow-secondary);
+}
+
+.hex-left {
+  top: 50%;
+  left: calc(var(--hex-gap) + calc(var(--hex-width) / 2));
+}
+
+.hex-right {
+  top: 50%;
+  left: calc(
+    3 * var(--hex-gap) + 2 * var(--hex-width) + calc(var(--hex-width) / 2)
+  );
+}

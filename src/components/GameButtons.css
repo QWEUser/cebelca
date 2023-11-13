@@ -1,0 +1,19 @@
+.game-buttons button {
+  background-color: white;
+  border: 1px solid #d4dae4;
+  height: 40px;
+  color: black;
+  padding: 0px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 15px;
+  border-radius: 30px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: Montserrat, "Open Sans", sans-serif;
+}
+
+.game-buttons button:hover {
+  border: 1px solid black;
+}
