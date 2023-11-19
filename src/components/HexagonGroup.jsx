@@ -1,16 +1,16 @@
-import "./HexagonGroup.css";
+import sytles from "./HexagonGroup.module.css";
 import Hexagon from "./Hexagon";
 
 function HexagonGroup() {
   return (
-    <div className="hex-container">
-      <Hexagon className="hex-center">A</Hexagon>
-      <Hexagon className="hex-left">B</Hexagon>
-      <Hexagon className="hex-right">C</Hexagon>
-      <Hexagon className="hex-top-right">D</Hexagon>
-      <Hexagon className="hex-top-left">E</Hexagon>
-      <Hexagon className="hex-bottom-left">F</Hexagon>
-      <Hexagon className="hex-bottom-right">G</Hexagon>
+    <div className={sytles.hexContainer}>
+      <Hexagon className="hexCenter">A</Hexagon>
+      <Hexagon className="hexLeft">B</Hexagon>
+      <Hexagon className="hexRight">C</Hexagon>
+      <Hexagon className="hexTopRight">D</Hexagon>
+      <Hexagon className="hexTopLeft">E</Hexagon>
+      <Hexagon className="hexBottomLeft">F</Hexagon>
+      <Hexagon className="hexBottomRight">G</Hexagon>
     </div>
   );
 }

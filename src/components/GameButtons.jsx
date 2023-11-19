@@ -1,8 +1,8 @@
-import "./GameButtons.css";
+import styles from "./GameButtons.module.css";
 
 function GameButtons() {
   return (
-    <div className="game-buttons">
+    <div className={styles.gameButtons}>
       <button>Briši</button>
       <button>
         <svg

@@ -1,3 +1,13 @@
+.hex {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  color: #000000;
+}
+
+.hex:hover {
+  cursor: pointer;
+}
+
 .hex .top {
   width: 0;
   border-bottom: calc(var(--hex-height) / 2) solid var(--hexagon-color);
@@ -12,7 +22,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1.6em;
+  font-size: 1.5em;
   font-family: "Montserrat", "Open Sans", sans-serif;
   font-weight: 700;
 }
@@ -26,26 +36,51 @@
 
 /* override colors for middle hex in top, middle and bottom */
 
-.hex-center > .top {
+.hexCenter > .top {
   border-bottom: calc(var(--hex-height) / 2) solid var(--yellow-secondary);
 }
 
-.hex-center > .middle {
+.hexCenter > .middle {
   background: var(--yellow-secondary);
 }
 
-.hex-center > .bottom {
+.hexCenter > .bottom {
   border-top: calc(var(--hex-height) / 2) solid var(--yellow-secondary);
 }
 
-.hex-left {
+/* hex positions */
+
+.hexLeft {
   top: 50%;
   left: calc(var(--hex-gap) + calc(var(--hex-width) / 2));
 }
 
-.hex-right {
+.hexRight {
   top: 50%;
   left: calc(
     3 * var(--hex-gap) + 2 * var(--hex-width) + calc(var(--hex-width) / 2)
   );
+}
+
+.hexTopRight {
+  top: calc(var(--hex-gap) + var(--hex-height));
+  left: calc(2.5 * var(--hex-gap) + 2 * var(--hex-width));
+}
+
+.hexTopLeft {
+  top: calc(var(--hex-gap) + var(--hex-height));
+  left: calc(1.5 * var(--hex-gap) + var(--hex-width));
+}
+.hexBottomLeft {
+  top: calc(3 * var(--hex-gap) + 4 * var(--hex-height));
+  left: calc(1.5 * var(--hex-gap) + var(--hex-width));
+}
+.hexBottomRight {
+  top: calc(3 * var(--hex-gap) + 4 * var(--hex-height));
+  left: calc(2.5 * var(--hex-gap) + 2 * var(--hex-width));
+}
+
+.hexCenter {
+  top: 50%;
+  left: 50%;
 }

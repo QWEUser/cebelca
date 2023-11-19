@@ -1,4 +1,10 @@
-.game-buttons button {
+.gameButtons {
+  display: flex;
+  justify-content: space-around;
+  margin: 20px 0px;
+}
+
+.gameButtons button {
   background-color: white;
   border: 1px solid #d4dae4;
   height: 40px;
@@ -14,6 +20,6 @@
   font-family: Montserrat, "Open Sans", sans-serif;
 }
 
-.game-buttons button:hover {
+.gameButtons button:hover {
   border: 1px solid black;
 }

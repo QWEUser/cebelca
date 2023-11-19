@@ -1,11 +1,11 @@
-import "./Hexagon.css";
+import styles from "./Hexagon.module.css";
 
 function Hexagon({ children, className }) {
   return (
-    <div className={`hex ${className}`}>
-      <div className="top"></div>
-      <div className="middle">{children}</div>
-      <div className="bottom"></div>
+    <div className={`${styles.hex} ${styles[className]}`}>
+      <div className={styles.top}></div>
+      <div className={styles.middle}>{children}</div>
+      <div className={styles.bottom}></div>
     </div>
   );
 }
