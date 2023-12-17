@@ -1,7 +1,8 @@
 .gameButtons {
   display: flex;
   justify-content: space-around;
-  margin: 20px 0px;
+  margin: 20px auto 0px;
+  width: 300px;
 }
 
 .gameButtons button {

@@ -4,7 +4,22 @@
   font-family: "Montserrat", "Open Sans", sans-serif;
   font-size: 26px;
   font-weight: 700;
+  color: black;
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  outline: none;
 }
+
+/* .inputWord {
+  height: 50px;
+  text-align: center;
+  font-family: "Montserrat", "Open Sans", sans-serif;
+  font-size: 26px;
+  font-weight: 700;
+  color: black;
+} */
 
 .inputWord::after {
   content: "";

@@ -1,10 +1,10 @@
 import styles from "./GameButtons.module.css";
 
-function GameButtons() {
+function GameButtons({ dispatch }) {
   return (
     <div className={styles.gameButtons}>
       <button>Briši</button>
-      <button>
+      <button onClick={() => dispatch({ type: "shuffleGameLetters" })}>
         <svg
           className="shuffle-icon"
           height="24"

@@ -30,6 +30,7 @@
   display: inline-block;
   overflow: hidden;
   user-select: none;
+  text-align: left;
 }
 
 .userWords__content__arr {

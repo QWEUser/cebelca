@@ -4,7 +4,9 @@ function UserWords() {
   return (
     <div className={styles.userWords}>
       <div className={styles.userWords__content}>
-        <div className={styles.userWords__content__text}></div>
+        <div className={styles.userWords__content__text}>
+          Uporabljene besede ...
+        </div>
         <svg
           className={styles.userWords__content__arr}
           width="13"
