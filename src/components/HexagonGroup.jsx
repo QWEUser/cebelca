@@ -11,10 +11,13 @@ const hexagonClassNames = [
   "hexBottomRight",
 ];
 
-function HexagonGroup({ gameLetters, gameCenterLetter }) {
-  // create rendered Hexagon components
+function HexagonGroup({ gameLetters, gameCenterLetter, dispatch }) {
   const renderedHexagons = gameLetters.map((letter, index) => (
-    <Hexagon key={index} className={hexagonClassNames[index]}>
+    <Hexagon
+      key={index}
+      className={hexagonClassNames[index]}
+      onClick={() => dispatch({ type: "userInputWord", payload: letter })}
+    >
       {letter}
     </Hexagon>
   ));
@@ -22,7 +25,14 @@ function HexagonGroup({ gameLetters, gameCenterLetter }) {
   // render Hexagons
   return (
     <div className={sytles.hexContainer}>
-      <Hexagon className="hexCenter">{gameCenterLetter}</Hexagon>
+      <Hexagon
+        className="hexCenter"
+        onClick={() =>
+          dispatch({ type: "userInputWord", payload: gameCenterLetter })
+        }
+      >
+        {gameCenterLetter}
+      </Hexagon>
       {renderedHexagons}
     </div>
   );

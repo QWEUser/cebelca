@@ -3,7 +3,9 @@ import styles from "./GameButtons.module.css";
 function GameButtons({ dispatch }) {
   return (
     <div className={styles.gameButtons}>
-      <button>Briši</button>
+      <button onClick={() => dispatch({ type: "deleteLastLetter" })}>
+        Briši
+      </button>
       <button onClick={() => dispatch({ type: "shuffleGameLetters" })}>
         <svg
           className="shuffle-icon"
