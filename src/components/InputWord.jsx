@@ -10,6 +10,7 @@ function InputWord({ inputWord }) {
   //     dispatch({ type: "userInputWord", payload: e.target.value });
   //   }
   // }
+  // const displayWordArray = [...inputWord];
 
   return (
     // <input
@@ -19,6 +20,7 @@ function InputWord({ inputWord }) {
     //   onChange={(e) => checkInput(e)}
     //   autoFocus
     // ></input>
+    // <div className={styles.inputWord}>{displayWordArray}</div>
     <div className={styles.inputWord}>{inputWord}</div>
   );
 }

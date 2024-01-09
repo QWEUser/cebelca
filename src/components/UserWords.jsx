@@ -1,11 +1,17 @@
 import styles from "./UserWords.module.css";
 
-function UserWords() {
+function UserWords({ userSubmitedWords }) {
+  const renderedUserSubmitedWords = userSubmitedWords.map((word, index) => (
+    <span key={index}>{word}, </span>
+  ));
+
   return (
     <div className={styles.userWords}>
       <div className={styles.userWords__content}>
         <div className={styles.userWords__content__text}>
-          Uporabljene besede ...
+          {userSubmitedWords == ""
+            ? "Uporabljene besede ..."
+            : renderedUserSubmitedWords}
         </div>
         <svg
           className={styles.userWords__content__arr}
