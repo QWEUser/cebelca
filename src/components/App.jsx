@@ -58,6 +58,7 @@ const initialState = {
   gameLetters: pangramSetArray.filter((letter) => letter != gameCenterLetter),
   inputWord: "",
   userSubmitedWords: [],
+  showWordsLeft: true,
 };
 
 // reducer function
@@ -89,6 +90,13 @@ function reducer(state, action) {
         inputWord: "",
       };
     }
+    case "showWordsLeft": {
+      console.log(state.shoWwordsLeft);
+      return {
+        ...state,
+        shoWwordsLeft: !state.showWordsLeft,
+      };
+    }
     case "resetApp": {
       return { ...state };
     }
@@ -98,10 +106,10 @@ function reducer(state, action) {
 }
 
 function App() {
-  const [{ gameLetters, inputWord, userSubmitedWords }, dispatch] = useReducer(
-    reducer,
-    initialState
-  );
+  const [
+    { gameLetters, inputWord, userSubmitedWords, showWordsLeft },
+    dispatch,
+  ] = useReducer(reducer, initialState);
 
   // if possible, change keyHandler and useEffect in the future to optimize performance; currently, any change in inputWord causes keyHandler to update, consequently triggering useEffect to dismount and mount .addEventListeners every time.
   const keyHandler = useCallback(
@@ -135,8 +143,12 @@ function App() {
 
   return (
     <>
-      <GameScore />
-      <GameLevel />
+      <GameScore dispatch={dispatch} />
+      <GameLevel
+        solutionsArray={solutionsArray}
+        userSubmitedWords={userSubmitedWords}
+        shoWwordsLeft={showWordsLeft}
+      />
       <UserWords userSubmitedWords={userSubmitedWords} />
       <GameMessage />
       <InputWord inputWord={inputWord} />
