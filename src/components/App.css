@@ -8,6 +8,7 @@
   padding: 2rem;
   text-align: center;
   --yellow-secondary: #ffd924;
+  --gray2: black;
 
   /* hexagon sizes: */
   --hex-size-multiplier: 0.69;

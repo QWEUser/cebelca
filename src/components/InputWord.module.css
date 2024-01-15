@@ -33,6 +33,10 @@
   transform: translate(0px, 2px);
 }
 
+.centerLetter {
+  color: var(--yellow-secondary);
+}
+
 @keyframes blinker {
   50% {
     opacity: 0;

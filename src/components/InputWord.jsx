@@ -1,28 +1,18 @@
 import styles from "./InputWord.module.css";
 
-//make sure only letters and an empty string are allowed as input
-// const regEx = /^$|^[A-Za-zčšž]+$/;
-
-function InputWord({ inputWord }) {
-  // // return <div className={styles.inputWord}>TEST</div>;
-  // function checkInput(e) {
-  //   if (e.target.value.match(regEx)) {
-  //     dispatch({ type: "userInputWord", payload: e.target.value });
-  //   }
-  // }
-  // const displayWordArray = [...inputWord];
-
-  return (
-    // <input
-    //   className={styles.inputWord}
-    //   type="text"
-    //   value={inputWord}
-    //   onChange={(e) => checkInput(e)}
-    //   autoFocus
-    // ></input>
-    // <div className={styles.inputWord}>{displayWordArray}</div>
-    <div className={styles.inputWord}>{inputWord}</div>
-  );
+function InputWord({ inputWord, gameCenterLetter }) {
+  const inputLetters = [...inputWord].map((letter, index) => {
+    if (letter == gameCenterLetter) {
+      return (
+        <span key={index} className={styles.centerLetter}>
+          {letter}
+        </span>
+      );
+    } else {
+      return letter;
+    }
+  });
+  return <div className={styles.inputWord}>{inputLetters}</div>;
 }
 
 export default InputWord;

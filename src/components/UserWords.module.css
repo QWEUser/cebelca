@@ -5,6 +5,7 @@
   position: relative;
   z-index: 100;
   user-select: none;
+  cursor: pointer;
 }
 
 .userWords__content {
@@ -31,6 +32,10 @@
   overflow: hidden;
   user-select: none;
   text-align: left;
+}
+
+.userWords__content__text__darker {
+  color: var(--gray2);
 }
 
 .userWords__content__arr {

@@ -2,7 +2,9 @@ import styles from "./UserWords.module.css";
 
 function UserWords({ userSubmitedWords }) {
   const renderedUserSubmitedWords = userSubmitedWords.map((word, index) => (
-    <span key={index}>{word}, </span>
+    <span className={styles.userWords__content__text__darker} key={index}>
+      {word},{" "}
+    </span>
   ));
 
   return (

@@ -45,7 +45,8 @@ function GameLevel({ solutionsArray, userSubmitedWords, showWordsLeft }) {
       <span className={styles.progressText}>
         <b>1x</b> <br></br>8 črk
       </span> */}
-      {renderWordCounts}
+      {/* {showWordsLeft} && {renderWordCounts} */}
+      {showWordsLeft ? renderWordCounts : null}
       {/* <div className={styles.progressText}>
         <strong className={styles.progressTitle}>Beginner</strong>
         <br></br>

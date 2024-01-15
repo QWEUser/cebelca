@@ -28,14 +28,10 @@ const gameCenterLetter =
   vowelFilteredPangram[Math.floor(Math.random() * vowelFilteredPangram.length)];
 console.log(initialPangram);
 
-// create regex for "keydown" events; allow user to only use keys that are part of the puzzle
-// const gameLettersRegex = /^[A-Za-zčšžČŠŽ]$/;
-
 //create regex to check weather a letter is part of puzzle letters
 const gameLettersRegex = new RegExp(`[${pangramSetArray.join("")}]`, "i");
 
 // create a solutions array from all words
-// const soultionsRegex = new RegExp(`[${gameCenterLetter}+${pangramSetArray}]`);
 const containsCenterLetter = allWords.filter((word) =>
   word.includes(gameCenterLetter)
 );
@@ -87,14 +83,14 @@ function reducer(state, action) {
       return {
         ...state,
         userSubmitedWords: [...state.userSubmitedWords, action.payload],
-        inputWord: "",
+        // inputWord: "",
+        inputWord: initialState.inputWord,
       };
     }
     case "showWordsLeft": {
-      console.log(state.shoWwordsLeft);
       return {
         ...state,
-        shoWwordsLeft: !state.showWordsLeft,
+        showWordsLeft: !state.showWordsLeft,
       };
     }
     case "resetApp": {
@@ -147,11 +143,11 @@ function App() {
       <GameLevel
         solutionsArray={solutionsArray}
         userSubmitedWords={userSubmitedWords}
-        shoWwordsLeft={showWordsLeft}
+        showWordsLeft={showWordsLeft}
       />
       <UserWords userSubmitedWords={userSubmitedWords} />
       <GameMessage />
-      <InputWord inputWord={inputWord} />
+      <InputWord inputWord={inputWord} gameCenterLetter={gameCenterLetter} />
       <HexagonGroup
         gameLetters={gameLetters}
         gameCenterLetter={gameCenterLetter}
