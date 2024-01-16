@@ -1,4 +1,8 @@
-.container {
+.mainContainer {
+  margin: 20px;
+}
+
+.countContainer {
   display: flex;
   flex-wrap: wrap;
   gap: 10px 10px;
@@ -6,6 +10,21 @@
   max-width: 490px;
   padding: 0 15px;
   margin: 8px auto 0px;
+}
+
+.scoreContainer {
+  text-align: center;
+  color: #13141c;
+  font-size: 24px;
+  font-weight: 700;
+  margin: 30px auto;
+  background-color: var(--yellow-secondary);
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .progressText {

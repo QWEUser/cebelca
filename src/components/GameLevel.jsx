@@ -1,6 +1,11 @@
 import styles from "./GameLevel.module.css";
 
-function GameLevel({ solutionsArray, userSubmitedWords, showWordsLeft }) {
+function GameLevel({
+  solutionsArray,
+  userSubmitedWords,
+  showWordsLeft,
+  dispatch,
+}) {
   // create an array of all the words that are still the solution, but the player has not yet entered
   const wordsLeft = solutionsArray.filter(
     (word) => !userSubmitedWords.includes(word)
@@ -9,8 +14,19 @@ function GameLevel({ solutionsArray, userSubmitedWords, showWordsLeft }) {
 
   //create an array of 100 elements with value 0. This array serves as counter for how many words have how many letters
   let countArray = new Array(100).fill(0);
+  let score = 0;
+  let countPangrams = 0;
   for (const word of wordsLeft) {
     countArray[word.length]++;
+    score = score + word.length;
+    let wordUniqueLetters = Array.from(new Set([...word]));
+    if (wordUniqueLetters.length == 7) {
+      score = score + 7;
+      countPangrams++;
+      console.log(
+        "pangram: " + word + " , number of pangrams found: " + countPangrams
+      );
+    }
   }
 
   // create an array of "circles" that will display how many words of number of letters are still left.
@@ -24,41 +40,18 @@ function GameLevel({ solutionsArray, userSubmitedWords, showWordsLeft }) {
       );
     }
   });
-  // const renderWordCounts = countArray.map((count, index) => {
-  //   return <div key={index}>{count}</div>;
-  // });
 
   return (
-    <div className={styles.container}>
-      {/* <span className={styles.progressText}>
-        <b>10x</b> <br></br>4 črke
-      </span>
-      <span className={styles.progressText}>
-        <b>5x</b> <br></br>5 črk
-      </span>
-      <span className={styles.progressText}>
-        <b>3x</b> <br></br>6 črk
-      </span>
-      <span className={styles.progressText}>
-        <b>2x</b> <br></br>7 črk
-      </span>
-      <span className={styles.progressText}>
-        <b>1x</b> <br></br>8 črk
-      </span> */}
-      {/* {showWordsLeft} && {renderWordCounts} */}
-      {showWordsLeft ? renderWordCounts : null}
-      {/* <div className={styles.progressText}>
-        <strong className={styles.progressTitle}>Beginner</strong>
-        <br></br>
-        <span className={styles.nextWrapper}>
-          <b>
-            <span className={styles.pointsToNext}>8 </span>
-          </b>
-          to
-          <span className={styles.nextTitle}> Novice</span>
-        </span>
+    <div className={styles.mainContainer}>
+      <div
+        className={styles.scoreContainer}
+        onClick={() => dispatch({ type: "showWordsLeft" })}
+      >
+        {score}
       </div>
-      <div className={styles.progressLine}></div> */}
+      <div className={styles.countContainer}>
+        {showWordsLeft ? renderWordCounts : null}
+      </div>
     </div>
   );
 }

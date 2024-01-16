@@ -4,7 +4,6 @@ import allWordsJSON from "../assets/words-data.json";
 import GameButtons from "./GameButtons";
 import GameLevel from "./GameLevel";
 import GameMessage from "./GameMessage";
-import GameScore from "./GameScore";
 import HexagonGroup from "./HexagonGroup";
 import InputWord from "./InputWord";
 import UserWords from "./UserWords";
@@ -83,7 +82,6 @@ function reducer(state, action) {
       return {
         ...state,
         userSubmitedWords: [...state.userSubmitedWords, action.payload],
-        // inputWord: "",
         inputWord: initialState.inputWord,
       };
     }
@@ -107,7 +105,7 @@ function App() {
     dispatch,
   ] = useReducer(reducer, initialState);
 
-  // if possible, change keyHandler and useEffect in the future to optimize performance; currently, any change in inputWord causes keyHandler to update, consequently triggering useEffect to dismount and mount .addEventListeners every time.
+  // TODO: if possible, change keyHandler and useEffect in the future to optimize performance; currently, any change in inputWord causes keyHandler to update, consequently triggering useEffect to dismount and mount .addEventListeners every time.
   const keyHandler = useCallback(
     (e) => {
       if (e.key == "Enter" || e.key == "Return") {
@@ -139,11 +137,11 @@ function App() {
 
   return (
     <>
-      <GameScore dispatch={dispatch} />
       <GameLevel
         solutionsArray={solutionsArray}
         userSubmitedWords={userSubmitedWords}
         showWordsLeft={showWordsLeft}
+        dispatch={dispatch}
       />
       <UserWords userSubmitedWords={userSubmitedWords} />
       <GameMessage />
