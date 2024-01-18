@@ -1,20 +1,39 @@
 import styles from "./UserWords.module.css";
 
-function UserWords({ userSubmitedWords }) {
-  const renderedUserSubmitedWords = userSubmitedWords.map((word, index) => (
-    <span className={styles.userWords__content__text__darker} key={index}>
-      {word},{" "}
-    </span>
-  ));
+function UserWords({ userSubmitedWords, showUserWords, dispatch }) {
+  const renderedUserSubmitedWords = userSubmitedWords
+    .map((word, index) => (
+      <div
+        className={
+          !showUserWords
+            ? styles.userWords__content__text__darker
+            : styles.userWords__content__blocks__block
+        }
+        key={index}
+      >
+        {word}
+      </div>
+    ))
+    .reverse();
 
   return (
     <div className={styles.userWords}>
-      <div className={styles.userWords__content}>
-        <div className={styles.userWords__content__text}>
+      <div
+        className={styles.userWords__content}
+        onClick={() => dispatch({ type: "showUserWords" })}
+      >
+        <div
+          className={
+            !showUserWords
+              ? styles.userWords__content__text
+              : styles.userWords__content__blocks
+          }
+        >
           {userSubmitedWords == ""
             ? "Uporabljene besede ..."
             : renderedUserSubmitedWords}
         </div>
+
         <svg
           className={styles.userWords__content__arr}
           width="13"

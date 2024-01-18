@@ -34,8 +34,29 @@
   text-align: left;
 }
 
+.userWords__content__blocks {
+  display: flex;
+  flex-wrap: wrap;
+  /* justify-content: center; */
+}
+
 .userWords__content__text__darker {
   color: var(--gray2);
+  margin-right: 0.5ch;
+  display: inline;
+}
+
+.userWords__content__text__darker:after {
+  content: ", ";
+}
+
+.userWords__content__blocks__block {
+  color: var(--gray2);
+  font-size: 14px;
+  margin: 5px;
+  padding: 10px;
+  background: white;
+  border-radius: 10px;
 }
 
 .userWords__content__arr {

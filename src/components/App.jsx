@@ -54,6 +54,7 @@ const initialState = {
   inputWord: "",
   userSubmitedWords: [],
   showWordsLeft: true,
+  showUserWords: false,
 };
 
 // reducer function
@@ -91,6 +92,13 @@ function reducer(state, action) {
         showWordsLeft: !state.showWordsLeft,
       };
     }
+    case "showUserWords": {
+      console.log(state.showUserWords);
+      return {
+        ...state,
+        showUserWords: !state.showUserWords,
+      };
+    }
     case "resetApp": {
       return { ...state };
     }
@@ -101,7 +109,7 @@ function reducer(state, action) {
 
 function App() {
   const [
-    { gameLetters, inputWord, userSubmitedWords, showWordsLeft },
+    { gameLetters, inputWord, userSubmitedWords, showWordsLeft, showUserWords },
     dispatch,
   ] = useReducer(reducer, initialState);
 
@@ -143,7 +151,11 @@ function App() {
         showWordsLeft={showWordsLeft}
         dispatch={dispatch}
       />
-      <UserWords userSubmitedWords={userSubmitedWords} />
+      <UserWords
+        userSubmitedWords={userSubmitedWords}
+        showUserWords={showUserWords}
+        dispatch={dispatch}
+      />
       <GameMessage />
       <InputWord inputWord={inputWord} gameCenterLetter={gameCenterLetter} />
       <HexagonGroup
