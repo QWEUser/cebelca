@@ -15,6 +15,7 @@
   position: relative;
   padding: 10px 40px 10px 15px;
   min-height: 40px;
+  /* text-overflow: ellipsis; */
 }
 
 .userWords__content__text {
@@ -42,7 +43,6 @@
 
 .userWords__content__text__darker {
   color: var(--gray2);
-  margin-right: 0.5ch;
   display: inline;
 }
 
@@ -57,6 +57,11 @@
   padding: 10px;
   background: white;
   border-radius: 10px;
+}
+
+.userWords__content__blocks__block:hover {
+  /* background-color: var(--yellow-secondary); */
+  color: var(--yellow-secondary);
 }
 
 .userWords__content__arr {

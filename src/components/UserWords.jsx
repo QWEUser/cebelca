@@ -2,18 +2,42 @@ import styles from "./UserWords.module.css";
 
 function UserWords({ userSubmitedWords, showUserWords, dispatch }) {
   const renderedUserSubmitedWords = userSubmitedWords
-    .map((word, index) => (
-      <div
-        className={
-          !showUserWords
-            ? styles.userWords__content__text__darker
-            : styles.userWords__content__blocks__block
+    .map(
+      (word, index) => {
+        if (!showUserWords) {
+          return (
+            <span
+              className={styles.userWords__content__text__darker}
+              key={index}
+            >
+              {word}
+            </span>
+          );
+        } else {
+          return (
+            <a
+              className={styles.userWords__content__blocks__block}
+              key={index}
+              href={`https://www.fran.si/iskanje?View=1&Query=${word}`}
+              target={"_blank"}
+              rel="noopener noreferrer"
+            >
+              {word}
+            </a>
+          );
         }
-        key={index}
-      >
-        {word}
-      </div>
-    ))
+      }
+      // <div
+      //   className={
+      //     !showUserWords
+      //       ? styles.userWords__content__text__darker
+      //       : styles.userWords__content__blocks__block
+      //   }
+      //   key={index}
+      // >
+      //   {word}
+      // </div>
+    )
     .reverse();
 
   return (
