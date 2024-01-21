@@ -1,3 +1,45 @@
 .container {
   height: 40px;
+  /* visibility: hidden; */
+  color: black;
+  background-color: green;
+  width: fit-content;
+  text-align: center;
+  margin: auto;
+  padding: 5px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  animation: fade 2s linear forwards;
+}
+
+.container > p {
+  justify-content: center;
+}
+
+.disabled {
+  visibility: hidden;
+}
+
+@keyframes fade {
+  /* 0%,
+  100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  } */
+  from {
+    opacity: 0;
+  }
+  25% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
 }

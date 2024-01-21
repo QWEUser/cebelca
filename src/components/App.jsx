@@ -48,6 +48,8 @@ const solutionsArray = containsCenterLetter.filter((word) => {
 
 console.log(solutionsArray);
 
+// useReducer logic
+
 // reducer function initial state
 const initialState = {
   gameLetters: pangramSetArray.filter((letter) => letter != gameCenterLetter),
@@ -84,6 +86,7 @@ function reducer(state, action) {
         ...state,
         userSubmitedWords: [...state.userSubmitedWords, action.payload],
         inputWord: initialState.inputWord,
+        showGameMessage: true,
       };
     }
     case "showWordsLeft": {
@@ -93,7 +96,6 @@ function reducer(state, action) {
       };
     }
     case "showUserWords": {
-      console.log(state.showUserWords);
       return {
         ...state,
         showUserWords: !state.showUserWords,
@@ -156,7 +158,14 @@ function App() {
         showUserWords={showUserWords}
         dispatch={dispatch}
       />
-      <GameMessage />
+      <GameMessage
+        // check all words submited by user; if there are no words, pass on empty string, otherwise pass on the last submited word
+        lastSubmitedWord={
+          userSubmitedWords.length > 0
+            ? userSubmitedWords[userSubmitedWords.length - 1]
+            : ""
+        }
+      />
       <InputWord inputWord={inputWord} gameCenterLetter={gameCenterLetter} />
       <HexagonGroup
         gameLetters={gameLetters}

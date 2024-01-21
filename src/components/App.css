@@ -5,7 +5,8 @@
 #root {
   width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 0;
+  /* padding: 2rem; */
   text-align: center;
   --yellow-secondary: #ffd924;
   --gray2: #6d7c95;

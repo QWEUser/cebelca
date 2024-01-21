@@ -1,43 +1,31 @@
 import styles from "./UserWords.module.css";
 
 function UserWords({ userSubmitedWords, showUserWords, dispatch }) {
+  // create an array of JSX elements with user words
   const renderedUserSubmitedWords = userSubmitedWords
-    .map(
-      (word, index) => {
-        if (!showUserWords) {
-          return (
-            <span
-              className={styles.userWords__content__text__darker}
-              key={index}
-            >
-              {word}
-            </span>
-          );
-        } else {
-          return (
-            <a
-              className={styles.userWords__content__blocks__block}
-              key={index}
-              href={`https://www.fran.si/iskanje?View=1&Query=${word}`}
-              target={"_blank"}
-              rel="noopener noreferrer"
-            >
-              {word}
-            </a>
-          );
-        }
+    .map((word, index) => {
+      // if user did not click "show all words" button, display single words in one line
+      if (!showUserWords) {
+        return (
+          <span className={styles.userWords__content__text__darker} key={index}>
+            {word}
+          </span>
+        );
+      } else {
+        // if user clicked on "show all words" button, display words in block elements with links
+        return (
+          <a
+            className={styles.userWords__content__blocks__block}
+            key={index}
+            href={`https://www.fran.si/iskanje?View=1&Query=${word}`}
+            target={"_blank"}
+            rel="noopener noreferrer"
+          >
+            {word}
+          </a>
+        );
       }
-      // <div
-      //   className={
-      //     !showUserWords
-      //       ? styles.userWords__content__text__darker
-      //       : styles.userWords__content__blocks__block
-      //   }
-      //   key={index}
-      // >
-      //   {word}
-      // </div>
-    )
+    })
     .reverse();
 
   return (
@@ -46,17 +34,24 @@ function UserWords({ userSubmitedWords, showUserWords, dispatch }) {
         className={styles.userWords__content}
         onClick={() => dispatch({ type: "showUserWords" })}
       >
-        <div
-          className={
-            !showUserWords
-              ? styles.userWords__content__text
-              : styles.userWords__content__blocks
-          }
-        >
-          {userSubmitedWords == ""
-            ? "Uporabljene besede ..."
-            : renderedUserSubmitedWords}
-        </div>
+        {userSubmitedWords == "" ? (
+          // if the user did not input any words yet, display this div
+          <div className={styles.userWords__content__text}>
+            Uporabljene besede ...
+          </div>
+        ) : (
+          // otherwise, if user words exist, display this div
+          <div
+            className={
+              // if user clicked on "show all words" button, render submited words in blocks, otherwise display a single line of words (default on page load)
+              !showUserWords
+                ? styles.userWords__content__text
+                : styles.userWords__content__blocks
+            }
+          >
+            {renderedUserSubmitedWords}
+          </div>
+        )}
 
         <svg
           className={styles.userWords__content__arr}

@@ -18,8 +18,8 @@ function GameLevel({
   let countPangrams = 0;
   for (const word of wordsLeft) {
     countArray[word.length]++;
-    score = score + word.length;
-    let wordUniqueLetters = Array.from(new Set([...word]));
+    score = score + word.length - 3;
+    const wordUniqueLetters = Array.from(new Set([...word]));
     if (wordUniqueLetters.length == 7) {
       score = score + 7;
       countPangrams++;
