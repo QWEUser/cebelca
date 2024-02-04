@@ -1,6 +1,6 @@
 import styles from "./GameButtons.module.css";
 
-function GameButtons({ dispatch }) {
+function GameButtons({ inputWord, dispatch }) {
   return (
     <div className={styles.gameButtons}>
       <button onClick={() => dispatch({ type: "deleteLastLetter" })}>
@@ -20,7 +20,11 @@ function GameButtons({ dispatch }) {
           ></path>
         </svg>
       </button>
-      <button>Vnesi</button>
+      <button
+        onClick={() => dispatch({ type: "userSubmitWord", payload: inputWord })}
+      >
+        Vnesi
+      </button>
     </div>
   );
 }

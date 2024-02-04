@@ -1,0 +1,33 @@
+.container {
+  position: relative;
+}
+
+.st5 {
+  fill: none;
+  stroke: #000000;
+  stroke-width: 3.01;
+  /* stroke-width: 4.51808405; */
+  stroke-miterlimit: 10;
+}
+.st6 {
+  fill: none;
+  stroke: #000000;
+  stroke-width: 1.64;
+  /* stroke-width: 2.46440935; */
+  stroke-miterlimit: 10;
+}
+.st7 {
+  fill: #ffd100;
+  stroke-width: 0.1;
+  /* stroke-width: 0.20536745; */
+}
+
+p {
+  color: var(--color-font-dark);
+  font-family: "Poppins-Bold";
+  font-size: 26px;
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

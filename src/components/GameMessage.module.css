@@ -2,7 +2,7 @@
   height: 40px;
   /* visibility: hidden; */
   color: black;
-  background-color: green;
+  /* background-color: green; */
   width: fit-content;
   text-align: center;
   margin: auto;
@@ -10,11 +10,22 @@
   border-radius: 5px;
   display: flex;
   align-items: center;
-  animation: fade 2s linear forwards;
+  /* position: relative; */
 }
 
 .container > p {
   justify-content: center;
+  animation: fade 2s linear forwards;
+  position: absolute;
+  top: 37%;
+}
+
+.wordScore {
+  position: absolute;
+  font-size: 36px;
+  color: var(--yellow-secondary);
+  transform: translate(120px, 20px);
+  animation: fadeslower 3s linear forwards;
 }
 
 .disabled {
@@ -22,13 +33,6 @@
 }
 
 @keyframes fade {
-  /* 0%,
-  100% {
-    opacity: 0;
-  }
-  50% {
-    opacity: 1;
-  } */
   from {
     opacity: 0;
   }
@@ -36,6 +40,22 @@
     opacity: 1;
   }
   75% {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+@keyframes fadeslower {
+  from {
+    opacity: 0;
+  }
+  12.5% {
+    opacity: 1;
+  }
+  87.5% {
     opacity: 1;
   }
   to {

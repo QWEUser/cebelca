@@ -8,6 +8,10 @@ import HexagonGroup from "./HexagonGroup";
 import InputWord from "./InputWord";
 import UserWords from "./UserWords";
 
+//TODO: get rid of words that contain letter w and y!!
+//TODO: get rid of bad words (includng "pedofil")!!
+//TODO: fix fonts
+
 // add an OR operator to define hard coded input in case "allWordsJSON is unavailable"
 const pangrams = allWordsJSON.pangrams.split(" ");
 const notPangrams = allWordsJSON.notPangrams.split(" ");
@@ -46,7 +50,28 @@ const solutionsArray = containsCenterLetter.filter((word) => {
   }
 });
 
+// calculate total score possible
+// create an array of 100 elements with value 0. This array serves as counter for how many words have how many letters
+
+let totalScore = 0;
+let countPangrams = 0;
+for (const word of solutionsArray) {
+  totalScore = totalScore + word.length - 3;
+  const wordUniqueLetters = Array.from(new Set([...word]));
+  if (wordUniqueLetters.length == 7) {
+    totalScore = totalScore + 7;
+    countPangrams++;
+    console.log(
+      "initial page load: pangram: " +
+        word +
+        " , number of pangrams found: " +
+        countPangrams
+    );
+  }
+}
+
 console.log(solutionsArray);
+console.log(totalScore);
 
 // useReducer logic
 
@@ -55,8 +80,9 @@ const initialState = {
   gameLetters: pangramSetArray.filter((letter) => letter != gameCenterLetter),
   inputWord: "",
   userSubmitedWords: [],
-  showWordsLeft: true,
+  showWordsLeft: false,
   showUserWords: false,
+  userCurrentScore: 0,
 };
 
 // reducer function
@@ -80,15 +106,40 @@ function reducer(state, action) {
         ...state,
         inputWord: state.inputWord.slice(0, -1),
       };
+    // check if user input word is valid and add it to userSubmitedWords
     case "userSubmitWord": {
       console.log(state.userSubmitedWords);
-      return {
-        ...state,
-        userSubmitedWords: [...state.userSubmitedWords, action.payload],
-        inputWord: initialState.inputWord,
-        showGameMessage: true,
-      };
+      if (
+        solutionsArray.includes(state.inputWord) &&
+        !state.userSubmitedWords.includes(state.inputWord)
+      ) {
+        const userWord = action.payload;
+        let score = userWord.length - 3;
+        const wordUniqueLetters = Array.from(new Set([...userWord]));
+        if (wordUniqueLetters.length == 7) {
+          score = score + 7;
+        }
+        console.log(state.userCurrentScore);
+
+        return {
+          ...state,
+          userSubmitedWords: [...state.userSubmitedWords, action.payload],
+          inputWord: initialState.inputWord,
+          userCurrentScore: state.userCurrentScore + score,
+          showGameMessage: true,
+        };
+      }
+      return { ...state };
     }
+    // case "userSubmitWord": {
+    //   console.log(state.userSubmitedWords);
+    //   return {
+    //     ...state,
+    //     userSubmitedWords: [...state.userSubmitedWords, action.payload],
+    //     inputWord: initialState.inputWord,
+    //     showGameMessage: true,
+    //   };
+    // }
     case "showWordsLeft": {
       return {
         ...state,
@@ -111,7 +162,14 @@ function reducer(state, action) {
 
 function App() {
   const [
-    { gameLetters, inputWord, userSubmitedWords, showWordsLeft, showUserWords },
+    {
+      gameLetters,
+      inputWord,
+      userSubmitedWords,
+      showWordsLeft,
+      showUserWords,
+      userCurrentScore,
+    },
     dispatch,
   ] = useReducer(reducer, initialState);
 
@@ -120,12 +178,8 @@ function App() {
     (e) => {
       if (e.key == "Enter" || e.key == "Return") {
         console.log(userSubmitedWords);
-        if (
-          solutionsArray.includes(inputWord) &&
-          !userSubmitedWords.includes(inputWord)
-        ) {
-          dispatch({ type: "userSubmitWord", payload: inputWord });
-        }
+
+        dispatch({ type: "userSubmitWord", payload: inputWord });
       }
       if (e.key == "Backspace" || e.key == "Delete") {
         dispatch({ type: "deleteLastLetter" });
@@ -148,6 +202,8 @@ function App() {
   return (
     <>
       <GameLevel
+        totalScore={totalScore}
+        userCurrentScore={userCurrentScore}
         solutionsArray={solutionsArray}
         userSubmitedWords={userSubmitedWords}
         showWordsLeft={showWordsLeft}
@@ -172,7 +228,7 @@ function App() {
         gameCenterLetter={gameCenterLetter}
         dispatch={dispatch}
       />
-      <GameButtons dispatch={dispatch} />
+      <GameButtons dispatch={dispatch} inputWord={inputWord} />
     </>
   );
 }

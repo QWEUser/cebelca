@@ -6,19 +6,15 @@
   width: 1280px;
   margin: 0 auto;
   padding: 0;
-  /* padding: 2rem; */
   text-align: center;
-  --yellow-secondary: #ffd924;
-  --gray2: #6d7c95;
 
   /* hexagon sizes: */
   --hex-size-multiplier: 0.69;
   --hex-width: calc(var(--hex-size-multiplier) * 104px);
   --hex-gap: 6px;
   --hex-height: calc(var(--hex-size-multiplier) * 60px);
+  --hex-cover-scale: 0.9;
   --hex-container-size: calc((var(--hex-width) * 3) + (var(--hex-gap) * 4));
-
-  /* width: var(--hex-container-size); */
 }
 
 @keyframes logo-spin {

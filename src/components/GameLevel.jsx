@@ -1,6 +1,9 @@
 import styles from "./GameLevel.module.css";
+import ScoreJar from "./ScoreJar";
 
 function GameLevel({
+  userCurrentScore,
+  totalScore,
   solutionsArray,
   userSubmitedWords,
   showWordsLeft,
@@ -12,7 +15,7 @@ function GameLevel({
   );
   console.log(wordsLeft);
 
-  //create an array of 100 elements with value 0. This array serves as counter for how many words have how many letters
+  // create an array of 100 elements with value 0. This array serves as counter for how many words have how many letters
   let countArray = new Array(100).fill(0);
   let score = 0;
   let countPangrams = 0;
@@ -43,12 +46,20 @@ function GameLevel({
 
   return (
     <div className={styles.mainContainer}>
-      <div
+      <div className={styles.scoreJarContainer}>
+        {/* TODO: CREATE HONEY JARS*/}
+        <ScoreJar
+          userCurrentScore={userCurrentScore}
+          jarScore={Math.floor(totalScore / 4)}
+          dispatch={dispatch}
+        />
+      </div>
+      {/* <div
         className={styles.scoreContainer}
         onClick={() => dispatch({ type: "showWordsLeft" })}
       >
         {score}
-      </div>
+      </div> */}
       <div className={styles.countContainer}>
         {showWordsLeft ? renderWordCounts : null}
       </div>

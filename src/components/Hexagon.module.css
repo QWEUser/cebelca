@@ -9,6 +9,8 @@
 }
 
 .hex .top {
+  position: absolute;
+  transform: translateY(calc(-1 * var(--hex-height) / 2));
   width: 0;
   border-bottom: calc(var(--hex-height) / 2) solid var(--hexagon-color);
   border-left: calc(var(--hex-width) / 2) solid transparent;
@@ -16,9 +18,47 @@
 }
 
 .hex .middle {
+  /* position: absolute; */
   width: var(--hex-width);
   height: var(--hex-height);
   background: var(--hexagon-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5em;
+  /* font-family: "Poppins-Bold", "Montserrat", "Open Sans", sans-serif; */
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.hex .bottom {
+  position: absolute;
+  width: 0;
+  border-top: calc(var(--hex-height) / 2) solid var(--hexagon-color);
+  border-left: calc(var(--hex-width) / 2) solid transparent;
+  border-right: calc(var(--hex-width) / 2) solid transparent;
+}
+
+/* TODO: fix these hex covers */
+
+.hex .topCover {
+  width: 0;
+  position: absolute;
+  transform: translateY(calc(-1.5 * 0.94 * var(--hex-height)))
+    scale(var(--hex-cover-scale));
+  border-bottom: calc(var(--hex-height) / 2) solid var(--hexagon-colorCover);
+  border-left: calc(var(--hex-width) / 2) solid transparent;
+  border-right: calc(var(--hex-width) / 2) solid transparent;
+  z-index: 100;
+}
+
+.hex .middleCover {
+  position: absolute;
+  transform: translateY(calc(-1 * var(--hex-height)))
+    scale(var(--hex-cover-scale));
+  width: var(--hex-width);
+  height: var(--hex-height);
+  background: var(--hexagon-colorCover);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -28,9 +68,12 @@
   text-transform: uppercase;
 }
 
-.hex .bottom {
+.hex .bottomCover {
+  position: absolute;
+  transform: translateY(calc(-0.08 * var(--hex-height)))
+    scale(var(--hex-cover-scale));
   width: 0;
-  border-top: calc(var(--hex-height) / 2) solid var(--hexagon-color);
+  border-top: calc(var(--hex-height) / 2) solid var(--hexagon-colorCover);
   border-left: calc(var(--hex-width) / 2) solid transparent;
   border-right: calc(var(--hex-width) / 2) solid transparent;
 }

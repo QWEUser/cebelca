@@ -7,6 +7,9 @@ function Hexagon({ children, className, onClick }) {
       <div className={styles.top}></div>
       <div className={styles.middle}>{children}</div>
       <div className={styles.bottom}></div>
+      {/* <div className={styles.topCover}></div>
+      <div className={styles.middleCover}></div>
+      <div className={styles.bottomCover}></div> */}
     </div>
   );
 }

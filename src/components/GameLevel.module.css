@@ -2,6 +2,15 @@
   margin: 20px;
 }
 
+.scoreJarContainer {
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 50px;
+  gap: 15px;
+}
+
 .countContainer {
   display: flex;
   flex-wrap: wrap;
