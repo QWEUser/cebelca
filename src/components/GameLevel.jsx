@@ -9,6 +9,9 @@ function GameLevel({
   showWordsLeft,
   dispatch,
 }) {
+  // determine the socre needed to fill one jar
+  const jarScore = Math.floor(totalScore / 4);
+
   // create an array of all the words that are still the solution, but the player has not yet entered
   const wordsLeft = solutionsArray.filter(
     (word) => !userSubmitedWords.includes(word)
@@ -47,12 +50,15 @@ function GameLevel({
   return (
     <div className={styles.mainContainer}>
       <div className={styles.scoreJarContainer}>
-        {/* TODO: CREATE HONEY JARS*/}
-        <ScoreJar
-          userCurrentScore={userCurrentScore}
-          jarScore={Math.floor(totalScore / 4)}
-          dispatch={dispatch}
-        />
+        {userCurrentScore < jarScore ? (
+          <ScoreJar
+            userCurrentScore={userCurrentScore}
+            jarScore={jarScore}
+            dispatch={dispatch}
+          />
+        ) : (
+          <h1 style={{ color: "black" }}>Bravo, zmagal si!</h1>
+        )}
       </div>
       {/* <div
         className={styles.scoreContainer}

@@ -1,6 +1,8 @@
 import styles from "./ScoreJar.module.css";
 
 function ScoreJar({ jarScore, userCurrentScore, dispatch }) {
+  // determine how full the jar is from 0 to 1
+  const jarFullPercentage = 1 - userCurrentScore / jarScore;
   return (
     <div className={styles.container}>
       <svg
@@ -10,11 +12,22 @@ function ScoreJar({ jarScore, userCurrentScore, dispatch }) {
         y="0px"
         viewBox="0 0 77.212005 99.999781"
         xmlSpace="preserve"
-        id="svg3789"
         width="77.212006"
         height="99.999786"
         onClick={() => dispatch({ type: "showWordsLeft" })}
       >
+        <defs>
+          <linearGradient id="gradient" x1="50%" y1="0%" x2="50%" y2="100%">
+            <stop
+              offset={`${jarFullPercentage}`}
+              stopColor="rgba(255, 255, 255, 0)"
+            />
+            <stop
+              offset={`${jarFullPercentage}`}
+              stopColor="var(--yellow-secondary)"
+            />
+          </linearGradient>
+        </defs>
         <g id="Layer_2" transform="translate(-396.859,-248.40486)">
           <path
             className={styles.st5}
@@ -30,7 +43,8 @@ function ScoreJar({ jarScore, userCurrentScore, dispatch }) {
             id="line3782"
           />
           <path
-            className={styles.st7}
+            // className={styles.st7}
+            fill="url(#gradient)"
             d="m 416.11831,267.77722 -9.41401,10.63177 c -2.1e-4,10e-6 -0.002,0 -0.002,0 v 0.002 42.10834 7.09561 c 0,7.38912 5.45852,11.01391 10.42841,10.98515 0.0431,0 39.22314,0.0285 38.21479,0.0285 4.52014,-0.20536 8.95394,-3.62473 8.95394,-10.98716 V 278.4066 c 8.2e-4,-4e-5 0.002,3e-5 0.002,0 l -9.3013,-10.62977 z"
             id="path3784"
           />

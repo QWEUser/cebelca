@@ -7,10 +7,12 @@ import GameMessage from "./GameMessage";
 import HexagonGroup from "./HexagonGroup";
 import InputWord from "./InputWord";
 import UserWords from "./UserWords";
+import Navbar from "./Navbar";
 
 //TODO: get rid of words that contain letter w and y!!
 //TODO: get rid of bad words (includng "pedofil")!!
 //TODO: fix fonts
+//TODO: fix name changing in congratulations word
 
 // add an OR operator to define hard coded input in case "allWordsJSON is unavailable"
 const pangrams = allWordsJSON.pangrams.split(" ");
@@ -201,6 +203,7 @@ function App() {
 
   return (
     <>
+      <Navbar />
       <GameLevel
         totalScore={totalScore}
         userCurrentScore={userCurrentScore}
