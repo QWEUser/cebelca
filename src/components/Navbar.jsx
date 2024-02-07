@@ -1,15 +1,18 @@
 import BeeIcon from "./NavbarIcons/BeeIcon";
 import StatisticsIcon from "./NavbarIcons/StatisticsIcon";
 import SettingsIcon from "./NavbarIcons/SettingsIcon";
-import InstructionsIcon from "./NavbarIcons/InstrucstionsIcon";
+import InstructionsIcon from "./NavbarIcons/InstructionsIcon";
+import sytles from "./Navbar.module.css";
 
 function Navbar() {
   return (
-    <div>
+    <div className={sytles.container}>
       <BeeIcon />
-      <StatisticsIcon />
-      <SettingsIcon />
-      <InstructionsIcon />
+      <div className={sytles.buttonsContainer}>
+        <StatisticsIcon />
+        <SettingsIcon />
+        <InstructionsIcon />
+      </div>
     </div>
   );
 }

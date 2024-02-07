@@ -1,0 +1,16 @@
+.container {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+
+.st49 {
+  fill: #ffffff;
+  stroke: #000000;
+  stroke-width: 27;
+  stroke-miterlimit: 10;
+}
+
+.st49:hover {
+  stroke: var(--yellow-secondary);
+}

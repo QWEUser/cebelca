@@ -1,0 +1,9 @@
+.container {
+  height: 30px;
+  width: 30px;
+  cursor: pointer;
+}
+
+.st50:hover {
+  fill: var(--yellow-secondary);
+}
