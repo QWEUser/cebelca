@@ -52,7 +52,9 @@ function ScoreJar({ jarScore, userCurrentScore, dispatch }) {
       </svg>
 
       {/* <p>{jarScore}</p> */}
-      {userCurrentScore < jarScore && <p>{userCurrentScore}</p>}
+      {userCurrentScore < jarScore && (
+        <p className={styles.jarScore}>{userCurrentScore}</p>
+      )}
     </div>
   );
 }

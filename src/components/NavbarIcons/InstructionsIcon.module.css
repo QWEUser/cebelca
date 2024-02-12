@@ -1,6 +1,8 @@
 .container {
   height: 30px;
   width: 30px;
+}
+.st50 {
   cursor: pointer;
 }
 

@@ -1,10 +1,10 @@
 .container {
   width: 30px;
   height: 30px;
-  cursor: pointer;
 }
 
 .st49 {
+  cursor: pointer;
   fill: #ffffff;
   stroke: #000000;
   stroke-width: 27;

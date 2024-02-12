@@ -76,7 +76,6 @@
   position: absolute;
   top: 17px;
   right: 14px;
-  z-index: 100;
   fill: var(--color-font-dark);
   stroke: var(--color-font-dark);
 }

@@ -8,11 +8,12 @@ import HexagonGroup from "./HexagonGroup";
 import InputWord from "./InputWord";
 import UserWords from "./UserWords";
 import Navbar from "./Navbar";
+import Overlay from "./Overlay";
+import GameInstructions from "./gameInstructions";
 
 //TODO: get rid of words that contain letter w and y!!
 //TODO: get rid of bad words (includng "pedofil")!!
 //TODO: fix fonts
-//TODO: fix name changing in congratulations word
 
 // add an OR operator to define hard coded input in case "allWordsJSON is unavailable"
 const pangrams = allWordsJSON.pangrams.split(" ");
@@ -33,7 +34,7 @@ const gameCenterLetter =
   vowelFilteredPangram[Math.floor(Math.random() * vowelFilteredPangram.length)];
 console.log(initialPangram);
 
-//create regex to check weather a letter is part of puzzle letters
+//create regex to check whether a letter is part of puzzle letters
 const gameLettersRegex = new RegExp(`[${pangramSetArray.join("")}]`, "i");
 
 // create a solutions array from all words
@@ -75,6 +76,21 @@ for (const word of solutionsArray) {
 console.log(solutionsArray);
 console.log(totalScore);
 
+// words that are displayed when user successfuly enters a new word
+const congratulationsWords = [
+  "Bravo!",
+  "Odlično!",
+  "Terna!",
+  "Super!",
+  "Obvladaš!",
+  "Noro!",
+  "Mojster!",
+  "Skriti talent!",
+  "Perfekcija!",
+  "Genialno!",
+  "Uau!",
+];
+
 // useReducer logic
 
 // reducer function initial state
@@ -85,6 +101,11 @@ const initialState = {
   showWordsLeft: false,
   showUserWords: false,
   userCurrentScore: 0,
+  showOverlay: true,
+  randomCongratulationsWord:
+    congratulationsWords[
+      Math.floor(Math.random() * congratulationsWords.length)
+    ],
 };
 
 // reducer function
@@ -129,6 +150,10 @@ function reducer(state, action) {
           inputWord: initialState.inputWord,
           userCurrentScore: state.userCurrentScore + score,
           showGameMessage: true,
+          randomCongratulationsWord:
+            congratulationsWords[
+              Math.floor(Math.random() * congratulationsWords.length)
+            ],
         };
       }
       return { ...state };
@@ -154,6 +179,13 @@ function reducer(state, action) {
         showUserWords: !state.showUserWords,
       };
     }
+    //TODO: toggleOverlay is not working
+    case "toggleOverlay": {
+      return {
+        ...state,
+        showOverlay: false,
+      };
+    }
     case "resetApp": {
       return { ...state };
     }
@@ -170,7 +202,9 @@ function App() {
       userSubmitedWords,
       showWordsLeft,
       showUserWords,
+      showOverlay,
       userCurrentScore,
+      randomCongratulationsWord,
     },
     dispatch,
   ] = useReducer(reducer, initialState);
@@ -203,6 +237,8 @@ function App() {
 
   return (
     <>
+      {showOverlay && <Overlay dispatch={dispatch} />}
+      <GameInstructions />
       <Navbar />
       <GameLevel
         totalScore={totalScore}
@@ -224,6 +260,7 @@ function App() {
             ? userSubmitedWords[userSubmitedWords.length - 1]
             : ""
         }
+        randomCongratulationsWord={randomCongratulationsWord}
       />
       <InputWord inputWord={inputWord} gameCenterLetter={gameCenterLetter} />
       <HexagonGroup

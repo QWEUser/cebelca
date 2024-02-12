@@ -1,19 +1,7 @@
 import styles from "./GameMessage.module.css";
 
-function GameMessage({ lastSubmitedWord }) {
-  const congratulationsWords = [
-    "Bravo!",
-    "Odlično!",
-    "Terna!",
-    "Super!",
-    "Obvladaš!",
-    "Noro!",
-    "Mojster!",
-    "Skriti talent!",
-    "Perfekcija!",
-    "Genialno!",
-    "Uau!",
-  ];
+function GameMessage({ lastSubmitedWord, randomCongratulationsWord }) {
+  console.log("GameMessage component rerendered!");
 
   // derived state; calculate the score of last user word input
   const wordUniqueLetters = lastSubmitedWord
@@ -23,6 +11,7 @@ function GameMessage({ lastSubmitedWord }) {
   const wordScore = isPangram
     ? lastSubmitedWord.length - 3 + 7
     : lastSubmitedWord.length - 3;
+
   const congratulationsWord = isPangram ? (
     <span>
       Č
@@ -32,15 +21,14 @@ function GameMessage({ lastSubmitedWord }) {
       belca!
     </span>
   ) : (
-    congratulationsWords[
-      Math.floor(Math.random() * congratulationsWords.length)
-    ]
+    randomCongratulationsWord
   );
+
   return (
     // this game message is displayed only for a short time; key is added so component rerenders when lastSubmitedWord changes
     wordScore > 0 ? (
       <div className={styles.container} key={lastSubmitedWord}>
-        <p>{congratulationsWord}</p>
+        <p className={styles.congratulationsWord}>{congratulationsWord}</p>
         <div className={styles.wordScore}>{`+${wordScore}`}</div>
       </div>
     ) : (

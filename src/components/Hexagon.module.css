@@ -26,7 +26,6 @@
   justify-content: center;
   align-items: center;
   font-size: 1.5em;
-  /* font-family: "Poppins-Bold", "Montserrat", "Open Sans", sans-serif; */
   font-weight: 700;
   text-transform: uppercase;
 }
@@ -44,12 +43,12 @@
 .hex .topCover {
   width: 0;
   position: absolute;
+
   transform: translateY(calc(-1.5 * 0.94 * var(--hex-height)))
     scale(var(--hex-cover-scale));
   border-bottom: calc(var(--hex-height) / 2) solid var(--hexagon-colorCover);
   border-left: calc(var(--hex-width) / 2) solid transparent;
   border-right: calc(var(--hex-width) / 2) solid transparent;
-  z-index: 100;
 }
 
 .hex .middleCover {
@@ -63,7 +62,6 @@
   justify-content: center;
   align-items: center;
   font-size: 1.5em;
-  font-family: "Montserrat", "Open Sans", sans-serif;
   font-weight: 700;
   text-transform: uppercase;
 }

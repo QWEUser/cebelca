@@ -8,13 +8,18 @@ function BeeIcon() {
         version="1.1"
         x="0px"
         y="0px"
-        viewBox="0 0 33.978001 29.999694"
+        viewBox="0 0 34 30"
+        // viewBox="0 0 33.978001 29.999694"
         xmlSpace="preserve"
         id="svg301"
-        width="33.978001"
-        height="29.999695"
+        width="34"
+        // width="33.978001"
+        height="30"
+        // height="29.999695"
+        transform="scale(1.5)"
       >
-        <g id="Layer_2" transform="translate(-342.29092,-263.79767)">
+        <g id="Layer_2" transform="translate(-342,-264)">
+          {/* <g id="Layer_2" transform="translate(-342.29092,-263.79767)"> */}
           <g
             id="g294"
             transform="matrix(0.10309362,0,0,0.10309362,322.24045,250.05527)"

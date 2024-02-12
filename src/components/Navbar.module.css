@@ -4,11 +4,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  /* background-color: var(--yellow-secondary); */
 }
 
 .buttonsContainer {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  column-gap: 5px;
+  column-gap: 10px;
 }
