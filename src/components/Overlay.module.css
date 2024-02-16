@@ -11,3 +11,33 @@
   cursor: pointer;
   /* margin: 0 auto; */
 }
+
+.container {
+  position: fixed;
+  max-width: 360px;
+  background-color: white;
+  color: var(--color-font-dark);
+  top: 10%;
+  left: 50vw;
+  transform: translateX(-50%);
+  z-index: 1000;
+  display: block;
+  text-align: left;
+  font-size: smaller;
+  border: 5px solid black;
+  padding: 20px;
+  border-radius: 20px;
+}
+
+.closingButton {
+  width: 30px;
+  height: 30px;
+  float: right;
+  font-size: 48px;
+  transition: transform 0.5s;
+}
+
+.closingButton:hover {
+  transform: rotate(360deg);
+  color: var(--yellow-secondary);
+}

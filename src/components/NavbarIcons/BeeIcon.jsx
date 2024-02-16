@@ -2,7 +2,7 @@ import styles from "./BeeIcon.module.css";
 
 function BeeIcon() {
   return (
-    <div className={styles.container}>
+    <button className={styles.container}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         version="1.1"
@@ -136,7 +136,7 @@ function BeeIcon() {
           />
         </g>
       </svg>
-    </div>
+    </button>
   );
 }
 

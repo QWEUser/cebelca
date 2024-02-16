@@ -24,9 +24,9 @@
 
 .jarScore {
   color: var(--color-font-dark);
-  /* font-family: "Poppins-Bold"; */
   font-size: 26px;
   position: absolute;
+  font-weight: bold;
   top: 25%;
   left: 50%;
   transform: translate(-50%, -50%);

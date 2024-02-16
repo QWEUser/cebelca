@@ -38,5 +38,7 @@
   body {
     transform: scale(var(--app-scale));
     transform-origin: top center;
+    /* height: 100%; */
+    /* overflow: hidden; */
   }
 }

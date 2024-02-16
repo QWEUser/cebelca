@@ -9,13 +9,12 @@ import InputWord from "./InputWord";
 import UserWords from "./UserWords";
 import Navbar from "./Navbar";
 import Overlay from "./Overlay";
-import GameInstructions from "./gameInstructions";
 
 //TODO: get rid of words that contain letter w and y!!
 //TODO: get rid of bad words (includng "pedofil")!!
 //TODO: fix fonts
 
-// add an OR operator to define hard coded input in case "allWordsJSON is unavailable"
+// TODO: add an OR operator to define hard coded input in case "allWordsJSON is unavailable"
 const pangrams = allWordsJSON.pangrams.split(" ");
 const notPangrams = allWordsJSON.notPangrams.split(" ");
 const allWords = pangrams.concat(notPangrams).sort();
@@ -101,7 +100,8 @@ const initialState = {
   showWordsLeft: false,
   showUserWords: false,
   userCurrentScore: 0,
-  showOverlay: true,
+  showOverlay: false,
+  overlayText: "",
   randomCongratulationsWord:
     congratulationsWords[
       Math.floor(Math.random() * congratulationsWords.length)
@@ -158,15 +158,6 @@ function reducer(state, action) {
       }
       return { ...state };
     }
-    // case "userSubmitWord": {
-    //   console.log(state.userSubmitedWords);
-    //   return {
-    //     ...state,
-    //     userSubmitedWords: [...state.userSubmitedWords, action.payload],
-    //     inputWord: initialState.inputWord,
-    //     showGameMessage: true,
-    //   };
-    // }
     case "showWordsLeft": {
       return {
         ...state,
@@ -179,11 +170,18 @@ function reducer(state, action) {
         showUserWords: !state.showUserWords,
       };
     }
-    //TODO: toggleOverlay is not working
-    case "toggleOverlay": {
+    case "openOverlay": {
+      return {
+        ...state,
+        showOverlay: true,
+        overlayText: action.payload,
+      };
+    }
+    case "closeOverlay": {
       return {
         ...state,
         showOverlay: false,
+        overlayText: initialState.overlayText,
       };
     }
     case "resetApp": {
@@ -203,6 +201,7 @@ function App() {
       showWordsLeft,
       showUserWords,
       showOverlay,
+      overlayText,
       userCurrentScore,
       randomCongratulationsWord,
     },
@@ -212,20 +211,26 @@ function App() {
   // TODO: if possible, change keyHandler and useEffect in the future to optimize performance; currently, any change in inputWord causes keyHandler to update, consequently triggering useEffect to dismount and mount .addEventListeners every time.
   const keyHandler = useCallback(
     (e) => {
-      if (e.key == "Enter" || e.key == "Return") {
-        console.log(userSubmitedWords);
+      if (showOverlay === false) {
+        if (e.key == "Enter" || e.key == "Return") {
+          console.log(userSubmitedWords);
 
-        dispatch({ type: "userSubmitWord", payload: inputWord });
-      }
-      if (e.key == "Backspace" || e.key == "Delete") {
-        dispatch({ type: "deleteLastLetter" });
-      }
-      // make sure only puzzle letters are allowed as input
-      if (e.key.match(gameLettersRegex) && e.key.length == 1) {
-        dispatch({ type: "userInputWord", payload: e.key });
+          dispatch({ type: "userSubmitWord", payload: inputWord });
+        }
+        if (e.key == "Backspace" || e.key == "Delete") {
+          dispatch({ type: "deleteLastLetter" });
+        }
+        // make sure only puzzle letters are allowed as input
+        if (e.key.match(gameLettersRegex) && e.key.length == 1) {
+          dispatch({ type: "userInputWord", payload: e.key });
+        }
+      } else {
+        if (e.key == "Escape") {
+          dispatch({ type: "closeOverlay" });
+        }
       }
     },
-    [inputWord, userSubmitedWords]
+    [inputWord, showOverlay, userSubmitedWords]
   );
 
   // add event listener to window object
@@ -237,9 +242,12 @@ function App() {
 
   return (
     <>
-      {showOverlay && <Overlay dispatch={dispatch} />}
-      <GameInstructions />
-      <Navbar />
+      {showOverlay && (
+        <Overlay dispatch={dispatch} overlayText={overlayText}>
+          {/* <GameInstructions /> */}
+        </Overlay>
+      )}
+      <Navbar dispatch={dispatch} />
       <GameLevel
         totalScore={totalScore}
         userCurrentScore={userCurrentScore}

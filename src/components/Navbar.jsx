@@ -4,14 +4,14 @@ import SettingsIcon from "./NavbarIcons/SettingsIcon";
 import InstructionsIcon from "./NavbarIcons/InstructionsIcon";
 import sytles from "./Navbar.module.css";
 
-function Navbar() {
+function Navbar({ dispatch }) {
   return (
     <div className={sytles.container}>
       <BeeIcon />
       <div className={sytles.buttonsContainer}>
-        <StatisticsIcon />
-        <SettingsIcon />
-        <InstructionsIcon />
+        <StatisticsIcon dispatch={dispatch} />
+        <SettingsIcon dispatch={dispatch} />
+        <InstructionsIcon dispatch={dispatch} />
       </div>
     </div>
   );

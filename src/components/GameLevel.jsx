@@ -9,7 +9,7 @@ function GameLevel({
   showWordsLeft,
   dispatch,
 }) {
-  // determine the socre needed to fill one jar
+  // determine the score needed to fill one jar
   const jarScore = Math.floor(totalScore / 4);
 
   // create an array of all the words that are still the solution, but the player has not yet entered
@@ -57,7 +57,7 @@ function GameLevel({
             dispatch={dispatch}
           />
         ) : (
-          <h1 style={{ color: "black" }}>Bravo, zmagal si!</h1>
+          <h1 style={{ color: "black" }}>Bravo, kozarec je poln!</h1>
         )}
       </div>
       {/* <div
