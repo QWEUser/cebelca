@@ -9,12 +9,13 @@ import InputWord from "./InputWord";
 import UserWords from "./UserWords";
 import Navbar from "./Navbar";
 import Overlay from "./Overlay";
+import EndOfGame from "./EndOfGame";
 
 //TODO: get rid of words that contain letter w and y!!
-//TODO: get rid of bad words (includng "pedofil")!!
-//TODO: fix fonts
+//TODO: get rid of bad words (including "pedofil", "citroen"?, "engineering"?, "ziza")!!
+//TODO: add inout word shake on wrong input -> add new variable isWordShaking and pass it down via useReducer to add or remove shake class
 
-// TODO: add an OR operator to define hard coded input in case "allWordsJSON is unavailable"
+//TODO: add an OR operator to define hard coded input in case "allWordsJSON is unavailable"
 const pangrams = allWordsJSON.pangrams.split(" ");
 const notPangrams = allWordsJSON.notPangrams.split(" ");
 const allWords = pangrams.concat(notPangrams).sort();
@@ -53,7 +54,6 @@ const solutionsArray = containsCenterLetter.filter((word) => {
 });
 
 // calculate total score possible
-// create an array of 100 elements with value 0. This array serves as counter for how many words have how many letters
 
 let totalScore = 0;
 let countPangrams = 0;
@@ -75,6 +75,22 @@ for (const word of solutionsArray) {
 console.log(solutionsArray);
 console.log(totalScore);
 
+// devide the totalScore to predetermined amount of jars and save the score to an array. For example, if totalScore = 101 and amountOfJars = 5, totalJarsScore should be [20,40,60,80,101] (all elements are rounded down, except the last element, which is orunded up)
+const amountOfJars = 5;
+
+const totalJarScoresArray = Array.from(
+  { length: amountOfJars },
+  (_e, index) => {
+    if (index !== amountOfJars - 1) {
+      return Math.floor(((index + 1) * totalScore) / amountOfJars);
+    } else {
+      return Math.ceil(((index + 1) * totalScore) / amountOfJars);
+    }
+  }
+);
+
+console.log(totalJarScoresArray);
+
 // words that are displayed when user successfuly enters a new word
 const congratulationsWords = [
   "Bravo!",
@@ -90,23 +106,42 @@ const congratulationsWords = [
   "Uau!",
 ];
 
+// get history of number of jars filled on this device
+// if (localStorage.getItem("jarsFilled") === null) {
+//   localStorage.setItem("jarsFilled", 0);
+// }
+
 // useReducer logic
 
 // reducer function initial state
 const initialState = {
   gameLetters: pangramSetArray.filter((letter) => letter != gameCenterLetter),
   inputWord: "",
+  isWordShaking: false,
   userSubmitedWords: [],
-  showWordsLeft: false,
+  // showWordsLeft: false,
   showUserWords: false,
   userCurrentScore: 0,
+  userTotalScore: 0,
+  oneJarScore: Math.floor(totalScore / amountOfJars),
   showOverlay: false,
+  // toggle is used to force rerender a component -> its value changes between true and false, so the component using key={toggle} forcefully rerenders
+  toggle: false,
   overlayText: "",
   randomCongratulationsWord:
     congratulationsWords[
       Math.floor(Math.random() * congratulationsWords.length)
     ],
+  wrongInputMessage: "",
+  // get history of number of jars filled on this device
+  jarsFilledHistory:
+    localStorage.getItem("jarsFilled") === null
+      ? 0
+      : Number(localStorage.getItem("jarsFilled")),
+  endOfGame: false,
 };
+
+console.log("oneJarScore: " + initialState.oneJarScore);
 
 // reducer function
 function reducer(state, action) {
@@ -123,15 +158,20 @@ function reducer(state, action) {
         ...state,
         inputWord: state.inputWord + action.payload,
       };
+    case "removeShake":
+      // remove .shake class from component
+      return {
+        ...state,
+        isWordShaking: false,
+      };
     case "deleteLastLetter":
       // delete last letter in inputWord
       return {
         ...state,
         inputWord: state.inputWord.slice(0, -1),
       };
-    // check if user input word is valid and add it to userSubmitedWords
     case "userSubmitWord": {
-      console.log(state.userSubmitedWords);
+      // check if user input word is valid and add it to userSubmitedWords
       if (
         solutionsArray.includes(state.inputWord) &&
         !state.userSubmitedWords.includes(state.inputWord)
@@ -142,28 +182,56 @@ function reducer(state, action) {
         if (wordUniqueLetters.length == 7) {
           score = score + 7;
         }
-        console.log(state.userCurrentScore);
+
+        const newScore = state.userCurrentScore + score;
 
         return {
           ...state,
           userSubmitedWords: [...state.userSubmitedWords, action.payload],
           inputWord: initialState.inputWord,
-          userCurrentScore: state.userCurrentScore + score,
+          isWordShaking: false,
+          userCurrentScore:
+            newScore >= state.oneJarScore
+              ? newScore - state.oneJarScore
+              : newScore,
+          //TODO: userTotalScore needs to be implemented!!
+          userTotalScore: newScore,
+          oneJarScore:
+            // state.userTotalScore is reading the previous state, so we need to add newScore
+            state.userTotalScore + newScore <
+            (totalScore * (amountOfJars - 1)) / amountOfJars
+              ? state.oneJarScore
+              : Math.ceil(totalScore / amountOfJars),
           showGameMessage: true,
           randomCongratulationsWord:
             congratulationsWords[
               Math.floor(Math.random() * congratulationsWords.length)
             ],
+          wrongInputMessage: "",
+          // ISSUE: this implemetation will add only 1 extra filled jar, even if your input is worth 2+ full new jars
+          jarsFilledHistory:
+            newScore >= state.oneJarScore
+              ? state.jarsFilledHistory + 1
+              : state.jarsFilledHistory,
+          endOfGame:
+            state.userTotalScore + newScore === totalScore ? true : false,
         };
       }
-      return { ...state };
-    }
-    case "showWordsLeft": {
+
       return {
         ...state,
-        showWordsLeft: !state.showWordsLeft,
+        isWordShaking: true,
+        toggle: !state.toggle,
+        wrongInputMessage:
+          state.inputWord.length < 4 ? "Prekratka beseda!" : "Napačna beseda!",
       };
     }
+    // case "showWordsLeft": {
+    //   return {
+    //     ...state,
+    //     showWordsLeft: !state.showWordsLeft,
+    //   };
+    // }
     case "showUserWords": {
       return {
         ...state,
@@ -187,6 +255,14 @@ function reducer(state, action) {
     case "resetApp": {
       return { ...state };
     }
+    case "resetStatistics": {
+      return {
+        ...state,
+        jarsFilledHistory: 0,
+        showOverlay: false,
+        overlayText: initialState.overlayText,
+      };
+    }
     default:
       throw new Error("Action unknown");
   }
@@ -197,13 +273,19 @@ function App() {
     {
       gameLetters,
       inputWord,
+      isWordShaking,
       userSubmitedWords,
-      showWordsLeft,
+      // showWordsLeft,
       showUserWords,
       showOverlay,
+      toggle,
       overlayText,
       userCurrentScore,
+      oneJarScore,
       randomCongratulationsWord,
+      wrongInputMessage,
+      jarsFilledHistory,
+      endOfGame,
     },
     dispatch,
   ] = useReducer(reducer, initialState);
@@ -240,10 +322,24 @@ function App() {
     return () => window.removeEventListener("keydown", keyHandler, false);
   }, [keyHandler]);
 
+  //TODO: useEffect should not run on first render!!
+  useEffect(() => {
+    if (localStorage.getItem("jarsFilled") === null) {
+      localStorage.setItem("jarsFilled", 0);
+    }
+    localStorage.setItem("jarsFilled", jarsFilledHistory);
+  }, [jarsFilledHistory]);
+
   return (
     <>
+      {endOfGame && <EndOfGame />}
       {showOverlay && (
-        <Overlay dispatch={dispatch} overlayText={overlayText}>
+        <Overlay
+          dispatch={dispatch}
+          overlayText={overlayText}
+          solutionsArray={solutionsArray}
+          userSubmitedWords={userSubmitedWords}
+        >
           {/* <GameInstructions /> */}
         </Overlay>
       )}
@@ -253,7 +349,8 @@ function App() {
         userCurrentScore={userCurrentScore}
         solutionsArray={solutionsArray}
         userSubmitedWords={userSubmitedWords}
-        showWordsLeft={showWordsLeft}
+        oneJarScore={oneJarScore}
+        // showWordsLeft={showWordsLeft}
         dispatch={dispatch}
       />
       <UserWords
@@ -269,8 +366,16 @@ function App() {
             : ""
         }
         randomCongratulationsWord={randomCongratulationsWord}
+        wrongInputMessage={wrongInputMessage}
+        toggle={toggle}
       />
-      <InputWord inputWord={inputWord} gameCenterLetter={gameCenterLetter} />
+      <InputWord
+        inputWord={inputWord}
+        gameCenterLetter={gameCenterLetter}
+        isWordShaking={isWordShaking}
+        toggle={toggle}
+        dispatch={dispatch}
+      />
       <HexagonGroup
         gameLetters={gameLetters}
         gameCenterLetter={gameCenterLetter}

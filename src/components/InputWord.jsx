@@ -1,6 +1,7 @@
+// import { useEffect } from "react";
 import styles from "./InputWord.module.css";
 
-function InputWord({ inputWord, gameCenterLetter }) {
+function InputWord({ inputWord, gameCenterLetter, isWordShaking, toggle }) {
   const inputLetters = [...inputWord].map((letter, index) => {
     if (letter == gameCenterLetter) {
       return (
@@ -12,7 +13,15 @@ function InputWord({ inputWord, gameCenterLetter }) {
       return letter;
     }
   });
-  return <div className={styles.inputWord}>{inputLetters}</div>;
+  //TODO: add shaking clas when isWordShaking === true
+  return (
+    <div
+      key={toggle}
+      className={`${styles.inputWord} ${isWordShaking ? styles.shake : null}`}
+    >
+      {inputLetters}
+    </div>
+  );
 }
 
 export default InputWord;

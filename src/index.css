@@ -3,9 +3,8 @@
   /* line-height: 1.5; */
   font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #ffffff;
+  /* color-scheme: light dark; */
+
   /* background-color: #242424; */
   /* --hexagon-color: black; */
   --hexagon-color: #e4eaf3;
@@ -13,8 +12,10 @@
   --color-border-dark: #000000;
   --color-font-dark: #000000;
   --yellow-secondary: #ffd924;
+  --background-color: #ffffff;
   --gray2: #6d7c95;
-  --app-scale: 1.2;
+  --app-scale-up: 1.2;
+  --app-scale-down: 0.9;
 
   /* font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -29,7 +30,7 @@ body {
   justify-content: center;
   align-items: flex-start;
   min-width: 320px;
-  min-height: 100vh;
+  /* height: 100dvh; */
   overflow-x: hidden;
 }
 
@@ -46,6 +47,8 @@ button {
   padding: 0;
   font-family: Poppins, sans-serif;
 }
+
+
 
 ::-moz-selection {
   background: var(--yellow-secondary);

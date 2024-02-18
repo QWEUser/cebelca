@@ -3,10 +3,12 @@
 }
 
 #root {
-  width: 1280px;
-  margin: 0 auto 0;
+  /* width: 1280px; */
+  /* margin: 0 auto 0; */
   padding: 0;
   text-align: center;
+  color: var(--color-font-dark);
+  background-color: var(--background-color);
 
   /* hexagon sizes: */
   --hex-size-multiplier: 0.69;
@@ -34,11 +36,20 @@
   }
 } */
 
+
+
+/* TODO: fix meadia queries */
+
 @media (min-width: 600px) {
   body {
-    transform: scale(var(--app-scale));
+    transform: scale(var(--app-scale-up));
     transform-origin: top center;
-    /* height: 100%; */
-    /* overflow: hidden; */
+  }
+}
+
+@media (max-height: 700px) {
+  body {
+    transform: scale(var(--app-scale-down));
+    transform-origin: top center;
   }
 }

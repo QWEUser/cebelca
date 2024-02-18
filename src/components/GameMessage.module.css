@@ -11,10 +11,7 @@
 }
 
 .congratulationsWord {
-  /* justify-content: center; */
   animation: fade 2s linear forwards;
-  /* position: absolute; */
-  /* top: 37%; */
 }
 
 .wordScore {
@@ -27,6 +24,11 @@
 
 .disabled {
   visibility: hidden;
+}
+
+.error {
+  animation: fade 2s linear forwards;
+  font-weight: bold;
 }
 
 @keyframes fade {

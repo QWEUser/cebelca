@@ -1,8 +1,9 @@
 import styles from "./Overlay.module.css";
 import GameInstructions from "./GameInstructions";
 import GameStatistics from "./GameStatistics";
+import GameWordsLeft from "./GameWordsLeft";
 
-function Overlay({ dispatch, overlayText }) {
+function Overlay({ dispatch, overlayText, solutionsArray, userSubmitedWords }) {
   return (
     <>
       <div
@@ -23,7 +24,15 @@ function Overlay({ dispatch, overlayText }) {
               return <GameInstructions />;
             }
             case "statistics": {
-              return <GameStatistics />;
+              return <GameStatistics dispatch={dispatch} />;
+            }
+            case "wordsLeft": {
+              return (
+                <GameWordsLeft
+                  solutionsArray={solutionsArray}
+                  userSubmitedWords={userSubmitedWords}
+                />
+              );
             }
             default:
               return null;

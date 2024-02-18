@@ -1,7 +1,7 @@
 .background {
   position: fixed;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 100;
   top: 0;
@@ -18,26 +18,36 @@
   background-color: white;
   color: var(--color-font-dark);
   top: 10%;
-  left: 50vw;
+  left: 50%;
   transform: translateX(-50%);
   z-index: 1000;
   display: block;
   text-align: left;
   font-size: smaller;
-  border: 5px solid black;
-  padding: 20px;
+  border: 5px solid var(--color-font-dark);
+  padding: 30px 20px 20px;
   border-radius: 20px;
 }
 
 .closingButton {
-  width: 30px;
-  height: 30px;
+  /* height: 48px; */
+  position: absolute;
+  right: 16px;
+  top: 6px;
   float: right;
   font-size: 48px;
-  transition: transform 0.5s;
+  transition: transform 1s;
 }
 
 .closingButton:hover {
   transform: rotate(360deg);
   color: var(--yellow-secondary);
+}
+
+@media (max-width: 600px) {
+  .container {
+    left: 5%;
+    right: 5%;
+    transform: translateX(0%);
+  }
 }

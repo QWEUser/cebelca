@@ -1,10 +1,14 @@
 import styles from "./ScoreJar.module.css";
 
-function ScoreJar({ jarScore, userCurrentScore, dispatch }) {
+function ScoreJar({ userCurrentScore, oneJarScore, dispatch }) {
   // determine how full the jar is from 0 to 1
-  const jarFullPercentage = 1 - userCurrentScore / jarScore;
+  const jarFullPercentage = 1 - userCurrentScore / oneJarScore;
   return (
-    <div className={styles.container}>
+    <div
+      className={styles.container}
+      onClick={() => dispatch({ type: "openOverlay", payload: "wordsLeft" })}
+      // onClick={() => dispatch({ type: "showWordsLeft" })}
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         version="1.1"
@@ -14,18 +18,35 @@ function ScoreJar({ jarScore, userCurrentScore, dispatch }) {
         xmlSpace="preserve"
         width="77.212006"
         height="99.999786"
-        onClick={() => dispatch({ type: "showWordsLeft" })}
+        key={jarFullPercentage}
       >
         <defs>
           <linearGradient id="gradient" x1="50%" y1="0%" x2="50%" y2="100%">
             <stop
               offset={`${jarFullPercentage}`}
               stopColor="rgba(255, 255, 255, 0)"
-            />
+            >
+              {/* TODO: make this work! */}
+              <animate
+                attributeName="offset"
+                // TODO: "from" needs to be changed to previous state value
+                from="100%"
+                to={`${jarFullPercentage}`}
+                dur="1s"
+              />
+            </stop>
             <stop
               offset={`${jarFullPercentage}`}
               stopColor="var(--yellow-secondary)"
-            />
+            >
+              <animate
+                attributeName="offset"
+                // TODO: "from" needs to be changed to previous state value
+                from="0%"
+                to={`${jarFullPercentage}`}
+                dur="1s"
+              />
+            </stop>
           </linearGradient>
         </defs>
         <g id="Layer_2" transform="translate(-396.859,-248.40486)">
@@ -51,10 +72,10 @@ function ScoreJar({ jarScore, userCurrentScore, dispatch }) {
         </g>
       </svg>
 
-      {/* <p>{jarScore}</p> */}
-      {userCurrentScore < jarScore && (
+      <p className={styles.jarScore}>{userCurrentScore}</p>
+      {/* {userCurrentScore < jarScore && (
         <p className={styles.jarScore}>{userCurrentScore}</p>
-      )}
+      )} */}
     </div>
   );
 }
