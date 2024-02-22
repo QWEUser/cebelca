@@ -122,6 +122,7 @@ const initialState = {
   // showWordsLeft: false,
   showUserWords: false,
   userCurrentScore: 0,
+  userPrevScore: 0,
   userTotalScore: 0,
   oneJarScore: Math.floor(totalScore / amountOfJars),
   showOverlay: false,
@@ -194,6 +195,7 @@ function reducer(state, action) {
             newScore >= state.oneJarScore
               ? newScore - state.oneJarScore
               : newScore,
+          userPrevScore: state.userCurrentScore,
           //TODO: userTotalScore needs to be implemented!!
           userTotalScore: newScore,
           oneJarScore:
@@ -280,7 +282,9 @@ function App() {
       showOverlay,
       toggle,
       overlayText,
+      userTotalScore,
       userCurrentScore,
+      userPrevScore,
       oneJarScore,
       randomCongratulationsWord,
       wrongInputMessage,
@@ -333,20 +337,30 @@ function App() {
   return (
     <>
       {endOfGame && <EndOfGame />}
+
+      {/* <Overlay
+        overlayText={overlayText}
+        solutionsArray={solutionsArray}
+        userSubmitedWords={userSubmitedWords}
+        showOverlay={showOverlay}
+        dispatch={dispatch}
+      /> */}
+
       {showOverlay && (
         <Overlay
-          dispatch={dispatch}
           overlayText={overlayText}
           solutionsArray={solutionsArray}
           userSubmitedWords={userSubmitedWords}
-        >
-          {/* <GameInstructions /> */}
-        </Overlay>
+          dispatch={dispatch}
+        />
       )}
       <Navbar dispatch={dispatch} />
       <GameLevel
         totalScore={totalScore}
+        userTotalScore={userTotalScore}
         userCurrentScore={userCurrentScore}
+        userPrevScore={userPrevScore}
+        jarsFilledHistory={jarsFilledHistory}
         solutionsArray={solutionsArray}
         userSubmitedWords={userSubmitedWords}
         oneJarScore={oneJarScore}

@@ -1,7 +1,16 @@
 import styles from "./GameLevel.module.css";
 import ScoreJar from "./ScoreJar";
 
-function GameLevel({ userCurrentScore, oneJarScore, dispatch }) {
+function GameLevel({
+  userTotalScore,
+  userCurrentScore,
+  userPrevScore,
+  jarsFilledHistory,
+  oneJarScore,
+  dispatch,
+}) {
+  //TODO: this component can now be completely removed, inser <JarScore> directly in App.jsx
+
   // determine the score needed to fill one jar
   // const jarScore = Math.floor(totalScore / 4);
 
@@ -45,7 +54,10 @@ function GameLevel({ userCurrentScore, oneJarScore, dispatch }) {
       <div className={styles.scoreJarContainer}>
         {/* {userCurrentScore < jarScore ? ( */}
         <ScoreJar
+          userTotalScore={userTotalScore}
           userCurrentScore={userCurrentScore}
+          userPrevScore={userPrevScore}
+          jarsFilledHistory={jarsFilledHistory}
           oneJarScore={oneJarScore}
           // jarScore={jarScore}
           dispatch={dispatch}

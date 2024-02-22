@@ -3,11 +3,19 @@ import GameInstructions from "./GameInstructions";
 import GameStatistics from "./GameStatistics";
 import GameWordsLeft from "./GameWordsLeft";
 
-function Overlay({ dispatch, overlayText, solutionsArray, userSubmitedWords }) {
+function Overlay({
+  dispatch,
+  overlayText,
+  solutionsArray,
+  userSubmitedWords,
+  //TODO: use showOverlay to transition overlay + overlayText
+  // showOverlay,
+}) {
   return (
     <>
       <div
         className={styles.background}
+        // style={showOverlay && { display: "none" }}
         onClick={() => dispatch({ type: "closeOverlay" })}
       />
       <div className={styles.container}>
