@@ -1,7 +1,7 @@
 .hex {
   position: absolute;
   transform: translate(-50%, -50%);
-  color: #000000;
+  /* color: var(--font-color); */
 }
 
 .hex:hover {
@@ -79,15 +79,15 @@
 /* override colors for middle hex in top, middle and bottom */
 
 .hexCenter > .top {
-  border-bottom: calc(var(--hex-height) / 2) solid var(--yellow-secondary);
+  border-bottom: calc(var(--hex-height) / 2) solid var(--yellow);
 }
 
 .hexCenter > .middle {
-  background: var(--yellow-secondary);
+  background: var(--yellow);
 }
 
 .hexCenter > .bottom {
-  border-top: calc(var(--hex-height) / 2) solid var(--yellow-secondary);
+  border-top: calc(var(--hex-height) / 2) solid var(--yellow);
 }
 
 /* hex positions */

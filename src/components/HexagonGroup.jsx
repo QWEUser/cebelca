@@ -1,6 +1,6 @@
 import sytles from "./HexagonGroup.module.css";
-import Hexagon from "./Hexagon";
-// import HexagonSVG from "./HexagonSVG";
+// import Hexagon from "./Hexagon";
+import HexagonSVG from "./HexagonSVG";
 
 const hexagonClassNames = [
   // "hexCenter",
@@ -14,33 +14,41 @@ const hexagonClassNames = [
 
 function HexagonGroup({ gameLetters, gameCenterLetter, dispatch }) {
   const renderedHexagons = gameLetters.map((letter, index) => (
-    // <HexagonSVG
-    //   key={index}
-    //   className={hexagonClassNames[index]}
-    //   onClick={() => dispatch({ type: "userInputWord", payload: letter })}
-    // >
-    //   {letter}
-    // </HexagonSVG>
-    <Hexagon
+    <HexagonSVG
       key={index}
       className={hexagonClassNames[index]}
       onClick={() => dispatch({ type: "userInputWord", payload: letter })}
     >
       {letter}
-    </Hexagon>
+    </HexagonSVG>
+    // <Hexagon
+    //   key={index}
+    //   className={hexagonClassNames[index]}
+    //   onClick={() => dispatch({ type: "userInputWord", payload: letter })}
+    // >
+    //   {letter}
+    // </Hexagon>
   ));
 
   // render Hexagons
   return (
     <div className={sytles.hexContainer}>
-      <Hexagon
+      <HexagonSVG
         className="hexCenter"
         onClick={() =>
           dispatch({ type: "userInputWord", payload: gameCenterLetter })
         }
       >
         {gameCenterLetter}
-      </Hexagon>
+      </HexagonSVG>
+      {/* <Hexagon
+        className="hexCenter"
+        onClick={() =>
+          dispatch({ type: "userInputWord", payload: gameCenterLetter })
+        }
+      >
+        {gameCenterLetter}
+      </Hexagon> */}
       {renderedHexagons}
     </div>
   );

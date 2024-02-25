@@ -4,8 +4,9 @@
 }
 .st50 {
   cursor: pointer;
+  fill: var(--fill-color-primary);
 }
 
 .st50:hover {
-  fill: var(--yellow-secondary);
+  fill: var(--fill-color-secondary);
 }

@@ -15,11 +15,13 @@ function InputWord({ inputWord, gameCenterLetter, isWordShaking, toggle }) {
   });
   //TODO: add shaking clas when isWordShaking === true
   return (
-    <div
-      key={toggle}
-      className={`${styles.inputWord} ${isWordShaking ? styles.shake : null}`}
-    >
-      {inputLetters}
+    <div className={styles.container}>
+      <div
+        key={toggle}
+        className={`${styles.inputWord} ${isWordShaking ? styles.shake : null}`}
+      >
+        {inputLetters}
+      </div>
     </div>
   );
 }

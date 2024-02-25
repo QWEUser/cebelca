@@ -9,54 +9,54 @@
 }
 .st1 {
   fill: none;
-  stroke: #000000;
+  stroke: var(--fill-color-primary);
   stroke-width: 10;
   stroke-miterlimit: 10;
 }
 .st2 {
   fill: none;
-  stroke: #000000;
+  stroke: var(--fill-color-primary);
   stroke-width: 8;
   stroke-miterlimit: 10;
 }
 .st3 {
   fill: none;
-  stroke: #000000;
+  stroke: var(--fill-color-primary);
   stroke-width: 12;
   stroke-miterlimit: 10;
 }
 .st4 {
-  fill: #ffd100;
-  stroke: #000000;
+  fill: var(--bee-fill-color-secondary);
+  stroke: var(--fill-color-primary);
   stroke-width: 9;
   stroke-miterlimit: 10;
 }
 .st5 {
   fill: none;
-  stroke: #000000;
+  stroke: var(--fill-color-primary);
   stroke-width: 9;
   stroke-miterlimit: 10;
 }
 .st6 {
-  stroke: #000000;
+  stroke: var(--fill-color-primary);
   stroke-width: 9;
   stroke-miterlimit: 10;
 }
 .st7 {
-  fill: #ffffff;
-  stroke: #000000;
+  fill: var(--fill-color-background);
+  stroke: var(--fill-color-primary);
   stroke-width: 9;
   stroke-miterlimit: 10;
 }
 .st8 {
   fill: none;
-  stroke: #000000;
+  stroke: var(--fill-color-primary);
   stroke-width: 17;
   stroke-miterlimit: 10;
 }
 .st9 {
   fill: none;
-  stroke: #000000;
+  stroke: var(--fill-color-primary);
   stroke-width: 5;
   stroke-miterlimit: 10;
 }
@@ -64,11 +64,11 @@
   fill: none;
 }
 .st11 {
-  fill: #ffd100;
+  fill: var(--fill-color-secondary);
 }
 .st12 {
   fill: none;
-  stroke: #000000;
+  stroke: var(--fill-color-primary);
   stroke-width: 22;
   stroke-miterlimit: 10;
 }

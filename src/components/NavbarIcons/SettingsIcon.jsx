@@ -1,9 +1,11 @@
 import styles from "./SettingsIcon.module.css";
 
-function SettingsIcon() {
+function SettingsIcon({ dispatch }) {
   return (
     // <div className={styles.container}>
-    <button>
+    <button
+      onClick={() => dispatch({ type: "openOverlay", payload: "settings" })}
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         version="1.1"

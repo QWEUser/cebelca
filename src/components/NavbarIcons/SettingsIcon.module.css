@@ -5,12 +5,12 @@
 
 .st49 {
   cursor: pointer;
-  fill: #ffffff;
-  stroke: #000000;
+  fill: var(--fill-color-background);
+  stroke: var(--fill-color-primary);
   stroke-width: 27;
   stroke-miterlimit: 10;
 }
 
 .st49:hover {
-  stroke: var(--yellow-secondary);
+  stroke: var(--fill-color-secondary);
 }

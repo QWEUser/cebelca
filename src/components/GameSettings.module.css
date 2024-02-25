@@ -1,0 +1,37 @@
+.container input {
+  display: none;
+}
+
+.container input + label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+  /* transition: background-color 250ms ease-in-out; */
+  margin: 0px 20px 20px 0px;
+}
+
+.container input + label::before {
+  content: "";
+  height: 24px;
+  width: 48px;
+  border-radius: 24px;
+  border: 2px solid var(--border-color);
+  margin-right: 12px;
+}
+
+.container input + label::after {
+  content: "";
+  height: 20px;
+  width: 20px;
+  border-radius: 20px;
+  background-color: var(--font-color);
+  position: absolute;
+  left: 5px;
+  transition: transform 250ms ease-in-out;
+  /* transition: background-color 250ms ease-in-out, transform 500ms ease-in-out; */
+}
+
+.container input:checked + label::after {
+  transform: translateX(100%);
+}

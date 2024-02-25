@@ -6,11 +6,11 @@
 .st46 {
   cursor: pointer;
   fill: none;
-  stroke: #000000;
+  stroke: var(--fill-color-primary);
   stroke-width: 30;
   stroke-miterlimit: 10;
 }
 
 .st46:hover {
-  stroke: var(--yellow-secondary);
+  stroke: var(--fill-color-secondary);
 }

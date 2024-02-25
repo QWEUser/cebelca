@@ -1,21 +1,19 @@
 .background {
   position: fixed;
   min-height: 100%;
-  /* height: 100vh; */
   width: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 100;
   top: 0;
   left: 0;
-
   cursor: pointer;
 }
 
 .container {
   position: fixed;
   max-width: 360px;
-  background-color: white;
-  color: var(--color-font-dark);
+  background-color: var(--background-color);
+  color: var(--font-color);
   top: 10%;
   left: 50%;
   transform: translateX(-50%);
@@ -23,24 +21,24 @@
   display: block;
   text-align: left;
   font-size: smaller;
-  border: 5px solid var(--color-font-dark);
+  border: 5px solid var(--font-color);
   padding: 30px 20px 20px;
   border-radius: 20px;
+  animation: slidedown 1.5s ease-out forwards;
 }
 
 .closingButton {
-  /* height: 48px; */
   position: absolute;
   right: 16px;
   top: 6px;
   float: right;
   font-size: 48px;
-  transition: transform 1s;
+  transition: transform 1.5s;
 }
 
 .closingButton:hover {
   transform: rotate(360deg);
-  color: var(--yellow-secondary);
+  color: var(--background-color-secondary);
 }
 
 @media (max-width: 600px) {
@@ -48,5 +46,17 @@
     left: 5%;
     right: 5%;
     transform: translateX(0%);
+  }
+}
+
+@keyframes slidedown {
+  0% {
+    transform: translate(-50%, -150%);
+  }
+  75% {
+    transform: translate(-50%, 5%);
+  }
+  100% {
+    transform: translate(-50%, 0);
   }
 }

@@ -12,28 +12,39 @@
   outline: none;
 } */
 
+.container {
+  max-width: 320px;
+  margin: auto;
+}
+
 .inputWord {
+  white-space: nowrap;
   height: 50px;
   text-align: center;
   text-transform: uppercase;
   font-size: 26px;
   font-weight: 700;
-  color: black;
+  color: var(--fill-color-primary);
+  margin: auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  direction: rtl;
+  text-align: center;
 }
 
-.inputWord::after {
+.inputWord::before {
   content: "";
   width: 3px;
   height: 22px;
   margin-left: 5px;
-  background-color: var(--yellow-secondary);
+  background-color: var(--background-color-secondary);
   animation: blinker 1.5s step-start infinite;
   display: inline-block;
   transform: translate(0px, 2px);
 }
 
 .centerLetter {
-  color: var(--yellow-secondary);
+  color: var(--background-color-secondary);
 }
 
 .shake {

@@ -30,9 +30,9 @@
 
 .newGameButton {
   background-color: var(--background-color);
-  border: 2px solid var(--color-border-dark);
+  border: 2px solid var(--border-color);
   height: 40px;
-  color: var(--color-font-dark);
+  color: var(--font-color);
   padding: 0px 15px;
   text-align: center;
   text-decoration: none;
@@ -48,5 +48,5 @@
 }
 
 .newGameButton:hover {
-  background-color: var(--yellow-secondary);
+  background-color: var(--fill-color-secondary);
 }

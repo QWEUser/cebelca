@@ -2,7 +2,6 @@ import styles from "./InstructionsIcon.module.css";
 
 function InstrucstionsIcon({ dispatch }) {
   return (
-    // <div className={sytles.container}>
     <button>
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -26,7 +25,6 @@ function InstrucstionsIcon({ dispatch }) {
         </g>
       </svg>
     </button>
-    // </div>
   );
 }
 

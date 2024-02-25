@@ -1,7 +1,6 @@
 .hexContainer {
   position: relative;
   margin: auto;
-  /* background-color: black; */
   width: calc((var(--hex-width) * 3) + (var(--hex-gap) * 4));
   height: calc((var(--hex-height) * 5) + (var(--hex-gap) * 4));
 }

@@ -1,7 +1,5 @@
 .container {
   height: 40px;
-  color: black;
-  /* background-color: green; */
   width: fit-content;
   text-align: center;
   margin: auto;
@@ -17,7 +15,7 @@
 .wordScore {
   position: absolute;
   font-size: 36px;
-  color: var(--yellow-secondary);
+  color: var(--font-color-secondary);
   transform: translate(120px, 20px);
   animation: fadeslower 3s linear forwards;
 }

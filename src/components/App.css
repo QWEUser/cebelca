@@ -3,12 +3,22 @@
 }
 
 #root {
-  /* width: 1280px; */
-  /* margin: 0 auto 0; */
-  padding: 0;
+  /* Project color definitions */
+
+  /* --hexagon-color: var(--light-gray);
+  --hexagon-colorCover: var(--white);
+  --border-color: var(--black);
+  --font-color: var(--black);
+  --font-color-secondary: var(--yellow);
+  --font-color-tertiary: var(--gray);
+  --background-color: var(--white);
+  --background-color-secondary: var(--yellow);
+  --fill-color-primary: var(--black);
+  --fill-color-secondary: var(--yellow);
+  --fill-color-background: var(--white); */
+
   text-align: center;
-  color: var(--color-font-dark);
-  background-color: var(--background-color);
+  color: var(--font-color);
 
   /* hexagon sizes: */
   --hex-size-multiplier: 0.69;
@@ -21,33 +31,34 @@
   --hex-container-size: calc((var(--hex-width) * 3) + (var(--hex-gap) * 4));
 }
 
-/* @keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-} */
-
 /* @media (prefers-reduced-motion: no-preference) {
   a:nth-of-type(2) .logo {
     animation: logo-spin infinite 20s linear;
   }
 } */
 
+.app {
+  height: calc(100% / var(--scale));
+}
+
+body * {
+  transition: background-color 250ms ease-in-out;
+}
+
 /* TODO: fix meadia queries */
 
 @media (min-width: 600px) {
-  body {
+  .app {
     transform: scale(var(--app-scale-up));
     transform-origin: top center;
+    --scale: var(--app-scale-up);
   }
 }
 
 @media (max-height: 700px) {
-  body {
+  .app {
     transform: scale(var(--app-scale-down));
     transform-origin: top center;
+    --scale: var(--app-scale-down);
   }
 }

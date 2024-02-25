@@ -9,20 +9,20 @@
 
 .st5 {
   fill: none;
-  stroke: #000000;
+  stroke: var(--fill-color-primary);
   stroke-width: 3.01;
   /* stroke-width: 4.51808405; */
   stroke-miterlimit: 10;
 }
 .st6 {
   fill: none;
-  stroke: #000000;
+  stroke: var(--fill-color-primary);
   stroke-width: 1.64;
   /* stroke-width: 2.46440935; */
   stroke-miterlimit: 10;
 }
 .st7 {
-  fill: var(--yellow-secondary);
+  fill: var(--fill-color-secondary);
   stroke-width: 0.1;
   /* stroke-width: 0.20536745; */
 }
@@ -51,16 +51,16 @@
 
 .textButton {
   background-color: var(--background-color);
-  border: 2px solid var(--color-border-dark);
+  border: 2px solid var(--border-color);
   height: 40px;
-  color: var(--color-font-dark);
+  color: var(--font-color);
   padding: 0px 15px;
   text-align: center;
   text-decoration: none;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 15px;
+  font-size: small;
   border-radius: 5px;
   font-weight: medium;
   cursor: pointer;
@@ -69,5 +69,5 @@
 }
 
 .textButton:hover {
-  background-color: var(--yellow-secondary);
+  background-color: var(--font-color-secondary);
 }

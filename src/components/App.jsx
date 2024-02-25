@@ -13,7 +13,6 @@ import EndOfGame from "./EndOfGame";
 
 //TODO: get rid of words that contain letter w and y!!
 //TODO: get rid of bad words (including "pedofil", "citroen"?, "engineering"?, "ziza")!!
-//TODO: add inout word shake on wrong input -> add new variable isWordShaking and pass it down via useReducer to add or remove shake class
 
 //TODO: add an OR operator to define hard coded input in case "allWordsJSON is unavailable"
 const pangrams = allWordsJSON.pangrams.split(" ");
@@ -106,15 +105,18 @@ const congratulationsWords = [
   "Uau!",
 ];
 
-// get history of number of jars filled on this device
-// if (localStorage.getItem("jarsFilled") === null) {
-//   localStorage.setItem("jarsFilled", 0);
-// }
+// check whether user prefers light or dark mode
+const userThemePreference = window.matchMedia("(prefers-color-scheme: dark)");
 
 // useReducer logic
 
 // reducer function initial state
 const initialState = {
+  darkMode:
+    localStorage.getItem("darkMode") === null
+      ? userThemePreference
+      : localStorage.getItem("darkMode") === "true",
+  // darkMode: true,
   gameLetters: pangramSetArray.filter((letter) => letter != gameCenterLetter),
   inputWord: "",
   isWordShaking: false,
@@ -265,6 +267,10 @@ function reducer(state, action) {
         overlayText: initialState.overlayText,
       };
     }
+    case "toggleDarkMode": {
+      localStorage.setItem("darkMode", !state.darkMode);
+      return { ...state, darkMode: !state.darkMode };
+    }
     default:
       throw new Error("Action unknown");
   }
@@ -273,6 +279,7 @@ function reducer(state, action) {
 function App() {
   const [
     {
+      darkMode,
       gameLetters,
       inputWord,
       isWordShaking,
@@ -335,68 +342,63 @@ function App() {
   }, [jarsFilledHistory]);
 
   return (
-    <>
-      {endOfGame && <EndOfGame />}
+    <div className={darkMode ? "dark app-container" : "light app-container"}>
+      <div className="app">
+        {endOfGame && <EndOfGame />}
 
-      {/* <Overlay
-        overlayText={overlayText}
-        solutionsArray={solutionsArray}
-        userSubmitedWords={userSubmitedWords}
-        showOverlay={showOverlay}
-        dispatch={dispatch}
-      /> */}
-
-      {showOverlay && (
-        <Overlay
-          overlayText={overlayText}
+        {showOverlay && (
+          <Overlay
+            overlayText={overlayText}
+            solutionsArray={solutionsArray}
+            userSubmitedWords={userSubmitedWords}
+            darkMode={darkMode}
+            dispatch={dispatch}
+          />
+        )}
+        <Navbar dispatch={dispatch} />
+        <GameLevel
+          totalScore={totalScore}
+          userTotalScore={userTotalScore}
+          userCurrentScore={userCurrentScore}
+          userPrevScore={userPrevScore}
+          jarsFilledHistory={jarsFilledHistory}
           solutionsArray={solutionsArray}
           userSubmitedWords={userSubmitedWords}
+          oneJarScore={oneJarScore}
+          // showWordsLeft={showWordsLeft}
           dispatch={dispatch}
         />
-      )}
-      <Navbar dispatch={dispatch} />
-      <GameLevel
-        totalScore={totalScore}
-        userTotalScore={userTotalScore}
-        userCurrentScore={userCurrentScore}
-        userPrevScore={userPrevScore}
-        jarsFilledHistory={jarsFilledHistory}
-        solutionsArray={solutionsArray}
-        userSubmitedWords={userSubmitedWords}
-        oneJarScore={oneJarScore}
-        // showWordsLeft={showWordsLeft}
-        dispatch={dispatch}
-      />
-      <UserWords
-        userSubmitedWords={userSubmitedWords}
-        showUserWords={showUserWords}
-        dispatch={dispatch}
-      />
-      <GameMessage
-        // check all words submited by user; if there are no words, pass on empty string, otherwise pass on the last submited word
-        lastSubmitedWord={
-          userSubmitedWords.length > 0
-            ? userSubmitedWords[userSubmitedWords.length - 1]
-            : ""
-        }
-        randomCongratulationsWord={randomCongratulationsWord}
-        wrongInputMessage={wrongInputMessage}
-        toggle={toggle}
-      />
-      <InputWord
-        inputWord={inputWord}
-        gameCenterLetter={gameCenterLetter}
-        isWordShaking={isWordShaking}
-        toggle={toggle}
-        dispatch={dispatch}
-      />
-      <HexagonGroup
-        gameLetters={gameLetters}
-        gameCenterLetter={gameCenterLetter}
-        dispatch={dispatch}
-      />
-      <GameButtons dispatch={dispatch} inputWord={inputWord} />
-    </>
+        <UserWords
+          userSubmitedWords={userSubmitedWords}
+          showUserWords={showUserWords}
+          dispatch={dispatch}
+        />
+        <GameMessage
+          // check all words submited by user; if there are no words, pass on empty string, otherwise pass on the last submited word
+          lastSubmitedWord={
+            userSubmitedWords.length > 0
+              ? userSubmitedWords[userSubmitedWords.length - 1]
+              : ""
+          }
+          randomCongratulationsWord={randomCongratulationsWord}
+          wrongInputMessage={wrongInputMessage}
+          toggle={toggle}
+        />
+        <InputWord
+          inputWord={inputWord}
+          gameCenterLetter={gameCenterLetter}
+          isWordShaking={isWordShaking}
+          toggle={toggle}
+          dispatch={dispatch}
+        />
+        <HexagonGroup
+          gameLetters={gameLetters}
+          gameCenterLetter={gameCenterLetter}
+          dispatch={dispatch}
+        />
+        <GameButtons dispatch={dispatch} inputWord={inputWord} />
+      </div>
+    </div>
   );
 }
 
