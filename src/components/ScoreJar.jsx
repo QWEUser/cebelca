@@ -31,7 +31,7 @@ function ScoreJar({
   useEffect(() => {
     const interval =
       intervalValid &&
-      setInterval(() => setDisplayScore((prevScore) => prevScore + 1), 300);
+      setInterval(() => setDisplayScore((prevScore) => prevScore + 1), 150);
 
     return () => clearInterval(interval);
   }, [intervalValid]);

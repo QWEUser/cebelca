@@ -75,7 +75,7 @@ console.log(solutionsArray);
 console.log(totalScore);
 
 // devide the totalScore to predetermined amount of jars and save the score to an array. For example, if totalScore = 101 and amountOfJars = 5, totalJarsScore should be [20,40,60,80,101] (all elements are rounded down, except the last element, which is orunded up)
-const amountOfJars = 20;
+const amountOfJars = 10;
 
 const totalJarScoresArray = Array.from(
   { length: amountOfJars },
@@ -196,9 +196,11 @@ function reducer(state, action) {
           isWordShaking: false,
           // TODO: ISSUE: this implemetation will add only 1 extra filled jar, even if your input is worth 2+ full new jars
           userCurrentScore:
-            newScore >= state.oneJarScore
-              ? newScore - state.oneJarScore
-              : newScore,
+            // newScore >= state.oneJarScore
+            //   ? newScore % state.oneJarScore
+            //   : // ? newScore - state.oneJarScore
+            //     newScore,
+            newScore % state.oneJarScore,
           userPrevScore: state.userCurrentScore,
           //TODO: userTotalScore needs to be implemented!!
           userTotalScore: newScore,
@@ -216,9 +218,14 @@ function reducer(state, action) {
             ],
           wrongInputMessage: "",
           // TODO: ISSUE: this implemetation will add only 1 extra filled jar, even if your input is worth 2+ full new jars
+          // jarsFilledHistory:
+          //   newScore >= state.oneJarScore
+          //     ? state.jarsFilledHistory + 1
+          //     : state.jarsFilledHistory,
           jarsFilledHistory:
             newScore >= state.oneJarScore
-              ? state.jarsFilledHistory + 1
+              ? state.jarsFilledHistory +
+                Math.floor(newScore / state.oneJarScore)
               : state.jarsFilledHistory,
           // jarFilled: false,
           endOfGame:
