@@ -43,9 +43,7 @@
 
 @media (max-width: 600px) {
   .container {
-    left: 5%;
-    right: 5%;
-    transform: translateX(0%);
+    width: 90%;
   }
 }
 
@@ -60,3 +58,11 @@
     transform: translate(-50%, 0);
   }
 }
+
+/* target only mobile devices with orientation: landscape */
+/* @media (orientation: landscape) and (hover: none) and (pointer: coarse) {
+  .background {
+    width: 100%;
+    height: 100%;
+  }
+} */

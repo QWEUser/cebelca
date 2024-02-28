@@ -3,6 +3,7 @@ import GameInstructions from "./GameInstructions";
 import GameStatistics from "./GameStatistics";
 import GameWordsLeft from "./GameWordsLeft";
 import GameSettings from "./GameSettings";
+import FullJarWindow from "./FullJarWindow";
 
 function Overlay({
   dispatch,
@@ -43,6 +44,9 @@ function Overlay({
                   userSubmitedWords={userSubmitedWords}
                 />
               );
+            }
+            case "fullJar": {
+              return <FullJarWindow dispatch={dispatch} />;
             }
             default:
               return null;

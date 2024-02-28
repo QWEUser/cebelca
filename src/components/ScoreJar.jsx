@@ -1,24 +1,29 @@
 import { useEffect, useState } from "react";
 import styles from "./ScoreJar.module.css";
 
+//TODO: Jar score not continuing to update after it gets full, randomly firing fullJar dispatch
+
 function ScoreJar({
   userCurrentScore,
   userPrevScore,
   // jarsFilledHistory,
   userTotalScore,
+  userPrevTotalScore,
   oneJarScore,
   dispatch,
 }) {
   const [displayScore, setDisplayScore] = useState(userPrevScore);
   const [jarFilled, setJarFilled] = useState(false);
   // determine how full the jar is from 0 to 1
-  const jarFullPercentage = 1 - displayScore / oneJarScore;
+  // const jarFullPercentage = 1 - displayScore / oneJarScore;
 
   const intervalValid = jarFilled
     ? // if jar is filled to the top, intervalValid becomes false, so the score stops adding up
       false
     : // otherwise, check if score needs to be topped up to the new score, or if it needs to fill up to the top of the whole jar
-    userCurrentScore > userPrevScore || userTotalScore == 0
+    (userCurrentScore > userPrevScore &&
+        oneJarScore > userTotalScore - userPrevTotalScore) ||
+      userTotalScore === 0
     ? displayScore < userCurrentScore
     : displayScore < oneJarScore;
 
@@ -26,20 +31,26 @@ function ScoreJar({
   useEffect(() => {
     const interval =
       intervalValid &&
-      setInterval(() => setDisplayScore((prevScore) => prevScore + 1), 100);
+      setInterval(() => setDisplayScore((prevScore) => prevScore + 1), 300);
 
     return () => clearInterval(interval);
   }, [intervalValid]);
 
   // once a user inputs a new word, reset jarFilled to false, so the adding up of score can continue
+  // TODO: this should not be needed, as the component rerenders on userTotalScore, and is set to false again!
   useEffect(() => {
     setJarFilled(false);
   }, [userTotalScore]);
 
-  if (displayScore == oneJarScore) {
-    setJarFilled(true);
-    setDisplayScore(userCurrentScore);
-  }
+  // dispatch function is wrapped inside a useEffect hook to prevent "Cannot update a component (`App`) while rendering a different component (`ScoreJar`)" error
+  useEffect(() => {
+    if (displayScore == oneJarScore) {
+      console.log("Jar full!");
+      setJarFilled(true);
+      setDisplayScore(userCurrentScore);
+      dispatch({ type: "openOverlay", payload: "fullJar" });
+    }
+  }, [dispatch, displayScore, oneJarScore, userCurrentScore]);
 
   return (
     <div
@@ -55,7 +66,7 @@ function ScoreJar({
         xmlSpace="preserve"
         width="77.212006"
         height="99.999786"
-        key={jarFullPercentage}
+        // key={jarFullPercentage}
       >
         <defs>
           <linearGradient id="gradient" x1="50%" y1="0%" x2="50%" y2="100%">

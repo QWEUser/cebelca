@@ -12,7 +12,7 @@ import Overlay from "./Overlay";
 import EndOfGame from "./EndOfGame";
 
 //TODO: get rid of words that contain letter w and y!!
-//TODO: get rid of bad words (including "pedofil", "citroen"?, "engineering"?, "ziza")!!
+//TODO: get rid of bad words (including "pedofil", "fafati", "citroen"?, "engineering"?, "ziza")!!
 
 //TODO: add an OR operator to define hard coded input in case "allWordsJSON is unavailable"
 const pangrams = allWordsJSON.pangrams.split(" ");
@@ -75,7 +75,7 @@ console.log(solutionsArray);
 console.log(totalScore);
 
 // devide the totalScore to predetermined amount of jars and save the score to an array. For example, if totalScore = 101 and amountOfJars = 5, totalJarsScore should be [20,40,60,80,101] (all elements are rounded down, except the last element, which is orunded up)
-const amountOfJars = 5;
+const amountOfJars = 20;
 
 const totalJarScoresArray = Array.from(
   { length: amountOfJars },
@@ -116,7 +116,6 @@ const initialState = {
     localStorage.getItem("darkMode") === null
       ? userThemePreference
       : localStorage.getItem("darkMode") === "true",
-  // darkMode: true,
   gameLetters: pangramSetArray.filter((letter) => letter != gameCenterLetter),
   inputWord: "",
   isWordShaking: false,
@@ -126,7 +125,9 @@ const initialState = {
   userCurrentScore: 0,
   userPrevScore: 0,
   userTotalScore: 0,
+  userPrevTotalScore: 0,
   oneJarScore: Math.floor(totalScore / amountOfJars),
+  // jarFilled: false,
   showOverlay: false,
   // toggle is used to force rerender a component -> its value changes between true and false, so the component using key={toggle} forcefully rerenders
   toggle: false,
@@ -193,6 +194,7 @@ function reducer(state, action) {
           userSubmitedWords: [...state.userSubmitedWords, action.payload],
           inputWord: initialState.inputWord,
           isWordShaking: false,
+          // TODO: ISSUE: this implemetation will add only 1 extra filled jar, even if your input is worth 2+ full new jars
           userCurrentScore:
             newScore >= state.oneJarScore
               ? newScore - state.oneJarScore
@@ -200,25 +202,35 @@ function reducer(state, action) {
           userPrevScore: state.userCurrentScore,
           //TODO: userTotalScore needs to be implemented!!
           userTotalScore: newScore,
+          userPrevTotalScore: state.userTotalScore,
           oneJarScore:
             // state.userTotalScore is reading the previous state, so we need to add newScore
             state.userTotalScore + newScore <
             (totalScore * (amountOfJars - 1)) / amountOfJars
               ? state.oneJarScore
               : Math.ceil(totalScore / amountOfJars),
-          showGameMessage: true,
+          // showGameMessage: true,
           randomCongratulationsWord:
             congratulationsWords[
               Math.floor(Math.random() * congratulationsWords.length)
             ],
           wrongInputMessage: "",
-          // ISSUE: this implemetation will add only 1 extra filled jar, even if your input is worth 2+ full new jars
+          // TODO: ISSUE: this implemetation will add only 1 extra filled jar, even if your input is worth 2+ full new jars
           jarsFilledHistory:
             newScore >= state.oneJarScore
               ? state.jarsFilledHistory + 1
               : state.jarsFilledHistory,
+          // jarFilled: false,
           endOfGame:
             state.userTotalScore + newScore === totalScore ? true : false,
+        };
+      }
+      if (state.userSubmitedWords.includes(state.inputWord)) {
+        return {
+          ...state,
+          isWordShaking: true,
+          toggle: !state.toggle,
+          wrongInputMessage: "Beseda je že bila uporabljena!",
         };
       }
 
@@ -230,12 +242,6 @@ function reducer(state, action) {
           state.inputWord.length < 4 ? "Prekratka beseda!" : "Napačna beseda!",
       };
     }
-    // case "showWordsLeft": {
-    //   return {
-    //     ...state,
-    //     showWordsLeft: !state.showWordsLeft,
-    //   };
-    // }
     case "showUserWords": {
       return {
         ...state,
@@ -263,8 +269,8 @@ function reducer(state, action) {
       return {
         ...state,
         jarsFilledHistory: 0,
-        showOverlay: false,
-        overlayText: initialState.overlayText,
+        // showOverlay: false,
+        // overlayText: initialState.overlayText,
       };
     }
     case "toggleDarkMode": {
@@ -284,7 +290,6 @@ function App() {
       inputWord,
       isWordShaking,
       userSubmitedWords,
-      // showWordsLeft,
       showUserWords,
       showOverlay,
       toggle,
@@ -292,6 +297,7 @@ function App() {
       userTotalScore,
       userCurrentScore,
       userPrevScore,
+      userPrevTotalScore,
       oneJarScore,
       randomCongratulationsWord,
       wrongInputMessage,
@@ -341,6 +347,8 @@ function App() {
     localStorage.setItem("jarsFilled", jarsFilledHistory);
   }, [jarsFilledHistory]);
 
+  console.log("current user score: " + userCurrentScore);
+
   return (
     <div className={darkMode ? "dark app-container" : "light app-container"}>
       <div className="app">
@@ -361,11 +369,11 @@ function App() {
           userTotalScore={userTotalScore}
           userCurrentScore={userCurrentScore}
           userPrevScore={userPrevScore}
+          userPrevTotalScore={userPrevTotalScore}
           jarsFilledHistory={jarsFilledHistory}
           solutionsArray={solutionsArray}
           userSubmitedWords={userSubmitedWords}
           oneJarScore={oneJarScore}
-          // showWordsLeft={showWordsLeft}
           dispatch={dispatch}
         />
         <UserWords

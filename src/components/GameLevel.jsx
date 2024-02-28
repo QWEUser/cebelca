@@ -5,6 +5,7 @@ function GameLevel({
   userTotalScore,
   userCurrentScore,
   userPrevScore,
+  userPrevTotalScore,
   jarsFilledHistory,
   oneJarScore,
   dispatch,
@@ -57,6 +58,7 @@ function GameLevel({
           userTotalScore={userTotalScore}
           userCurrentScore={userCurrentScore}
           userPrevScore={userPrevScore}
+          userPrevTotalScore={userPrevTotalScore}
           jarsFilledHistory={jarsFilledHistory}
           oneJarScore={oneJarScore}
           // jarScore={jarScore}

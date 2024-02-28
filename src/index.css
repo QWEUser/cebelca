@@ -28,10 +28,8 @@
 }
 
 html {
-  height: 100vh;
-  width: 100vw;
   --scale: 1;
-  /* background-color: var(--dark-blue); */
+  height: min-content;
 }
 
 body {
@@ -42,6 +40,8 @@ body {
   /* min-width: 320px; */
   overflow-x: hidden;
   height: inherit;
+  width: inherit;
+  /* height: inherit; */
 }
 
 button {
@@ -72,7 +72,7 @@ button {
   --fill-color-background: var(--white);
   --bee-fill-color-secondary: var(--yellow);
 
-  background-color: var(--background-color);
+  /* background-color: var(--background-color); */
 }
 
 .dark {
@@ -89,12 +89,12 @@ button {
   --fill-color-background: var(--dark-blue);
   --bee-fill-color-secondary: var(--dark-blue);
 
-  background-color: var(--background-color);
+  /* background-color: var(--background-color); */
 }
 
 .app-container {
-  width: 100vw;
-  height: 100vh;
+  width: 100dvw;
+  height: 100dvh;
   background-color: var(--background-color);
 }
 
@@ -106,7 +106,7 @@ button {
   background: var(--background-color-secondary);
 }
 
-@media (prefers-color-scheme: light) {
+/* @media (prefers-color-scheme: light) {
   :root {
     background-color: #ffffff;
   }
@@ -116,4 +116,4 @@ button {
   button {
     background-color: #f9f9f9;
   }
-}
+} */
