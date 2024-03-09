@@ -31,7 +31,7 @@ function ScoreJar({
   useEffect(() => {
     const interval =
       intervalValid &&
-      setInterval(() => setDisplayScore((prevScore) => prevScore + 1), 150);
+      setInterval(() => setDisplayScore((prevScore) => prevScore + 1), 200);
 
     return () => clearInterval(interval);
   }, [intervalValid]);
@@ -78,6 +78,13 @@ function ScoreJar({
               offset={1 - displayScore / oneJarScore}
               stopColor="var(--fill-color-secondary)"
             ></stop>
+            <animate
+              attributeName="offset"
+              from="0%"
+              to="100%"
+              dur="1s"
+              repeatCount="indefinite"
+            />
           </linearGradient>
         </defs>
         <g id="Layer_2" transform="translate(-396.859,-248.40486)">

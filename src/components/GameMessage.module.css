@@ -10,6 +10,7 @@
 
 .congratulationsWord {
   animation: fade 2s linear forwards;
+  color: var(--font-color);
 }
 
 .wordScore {

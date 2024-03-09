@@ -284,6 +284,9 @@ function reducer(state, action) {
       localStorage.setItem("darkMode", !state.darkMode);
       return { ...state, darkMode: !state.darkMode };
     }
+    case "gameOver": {
+      return { ...state, endOfGame: true, showOverlay: false };
+    }
     default:
       throw new Error("Action unknown");
   }
@@ -354,12 +357,15 @@ function App() {
     localStorage.setItem("jarsFilled", jarsFilledHistory);
   }, [jarsFilledHistory]);
 
-  console.log("current user score: " + userCurrentScore);
-
   return (
     <div className={darkMode ? "dark app-container" : "light app-container"}>
       <div className="app">
-        {endOfGame && <EndOfGame />}
+        {endOfGame && (
+          <EndOfGame
+            solutionsArray={solutionsArray}
+            userSubmitedWords={userSubmitedWords}
+          />
+        )}
 
         {showOverlay && (
           <Overlay

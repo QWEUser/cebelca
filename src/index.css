@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 :root {
   font-family: "Poppins", sans-serif;
   /* line-height: 1.5; */
@@ -27,10 +31,10 @@
   margin: 0;
 }
 
-html {
+/* html {
   --scale: 1;
   height: min-content;
-}
+} */
 
 body {
   margin: 0;
@@ -39,8 +43,9 @@ body {
   align-items: flex-start;
   /* min-width: 320px; */
   overflow-x: hidden;
-  height: inherit;
+  /* height: inherit; */
   width: inherit;
+  min-height: 100vh;
   /* height: inherit; */
 }
 

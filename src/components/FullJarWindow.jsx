@@ -5,8 +5,8 @@ function FullJarWindow({ dispatch }) {
     <div className={styles.container}>
       <h1>Kozarec napolnjen!</h1>
       <p>
-        Bravo, še en kozarec je poln medu! Želiš nadaljevati z igro in napolniti
-        še več kozarcev medu, ali želiš zaključiti z igro? Ob zaključku igre se
+        Bravo, kozarec je poln medu! Želiš nadaljevati z igro in napolniti še
+        več kozarcev medu, ali želiš zaključiti z igro? Ob zaključku igre se
         razkrijejo vse besede, ki niso bile najdene.
       </p>
       <div className={styles.buttonContainer}>

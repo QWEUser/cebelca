@@ -18,7 +18,11 @@ function GameMessage({
   const congratulationsWord = isPangram ? (
     <span>
       Č
-      <span style={{ color: "var(--yellow)", fontWeight: "bold" }}>&apos;</span>
+      <span
+        style={{ color: "var(--font-color-secondary)", fontWeight: "bold" }}
+      >
+        &apos;
+      </span>
       belca!
     </span>
   ) : (
