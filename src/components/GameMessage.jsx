@@ -23,7 +23,7 @@ function GameMessage({
       >
         &apos;
       </span>
-      belca!
+      belica!
     </span>
   ) : (
     randomCongratulationsWord

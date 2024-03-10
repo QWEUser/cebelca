@@ -10,6 +10,7 @@ import UserWords from "./UserWords";
 import Navbar from "./Navbar";
 import Overlay from "./Overlay";
 import EndOfGame from "./EndOfGame";
+import Intro from "./Intro";
 
 //TODO: get rid of words that contain letter w and y!!
 //TODO: get rid of bad words (including "pedofil", "fafati", "citroen"?, "engineering"?, "ziza")!!
@@ -112,6 +113,7 @@ const userThemePreference = window.matchMedia("(prefers-color-scheme: dark)");
 
 // reducer function initial state
 const initialState = {
+  isIntro: true,
   darkMode:
     localStorage.getItem("darkMode") === null
       ? userThemePreference
@@ -150,6 +152,9 @@ console.log("oneJarScore: " + initialState.oneJarScore);
 // reducer function
 function reducer(state, action) {
   switch (action.type) {
+    case "closeIntro": {
+      return { ...state, isIntro: false };
+    }
     case "shuffleGameLetters":
       // shuffle the gameLetters randomly
       return {
@@ -260,6 +265,7 @@ function reducer(state, action) {
         ...state,
         showOverlay: true,
         overlayText: action.payload,
+        isIntro: false,
       };
     }
     case "closeOverlay": {
@@ -277,7 +283,7 @@ function reducer(state, action) {
         ...state,
         jarsFilledHistory: 0,
         // showOverlay: false,
-        // overlayText: initialState.overlayText,
+        overlayText: "resetStatisticsText",
       };
     }
     case "toggleDarkMode": {
@@ -295,6 +301,7 @@ function reducer(state, action) {
 function App() {
   const [
     {
+      isIntro,
       darkMode,
       gameLetters,
       inputWord,
@@ -360,6 +367,7 @@ function App() {
   return (
     <div className={darkMode ? "dark app-container" : "light app-container"}>
       <div className="app">
+        {isIntro && <Intro dispatch={dispatch} />}
         {endOfGame && (
           <EndOfGame
             solutionsArray={solutionsArray}
@@ -395,7 +403,7 @@ function App() {
           dispatch={dispatch}
         />
         <GameMessage
-          // check all words submited by user; if there are no words, pass on empty string, otherwise pass on the last submited word
+          // check all words submited by user; if there are no words, pass on an empty string, otherwise pass on the last submited word
           lastSubmitedWord={
             userSubmitedWords.length > 0
               ? userSubmitedWords[userSubmitedWords.length - 1]

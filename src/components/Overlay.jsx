@@ -1,9 +1,11 @@
 import styles from "./Overlay.module.css";
-import GameInstructions from "./GameInstructions";
+import GameInstructions from "./OverlayMessages/GameInstructions";
 import GameStatistics from "./GameStatistics";
 import GameWordsLeft from "./GameWordsLeft";
-import GameSettings from "./GameSettings";
-import FullJarWindow from "./FullJarWindow";
+import GameSettings from "./OverlayMessages/GameSettings";
+import FullJarWindow from "./OverlayMessages/FullJarWindow";
+import GameStatisticsDefaultConfirmation from "./OverlayMessages/GameStatisticsDefaultConfirmation";
+import GameStatisticsDefaultMessage from "./OverlayMessages/GameStatisticsDefaultMessage";
 
 function Overlay({
   dispatch,
@@ -47,6 +49,12 @@ function Overlay({
             }
             case "fullJar": {
               return <FullJarWindow dispatch={dispatch} />;
+            }
+            case "statisticsDefaultConfirmation": {
+              return <GameStatisticsDefaultConfirmation dispatch={dispatch} />;
+            }
+            case "resetStatisticsText": {
+              return <GameStatisticsDefaultMessage dispatch={dispatch} />;
             }
             default:
               return null;

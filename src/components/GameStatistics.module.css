@@ -49,7 +49,28 @@
   margin: 16px;
 }
 
-.textButton {
+.confirmationContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-content: center;
+  position: absolute;
+  z-index: 1001;
+  background-color: var(--background-color);
+  border: 5px solid var(--font-color);
+  padding: 30px 20px 20px;
+  border-radius: 20px;
+  height: 90%;
+}
+
+.confirmationContainer p {
+  flex-basis: 100%;
+  text-align: center;
+  font-weight: bold;
+}
+
+.container button {
+  /* .textButton { */
   background-color: var(--background-color);
   border: 2px solid var(--border-color);
   height: 40px;
@@ -68,6 +89,7 @@
   margin-top: 20px;
 }
 
-.textButton:hover {
+/* .textButton:hover { */
+.container button:hover {
   background-color: var(--font-color-secondary);
 }

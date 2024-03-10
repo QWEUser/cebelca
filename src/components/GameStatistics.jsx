@@ -71,8 +71,13 @@ function GameStatistics({ dispatch }) {
         }
       })()}
       <button
-        onClick={() => dispatch({ type: "resetStatistics" })}
         className={styles.textButton}
+        onClick={() =>
+          dispatch({
+            type: "openOverlay",
+            payload: "statisticsDefaultConfirmation",
+          })
+        }
       >
         Ponastavi statistiko
       </button>
