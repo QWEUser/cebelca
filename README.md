@@ -1,8 +1,16 @@
-# React + Vite
+# C'belica
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is an early deployment to test basic game functionality.
 
-Currently, two official plugins are available:
+## Known bugs
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1. The page currently uses css scale property to work on different devices. This causes bad pixel rounding, so some elements like borders, underlines etc. are not displayed properly.
+2. Dark mode background issues on smaller devices.
+
+## Missing features
+
+1. Daily game.
+2. Saving current game progress to local storage.
+3. Bee animation on intro screen and game screen
+4. Bee proverbs on bee icon click.
+5. display current full jar score.
