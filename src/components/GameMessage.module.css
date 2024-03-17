@@ -28,6 +28,7 @@
 .error {
   animation: fade 2s linear forwards;
   font-weight: bold;
+  color: var(--font-color);
 }
 
 @keyframes fade {

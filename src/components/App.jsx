@@ -207,7 +207,6 @@ function reducer(state, action) {
             //     newScore,
             newScore % state.oneJarScore,
           userPrevScore: state.userCurrentScore,
-          //TODO: userTotalScore needs to be implemented!!
           userTotalScore: newScore,
           userPrevTotalScore: state.userTotalScore,
           oneJarScore:
