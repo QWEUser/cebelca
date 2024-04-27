@@ -1,7 +1,7 @@
 .userWords {
-  max-width: 240px;
+  max-width: 15rem;
   width: 100%;
-  margin: 10px auto 0px;
+  margin: 0.6rem auto 0px;
   position: relative;
   /* z-index: 100; */
   user-select: none;
@@ -11,25 +11,25 @@
 
 .userWords__content {
   width: 100%;
-  border-radius: 5px;
+  border-radius: 0.3rem;
   background-color: var(--background-color);
-  border: 2px solid var(--border-color);
+  border: 0.125rem solid var(--border-color);
   position: relative;
-  padding: 10px 40px 10px 15px;
-  min-height: 40px;
+  padding: 0.6rem 2.5rem 0.6rem 1rem;
+  min-height: 2.5rem;
   white-space: nowrap;
 }
 
 .userWords__content__text {
-  font-size: 14px;
+  font-size: 0.8rem;
   font-weight: 400;
   color: var(--font-color);
   position: absolute;
   top: 0;
-  left: 15px;
-  right: 40px;
-  height: 40px;
-  line-height: 40px;
+  left: 1rem;
+  right: 2.5rem;
+  height: 2.5rem;
+  line-height: 2.5rem;
   overflow: hidden;
   user-select: none;
   text-align: left;
@@ -54,12 +54,12 @@
 
 .userWords__content__blocks__block {
   color: var(--font-color);
-  font-size: 14px;
-  margin: 2px;
-  padding: 5px;
+  font-size: 0.8rem;
+  margin: 0.1rem;
+  padding: 0.3rem;
   /* background: var(--hexagon-color); */
   /* border: 2px dotted var(--border-color); */
-  border-radius: 5px;
+  border-radius: 0.3rem;
 }
 
 .userWords__content__blocks__block:hover {
@@ -70,8 +70,8 @@
 
 .userWords__content__arr {
   position: absolute;
-  top: 16px;
-  right: 12px;
+  top: 1rem;
+  right: 0.75rem;
   fill: var(--font-color);
   stroke: var(--font-color);
 }

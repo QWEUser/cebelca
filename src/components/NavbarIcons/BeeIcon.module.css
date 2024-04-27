@@ -1,7 +1,11 @@
 .container {
-  height: 30px;
-  width: 30px;
+  height: 2rem;
+  width: 2rem;
   cursor: pointer;
+}
+
+.container svg {
+  transform: scale(calc(1.5 * var(--scale)));
 }
 
 .st0 {

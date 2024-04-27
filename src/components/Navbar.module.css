@@ -1,15 +1,23 @@
 .container {
-  max-width: 240px;
-  margin: 0px auto 100px;
+  max-width: 15rem;
+  margin: 0rem auto 6.25rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-top: 20px;
+  padding-top: 1.2rem;
 }
+
+/* .beeContainer {
+  transform: scale(calc(1.4 * var(--scale)));
+} */
 
 .buttonsContainer {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  column-gap: 10px;
+
+  column-gap: calc(var(--scale) * 0.6rem);
+  /* column-gap: calc(0.6rem * var(--scale)); */
+  /* transform: scale(0.9); */
+  /* transform: scale(calc(0.8 * var(--scale))); */
 }

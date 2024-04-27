@@ -1,9 +1,9 @@
 .container {
-  height: 40px;
+  height: 2.5rem;
   width: fit-content;
   text-align: center;
   margin: auto;
-  padding: 5px;
+  padding: 0.3rem;
   display: flex;
   align-items: center;
 }
@@ -15,9 +15,9 @@
 
 .wordScore {
   position: absolute;
-  font-size: 36px;
+  font-size: 2rem;
   color: var(--font-color-secondary);
-  transform: translate(120px, 20px);
+  transform: translate(7rem, 1rem);
   animation: fadeslower 3s linear forwards;
 }
 

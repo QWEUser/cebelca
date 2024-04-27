@@ -7,7 +7,9 @@ import sytles from "./Navbar.module.css";
 function Navbar({ dispatch }) {
   return (
     <div className={sytles.container}>
-      <BeeIcon />
+      <div className={sytles.beeContainer}>
+        <BeeIcon />
+      </div>
       <div className={sytles.buttonsContainer}>
         <StatisticsIcon dispatch={dispatch} />
         <SettingsIcon dispatch={dispatch} />

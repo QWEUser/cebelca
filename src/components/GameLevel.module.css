@@ -1,35 +1,35 @@
 .mainContainer {
-  margin: 20px;
+  margin: 1.2rem;
 }
 
 .scoreJarContainer {
-  height: 50px;
+  height: 3rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 50px;
-  gap: 15px;
+  margin: 3rem;
+  gap: 1rem;
 }
 
 .countContainer {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px 10px;
+  gap: 0.8rem 0.8rem;
   justify-content: center;
-  max-width: 490px;
-  padding: 0 15px;
-  margin: 8px auto 0px;
+  max-width: 30rem;
+  padding: 0 1rem;
+  margin: 0.5rem auto 0px;
 }
 
 .scoreContainer {
   text-align: center;
   color: #13141c;
-  font-size: 24px;
+  font-size: 1.5rem;
   font-weight: 700;
-  margin: 30px auto;
+  margin: 2rem auto;
   background-color: var(--yellow);
-  width: 70px;
-  height: 70px;
+  width: 4.5rem;
+  height: 4.5rem;
   border-radius: 50%;
   display: flex;
   justify-content: center;
@@ -41,10 +41,10 @@
   color: var(--font-color-tertiary);
   font-weight: 500;
   text-align: center;
-  padding: 6px 0 0;
-  width: 70px;
-  height: 70px;
-  font-size: 14px;
+  padding: 0.4rem 0 0;
+  width: 4.5rem;
+  height: 4.5rem;
+  font-size: 1rem;
   border: var(--yellow) 5px solid;
   border-radius: 50%;
 }
@@ -52,5 +52,5 @@
 .progressText b {
   color: var(--font-color);
   /* color: #13141c; */
-  font-size: 14px;
+  font-size: 1rem;
 }

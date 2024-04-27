@@ -18,10 +18,10 @@
 
   /* hexagon sizes: */
   --hex-size-multiplier: 0.69;
-  --hex-width: 72px;
+  --hex-width: 4.5rem;
   /* --hex-width: calc(var(--hex-size-multiplier) * 104px); */
-  --hex-gap: 6px;
-  --hex-height: 42px;
+  --hex-gap: 0.375rem;
+  --hex-height: 2.625rem;
   /* --hex-height: calc(var(--hex-size-multiplier) * 60px); */
   --hex-cover-scale: 0.9;
   --hex-container-size: calc((var(--hex-width) * 3) + (var(--hex-gap) * 4));
@@ -34,7 +34,8 @@
 } */
 
 .app {
-  height: calc(100% / var(--scale));
+  /* height: calc(100% / var(--scale)); */
+  --scale: 1;
 }
 
 body * {
@@ -45,16 +46,32 @@ body * {
 
 @media (min-width: 600px) {
   .app {
-    transform: scale(var(--app-scale-up));
-    transform-origin: top center;
+    /* transform: scale(var(--app-scale-up));
+    transform-origin: top center; */
     --scale: var(--app-scale-up);
+  }
+  :root {
+    font-size: 19.2px;
+  }
+  svg {
+    /* transform: scale(var(--app-scale-up)); */
+    transform: scale(var(--scale));
+    transform-origin: center;
   }
 }
 
 @media (max-height: 700px) {
   .app {
-    transform: scale(var(--app-scale-down));
-    transform-origin: top center;
+    /* transform: scale(var(--app-scale-down));
+    transform-origin: top center; */
     --scale: var(--app-scale-down);
+  }
+  :root {
+    font-size: 14.4px;
+  }
+  svg {
+    /* transform: scale(var(--app-scale-down)); */
+    transform: scale(var(--scale));
+    transform-origin: center;
   }
 }

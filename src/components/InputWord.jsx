@@ -13,7 +13,6 @@ function InputWord({ inputWord, gameCenterLetter, isWordShaking, toggle }) {
       return letter;
     }
   });
-  //TODO: add shaking clas when isWordShaking === true
   return (
     <div className={styles.container}>
       <div
