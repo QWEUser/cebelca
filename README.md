@@ -1,6 +1,7 @@
 # C'belica
 
 This is an early deployment to test basic game functionality.
+You can try the game here: https://qweuser.github.io/cebelca/
 
 ## Known bugs
 
