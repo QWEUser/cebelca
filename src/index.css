@@ -95,12 +95,6 @@ button {
   /* background-color: var(--background-color); */
 }
 
-.app-container {
-  width: 100dvw;
-  height: 100dvh;
-  background-color: var(--background-color);
-}
-
 ::-moz-selection {
   background: var(--background-color-secondary);
 }

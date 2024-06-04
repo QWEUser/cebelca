@@ -38,6 +38,12 @@
   --scale: 1;
 }
 
+.app-container {
+  width: 100dvw;
+  min-height: 100dvh;
+  background-color: var(--background-color);
+}
+
 body * {
   transition: background-color 250ms ease-in-out;
 }

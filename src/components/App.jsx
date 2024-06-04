@@ -15,81 +15,103 @@ import Intro from "./Intro";
 //TODO: get rid of words that contain letter w and y!!
 //TODO: get rid of bad words (including "pedofil", "fafati", "citroen"?, "engineering"?, "ziza")!!
 
+// create daily game data
+
+// get a "day of year number", e.g. 1.1.2024 = 1, 2.6.2024 = 154, 31.12.2024 = 366 (leap year);
+const now = new Date();
+const startOfYear = new Date(now.getFullYear(), 0, 0);
+const diff =
+  now -
+  startOfYear +
+  (startOfYear.getTimezoneOffset() - now.getTimezoneOffset()) * 60 * 1000;
+const oneDay = 1000 * 60 * 60 * 24;
+const dayOfYear = Math.floor(diff / oneDay);
+console.log("Day of year: " + dayOfYear);
+
+// yearDay is a string made from current year and current day in year, for example "2024" (year) + "141" (current day in year) = "2024141"
+const yearDay = Number(now.getFullYear().toString() + dayOfYear.toString());
+console.log(yearDay);
+
+// define amount of jars that need to be filled to reach total score
+const amountOfJars = 10;
+
 //TODO: add an OR operator to define hard coded input in case "allWordsJSON is unavailable"
 const pangrams = allWordsJSON.pangrams.split(" ");
 const notPangrams = allWordsJSON.notPangrams.split(" ");
+console.log(pangrams.length);
 const allWords = pangrams.concat(notPangrams).sort();
 
-// randomly choose a pangram
-const initialPangram = pangrams[Math.floor(Math.random() * pangrams.length)];
+// // create a random new game on page load
+// // randomly choose a pangram
+// const initialPangram = pangrams[Math.floor(Math.random() * pangrams.length)];
 
-// pick a consonant from the word and make it the center letter
-const pangramArray = [...initialPangram];
-const vowelRegex = new RegExp(/[aeiou]/);
-const pangramSetArray = Array.from(new Set(pangramArray));
-const vowelFilteredPangram = pangramSetArray.filter(
-  (letter) => !vowelRegex.test(letter)
-);
-const gameCenterLetter =
-  vowelFilteredPangram[Math.floor(Math.random() * vowelFilteredPangram.length)];
-console.log(initialPangram);
+// // pick a consonant from the word and make it the center letter
+// const pangramArray = [...initialPangram];
+// const vowelRegex = new RegExp(/[aeiou]/);
+// const pangramSetArray = Array.from(new Set(pangramArray));
+// const vowelFilteredPangram = pangramSetArray.filter(
+//   (letter) => !vowelRegex.test(letter)
+// );
+// const gameCenterLetter =
+//   vowelFilteredPangram[Math.floor(Math.random() * vowelFilteredPangram.length)];
+// console.log(initialPangram);
 
-//create regex to check whether a letter is part of puzzle letters
-const gameLettersRegex = new RegExp(`[${pangramSetArray.join("")}]`, "i");
+// //create regex to check whether a letter is part of puzzle letters
+// const gameLettersRegex = new RegExp(`[${pangramSetArray.join("")}]`, "i");
 
-// create a solutions array from all words
-const containsCenterLetter = allWords.filter((word) =>
-  word.includes(gameCenterLetter)
-);
-const solutionsArray = containsCenterLetter.filter((word) => {
-  const wordArray = [...word];
-  for (let i = 0; i < wordArray.length; i++) {
-    if (!gameLettersRegex.test(wordArray[i])) {
-      return false;
-    }
-    if (i === wordArray.length - 1) {
-      return true;
-    }
-  }
-});
+// // create a solutions array from all words
+// const containsCenterLetter = allWords.filter((word) =>
+//   word.includes(gameCenterLetter)
+// );
+// const solutionsArray = containsCenterLetter.filter((word) => {
+//   const wordArray = [...word];
+//   for (let i = 0; i < wordArray.length; i++) {
+//     if (!gameLettersRegex.test(wordArray[i])) {
+//       return false;
+//     }
+//     if (i === wordArray.length - 1) {
+//       return true;
+//     }
+//   }
+// });
 
-// calculate total score possible
+// // calculate total score possible
 
-let totalScore = 0;
-let countPangrams = 0;
-for (const word of solutionsArray) {
-  totalScore = totalScore + word.length - 3;
-  const wordUniqueLetters = Array.from(new Set([...word]));
-  if (wordUniqueLetters.length == 7) {
-    totalScore = totalScore + 7;
-    countPangrams++;
-    console.log(
-      "initial page load: pangram: " +
-        word +
-        " , number of pangrams found: " +
-        countPangrams
-    );
-  }
-}
+// let totalScore = 0;
+// let countPangrams = 0;
+// for (const word of solutionsArray) {
+//   totalScore = totalScore + word.length - 3;
+//   const wordUniqueLetters = Array.from(new Set([...word]));
+//   if (wordUniqueLetters.length == 7) {
+//     totalScore = totalScore + 7;
+//     countPangrams++;
+//     console.log(
+//       "initial page load: pangram: " +
+//         word +
+//         " , number of pangrams found: " +
+//         countPangrams
+//     );
+//   }
+// }
 
-console.log(solutionsArray);
-console.log(totalScore);
+// console.log(solutionsArray);
+// console.log(totalScore);
 
-// devide the totalScore to predetermined amount of jars and save the score to an array. For example, if totalScore = 101 and amountOfJars = 5, totalJarsScore should be [20,40,60,80,101] (all elements are rounded down, except the last element, which is orunded up)
-const amountOfJars = 10;
+// // devide the totalScore to predetermined amount of jars and save the score to an array. For example, if totalScore = 101 and amountOfJars = 5, totalJarsScore should be [20,40,60,80,101] (all elements are rounded down, except the last element, which is orunded up)
+// const amountOfJars = 10;
 
-const totalJarScoresArray = Array.from(
-  { length: amountOfJars },
-  (_e, index) => {
-    if (index !== amountOfJars - 1) {
-      return Math.floor(((index + 1) * totalScore) / amountOfJars);
-    } else {
-      return Math.ceil(((index + 1) * totalScore) / amountOfJars);
-    }
-  }
-);
+// const totalJarScoresArray = Array.from(
+//   { length: amountOfJars },
+//   (_e, index) => {
+//     if (index !== amountOfJars - 1) {
+//       return Math.floor(((index + 1) * totalScore) / amountOfJars);
+//     } else {
+//       return Math.ceil(((index + 1) * totalScore) / amountOfJars);
+//     }
+//   }
+// );
 
-console.log(totalJarScoresArray);
+// console.log(totalJarScoresArray);
 
 // words that are displayed when user successfuly enters a new word
 const congratulationsWords = [
@@ -114,11 +136,24 @@ const userThemePreference = window.matchMedia("(prefers-color-scheme: dark)");
 // reducer function initial state
 const initialState = {
   isIntro: true,
+  yearDay: 0,
   darkMode:
     localStorage.getItem("darkMode") === null
       ? userThemePreference
       : localStorage.getItem("darkMode") === "true",
-  gameLetters: pangramSetArray.filter((letter) => letter != gameCenterLetter),
+
+  // gamePangram: "čebelica",
+
+  // TODO: newly added
+  gameCenterLetter: "b",
+  solutionsArray: [],
+  totalScore: 0,
+  gameLettersRegex: null,
+  // gameLettersRegex: gameLettersRegex,
+  // newly added
+
+  gameLetters: [],
+  // gameLetters: pangramSetArray.filter((letter) => letter != gameCenterLetter),
   inputWord: "",
   isWordShaking: false,
   userSubmitedWords: [],
@@ -128,7 +163,8 @@ const initialState = {
   userPrevScore: 0,
   userTotalScore: 0,
   userPrevTotalScore: 0,
-  oneJarScore: Math.floor(totalScore / amountOfJars),
+  oneJarScore: 1,
+  // oneJarScore: Math.floor(totalScore / amountOfJars),
   // jarFilled: false,
   showOverlay: false,
   // toggle is used to force rerender a component -> its value changes between true and false, so the component using key={toggle} forcefully rerenders
@@ -155,6 +191,129 @@ function reducer(state, action) {
     case "closeIntro": {
       return { ...state, isIntro: false };
     }
+    case "createNewGame": {
+      // create an initial Pangram either from a daily game or at random
+      let initialPangram = "čebelica";
+      if (action.payload.sourcePangram === "daily") {
+        initialPangram = pangrams[yearDay % pangrams.length];
+      } else if (action.payload.sourcePangram === "random") {
+        initialPangram = pangrams[Math.floor(Math.random() * pangrams.length)];
+      }
+
+      // pick a consonant from the word and make it the center letter
+      const pangramArray = [...initialPangram];
+      const vowelRegex = new RegExp(/[aeiou]/);
+      const pangramSetArray = Array.from(new Set(pangramArray));
+      const vowelFilteredPangram = pangramSetArray.filter(
+        (letter) => !vowelRegex.test(letter)
+      );
+      // pick a center letter of the game
+      const gameCenterLetter =
+        vowelFilteredPangram[
+          // Math.floor(Math.random() * vowelFilteredPangram.length)
+          yearDay % vowelFilteredPangram.length ||
+            Math.floor(Math.random() * vowelFilteredPangram.length)
+        ];
+      console.log(initialPangram);
+
+      //create regex to check whether a letter is part of puzzle letters
+      const gameLettersRegex = new RegExp(`[${pangramSetArray.join("")}]`, "i");
+
+      // create a solutions array from all words
+      const containsCenterLetter = allWords.filter((word) =>
+        word.includes(gameCenterLetter)
+      );
+      const solutionsArray = containsCenterLetter.filter((word) => {
+        const wordArray = [...word];
+        for (let i = 0; i < wordArray.length; i++) {
+          if (!gameLettersRegex.test(wordArray[i])) {
+            return false;
+          }
+          if (i === wordArray.length - 1) {
+            return true;
+          }
+        }
+      });
+
+      // calculate total score possible
+
+      let totalScore = 0;
+      let countPangrams = 0;
+      for (const word of solutionsArray) {
+        totalScore = totalScore + word.length - 3;
+        const wordUniqueLetters = Array.from(new Set([...word]));
+        if (wordUniqueLetters.length == 7) {
+          totalScore = totalScore + 7;
+          countPangrams++;
+          console.log(
+            "initial page load: pangram: " +
+              word +
+              " , number of pangrams found: " +
+              countPangrams
+          );
+        }
+      }
+
+      console.log(solutionsArray);
+      console.log(totalScore);
+
+      // devide the totalScore to predetermined amount of jars and save the score to an array. For example, if totalScore = 101 and amountOfJars = 5, totalJarsScore should be [20,40,60,80,101] (all elements are rounded down, except the last element, which is orunded up)
+      // const amountOfJars = 10;
+
+      const totalJarScoresArray = Array.from(
+        { length: amountOfJars },
+        (_e, index) => {
+          if (index !== amountOfJars - 1) {
+            return Math.floor(((index + 1) * totalScore) / amountOfJars);
+          } else {
+            return Math.ceil(((index + 1) * totalScore) / amountOfJars);
+          }
+        }
+      );
+
+      console.log(totalJarScoresArray);
+
+      const gameLetters = pangramSetArray.filter(
+        (letter) => letter != gameCenterLetter
+      );
+
+      const oneJarScore = Math.floor(totalScore / amountOfJars);
+
+      if (action.payload.sourcePangram === "daily") {
+        localStorage.setItem("dailyGameCenterLetter", gameCenterLetter);
+        localStorage.setItem("dailySolutionsArray", solutionsArray);
+        localStorage.setItem("dailyTotalScore", totalScore);
+        localStorage.setItem("dailyGameLettersRegex", gameLettersRegex);
+        localStorage.setItem("dailyGameLetters", gameLetters);
+        localStorage.setItem("dailyOneJarScore", oneJarScore);
+      } else if (action.payload.sourcePangram === "random") {
+        localStorage.setItem("randomGameCenterLetter", gameCenterLetter);
+        localStorage.setItem("randomSolutionsArray", solutionsArray);
+        localStorage.setItem("randomTotalScore", totalScore);
+        localStorage.setItem("randomGameLettersRegex", gameLettersRegex);
+        localStorage.setItem("randomGameLetters", gameLetters);
+        localStorage.setItem("randomOneJarScore", oneJarScore);
+      }
+
+      return {
+        ...state,
+        // gamePangram: initialPangram,
+        yearDay: yearDay,
+        solutionsArray: solutionsArray,
+        gameCenterLetter: gameCenterLetter,
+        totalScore: totalScore,
+        gameLetters: gameLetters,
+        gameLettersRegex: gameLettersRegex,
+        oneJarScore: oneJarScore,
+        isIntro: false,
+      };
+    }
+    //TODO: continue here:
+    case "continueDailyGame":
+      return {
+        ...state,
+        gameCenterLetter: localStorage.getItem("dailyGameCenterLetter"),
+      };
     case "shuffleGameLetters":
       // shuffle the gameLetters randomly
       return {
@@ -182,7 +341,7 @@ function reducer(state, action) {
     case "userSubmitWord": {
       // check if user input word is valid and add it to userSubmitedWords
       if (
-        solutionsArray.includes(state.inputWord) &&
+        state.solutionsArray.includes(state.inputWord) &&
         !state.userSubmitedWords.includes(state.inputWord)
       ) {
         const userWord = action.payload;
@@ -212,9 +371,13 @@ function reducer(state, action) {
           oneJarScore:
             // state.userTotalScore is reading the previous state, so we need to add newScore
             state.userTotalScore + newScore <
-            (totalScore * (amountOfJars - 1)) / amountOfJars
+            (state.totalScore * (amountOfJars - 1)) / amountOfJars
               ? state.oneJarScore
-              : Math.ceil(totalScore / amountOfJars),
+              : Math.ceil(state.totalScore / amountOfJars),
+          // state.userTotalScore + newScore <
+          // (totalScore * (amountOfJars - 1)) / amountOfJars
+          //   ? state.oneJarScore
+          //   : Math.ceil(totalScore / amountOfJars),
           // showGameMessage: true,
           randomCongratulationsWord:
             congratulationsWords[
@@ -233,7 +396,8 @@ function reducer(state, action) {
               : state.jarsFilledHistory,
           // jarFilled: false,
           endOfGame:
-            state.userTotalScore + newScore === totalScore ? true : false,
+            state.userTotalScore + newScore === state.totalScore ? true : false,
+          // state.userTotalScore + newScore === totalScore ? true : false,
         };
       }
       if (state.userSubmitedWords.includes(state.inputWord)) {
@@ -287,6 +451,7 @@ function reducer(state, action) {
     }
     case "toggleDarkMode": {
       localStorage.setItem("darkMode", !state.darkMode);
+      // console.log(state.gamePangram);
       return { ...state, darkMode: !state.darkMode };
     }
     case "gameOver": {
@@ -302,6 +467,12 @@ function App() {
     {
       isIntro,
       darkMode,
+      //TODO: new
+      solutionsArray,
+      gameCenterLetter,
+      totalScore,
+      gameLettersRegex,
+      // end new
       gameLetters,
       inputWord,
       isWordShaking,
@@ -345,7 +516,7 @@ function App() {
         }
       }
     },
-    [inputWord, showOverlay, userSubmitedWords]
+    [gameLettersRegex, inputWord, showOverlay, userSubmitedWords]
   );
 
   // add event listener to window object
@@ -362,6 +533,38 @@ function App() {
     }
     localStorage.setItem("jarsFilled", jarsFilledHistory);
   }, [jarsFilledHistory]);
+
+  // fetch current date from wordldtimeapi wrapped in a useEffect
+  // useEffect(() => {
+  //   const fetchDate = async () => {
+  //     await fetch("http://worldtimeapi.org/api/timezone/Europe/Ljubljana")
+  //       .then((response) => {
+  //         //handle response
+  //         // console.log(response);
+  //         return response.json();
+  //       })
+  //       .then((data) => {
+  //         //handle data
+  //         console.log(data);
+  //         console.log(data["day_of_year"]);
+  //         // yearDay is a string made from current year and current day in year, for example "2024" (year) + "141" (current day in year) = "2024141"
+  //         const yearDay = Number(
+  //           data["datetime"].slice(0, 4) + data["day_of_year"].toString()
+  //         );
+  //         // choose daily pangram
+  //         const dailyPangram = pangrams[yearDay % pangrams.length];
+  //         dispatch({
+  //           type: "createNewGame",
+  //           payload: { sourcePangram: dailyPangram, yearDay: yearDay },
+  //         });
+  //       })
+  //       .catch((error) => {
+  //         //handle error
+  //         throw new Error(error);
+  //       });
+  //   };
+  //   fetchDate();
+  // }, []);
 
   return (
     <div className={darkMode ? "dark app-container" : "light app-container"}>
