@@ -1,7 +1,7 @@
 import styles from "./Intro.module.css";
 import BeeIcon from "./NavbarIcons/BeeIcon";
 
-function Intro({ dispatch }) {
+function Intro({ yearDay, todayYearDay, dispatch }) {
   return (
     <div className={styles.container}>
       <div className={styles.beeContainer}>
@@ -16,24 +16,14 @@ function Intro({ dispatch }) {
         </span>
         belica
       </h1>
-      {/* <button
-        onClick={() =>
-          dispatch({ type: "openOverlay", payload: "instructions" })
-        }
-      >
-        Kako igrati?
-      </button> */}
       <button
-        // style={{
-        //   backgroundColor: "var(--background-color-secondary)",
-        // }}
-        onClick={() =>
+        onClick={() => {
           dispatch({
             type: "createNewGame",
             payload: { sourcePangram: "random" },
             // payload: { sourcePangram: null, yearDay: null },
-          })
-        }
+          });
+        }}
       >
         Naključna igra
       </button>
@@ -41,13 +31,17 @@ function Intro({ dispatch }) {
         style={{
           backgroundColor: "var(--background-color-secondary)",
         }}
-        onClick={() =>
-          dispatch({
-            type: "createNewGame",
-            payload: { sourcePangram: "daily" },
-            // payload: { sourcePangram: null, yearDay: null },
-          })
-        }
+        onClick={() => {
+          Number(yearDay) === Number(todayYearDay)
+            ? dispatch({ type: "continueDailyGame" })
+            : dispatch({
+                type: "createNewGame",
+                payload: { sourcePangram: "daily" },
+                // payload: { sourcePangram: null, yearDay: null },
+              });
+          console.log(yearDay);
+          console.log(todayYearDay);
+        }}
       >
         Dnevni izziv
       </button>

@@ -29,8 +29,12 @@ const dayOfYear = Math.floor(diff / oneDay);
 console.log("Day of year: " + dayOfYear);
 
 // yearDay is a string made from current year and current day in year, for example "2024" (year) + "141" (current day in year) = "2024141"
-const yearDay = Number(now.getFullYear().toString() + dayOfYear.toString());
-console.log(yearDay);
+const todayYearDay = Number(
+  now.getFullYear().toString() + dayOfYear.toString()
+);
+console.log(todayYearDay);
+// const yearDay = Number(now.getFullYear().toString() + dayOfYear.toString());
+// console.log(yearDay);
 
 // define amount of jars that need to be filled to reach total score
 const amountOfJars = 10;
@@ -136,21 +140,17 @@ const userThemePreference = window.matchMedia("(prefers-color-scheme: dark)");
 // reducer function initial state
 const initialState = {
   isIntro: true,
-  yearDay: 0,
+  yearDay: localStorage.getItem("yearDay"),
   darkMode:
     localStorage.getItem("darkMode") === null
       ? userThemePreference
       : localStorage.getItem("darkMode") === "true",
 
-  // gamePangram: "čebelica",
-
-  // TODO: newly added
   gameCenterLetter: "b",
   solutionsArray: [],
   totalScore: 0,
   gameLettersRegex: null,
-  // gameLettersRegex: gameLettersRegex,
-  // newly added
+  gameType: null,
 
   gameLetters: [],
   // gameLetters: pangramSetArray.filter((letter) => letter != gameCenterLetter),
@@ -195,7 +195,8 @@ function reducer(state, action) {
       // create an initial Pangram either from a daily game or at random
       let initialPangram = "čebelica";
       if (action.payload.sourcePangram === "daily") {
-        initialPangram = pangrams[yearDay % pangrams.length];
+        initialPangram = pangrams[todayYearDay % pangrams.length];
+        // initialPangram = pangrams[yearDay % pangrams.length];
       } else if (action.payload.sourcePangram === "random") {
         initialPangram = pangrams[Math.floor(Math.random() * pangrams.length)];
       }
@@ -211,7 +212,8 @@ function reducer(state, action) {
       const gameCenterLetter =
         vowelFilteredPangram[
           // Math.floor(Math.random() * vowelFilteredPangram.length)
-          yearDay % vowelFilteredPangram.length ||
+          todayYearDay % vowelFilteredPangram.length ||
+            // yearDay % vowelFilteredPangram.length ||
             Math.floor(Math.random() * vowelFilteredPangram.length)
         ];
       console.log(initialPangram);
@@ -279,26 +281,32 @@ function reducer(state, action) {
 
       const oneJarScore = Math.floor(totalScore / amountOfJars);
 
+      // if (action.payload.sourcePangram === "daily") {
+      //   localStorage.setItem("dailyGameCenterLetter", gameCenterLetter);
+      //   localStorage.setItem("dailySolutionsArray", solutionsArray);
+      //   localStorage.setItem("dailyTotalScore", totalScore);
+      //   localStorage.setItem("dailyGameLettersRegex", gameLettersRegex);
+      //   localStorage.setItem("dailyGameLetters", gameLetters);
+      //   localStorage.setItem("dailyOneJarScore", oneJarScore);
+      // } else if (action.payload.sourcePangram === "random") {
+      //   localStorage.setItem("randomGameCenterLetter", gameCenterLetter);
+      //   localStorage.setItem("randomSolutionsArray", solutionsArray);
+      //   localStorage.setItem("randomTotalScore", totalScore);
+      //   localStorage.setItem("randomGameLettersRegex", gameLettersRegex);
+      //   localStorage.setItem("randomGameLetters", gameLetters);
+      //   localStorage.setItem("randomOneJarScore", oneJarScore);
+      // }
+
       if (action.payload.sourcePangram === "daily") {
-        localStorage.setItem("dailyGameCenterLetter", gameCenterLetter);
-        localStorage.setItem("dailySolutionsArray", solutionsArray);
-        localStorage.setItem("dailyTotalScore", totalScore);
-        localStorage.setItem("dailyGameLettersRegex", gameLettersRegex);
-        localStorage.setItem("dailyGameLetters", gameLetters);
-        localStorage.setItem("dailyOneJarScore", oneJarScore);
-      } else if (action.payload.sourcePangram === "random") {
-        localStorage.setItem("randomGameCenterLetter", gameCenterLetter);
-        localStorage.setItem("randomSolutionsArray", solutionsArray);
-        localStorage.setItem("randomTotalScore", totalScore);
-        localStorage.setItem("randomGameLettersRegex", gameLettersRegex);
-        localStorage.setItem("randomGameLetters", gameLetters);
-        localStorage.setItem("randomOneJarScore", oneJarScore);
+        localStorage.setItem("yearDay", JSON.stringify(todayYearDay));
+        // localStorage.setItem("yearDay", JSON.stringify(yearDay));
       }
 
       return {
-        ...state,
-        // gamePangram: initialPangram,
-        yearDay: yearDay,
+        ...initialState,
+        yearDay: todayYearDay,
+        // yearDay: yearDay,
+        gameType: action.payload.sourcePangram,
         solutionsArray: solutionsArray,
         gameCenterLetter: gameCenterLetter,
         totalScore: totalScore,
@@ -312,7 +320,27 @@ function reducer(state, action) {
     case "continueDailyGame":
       return {
         ...state,
-        gameCenterLetter: localStorage.getItem("dailyGameCenterLetter"),
+        gameCenterLetter: JSON.parse(
+          localStorage.getItem("dailyGameCenterLetter")
+        ),
+        solutionsArray: JSON.parse(localStorage.getItem("dailySolutionsArray")),
+        totalScore: Number(localStorage.getItem("dailyTotalScore")),
+        gameLettersRegex: JSON.parse(
+          localStorage.getItem("dailyGameLettersRegex")
+        ),
+        gameLetters: JSON.parse(localStorage.getItem("dailyGameLetters")),
+        inputWord: JSON.parse(localStorage.getItem("dailyInputWord")),
+        userSubmitedWords: JSON.parse(
+          localStorage.getItem("dailyUserSubmitedWords")
+        ),
+        userCurrentScore: Number(localStorage.getItem("dailyUserCurrentScore")),
+        userPrevScore: Number(localStorage.getItem("dailyUserPrevScore")),
+        userTotalScore: Number(localStorage.getItem("dailyUserTotalScore")),
+        userPrevTotalScore: Number(
+          localStorage.getItem("dailyUserPrevTotalScore")
+        ),
+        oneJarScore: Number(localStorage.getItem("dailyOneJarScore")),
+        isIntro: false,
       };
     case "shuffleGameLetters":
       // shuffle the gameLetters randomly
@@ -450,8 +478,7 @@ function reducer(state, action) {
       };
     }
     case "toggleDarkMode": {
-      localStorage.setItem("darkMode", !state.darkMode);
-      // console.log(state.gamePangram);
+      localStorage.setItem("darkMode", JSON.stringify(!state.darkMode));
       return { ...state, darkMode: !state.darkMode };
     }
     case "gameOver": {
@@ -468,6 +495,8 @@ function App() {
       isIntro,
       darkMode,
       //TODO: new
+      yearDay,
+      gameType,
       solutionsArray,
       gameCenterLetter,
       totalScore,
@@ -526,13 +555,110 @@ function App() {
     return () => window.removeEventListener("keydown", keyHandler, false);
   }, [keyHandler]);
 
+  // localStorage sync
   //TODO: useEffect should not run on first render!!
   useEffect(() => {
     if (localStorage.getItem("jarsFilled") === null) {
-      localStorage.setItem("jarsFilled", 0);
+      localStorage.setItem("jarsFilled", JSON.stringify(0));
     }
-    localStorage.setItem("jarsFilled", jarsFilledHistory);
-  }, [jarsFilledHistory]);
+
+    // daily game localStorage sync
+    if (gameType === "daily") {
+      localStorage.setItem(
+        "dailyGameCenterLetter",
+        JSON.stringify(gameCenterLetter)
+      );
+      localStorage.setItem(
+        "dailySolutionsArray",
+        JSON.stringify(solutionsArray)
+      );
+      localStorage.setItem("dailyTotalScore", JSON.stringify(totalScore));
+      localStorage.setItem(
+        "dailyGameLettersRegex",
+        JSON.stringify(gameLettersRegex)
+      );
+      localStorage.setItem("dailyGameLetters", JSON.stringify(gameLetters));
+
+      localStorage.setItem("dailyInputWord", JSON.stringify(inputWord));
+      localStorage.setItem(
+        "dailyUserSubmitedWords",
+        JSON.stringify(userSubmitedWords)
+      );
+      localStorage.setItem(
+        "dailyUserCurrentScore",
+        JSON.stringify(userCurrentScore)
+      );
+      localStorage.setItem("dailyUserPrevScore", JSON.stringify(userPrevScore));
+      localStorage.setItem(
+        "dailyUserTotalScore",
+        JSON.stringify(userTotalScore)
+      );
+      localStorage.setItem(
+        "dailyUserPrevTotalScore",
+        JSON.stringify(userPrevTotalScore)
+      );
+
+      localStorage.setItem("dailyOneJarScore", JSON.stringify(oneJarScore));
+    }
+
+    // random game localStorage sync
+    if (gameType === "random") {
+      localStorage.setItem(
+        "randomGameCenterLetter",
+        JSON.stringify(gameCenterLetter)
+      );
+      localStorage.setItem(
+        "randomSolutionsArray",
+        JSON.stringify(solutionsArray)
+      );
+      localStorage.setItem("randomTotalScore", JSON.stringify(totalScore));
+      localStorage.setItem(
+        "randomGameLettersRegex",
+        JSON.stringify(gameLettersRegex)
+      );
+      localStorage.setItem("randomGameLetters", JSON.stringify(gameLetters));
+
+      localStorage.setItem("randomInputWord", JSON.stringify(inputWord));
+      localStorage.setItem(
+        "randomuserSubmitedWords",
+        JSON.stringify(userSubmitedWords)
+      );
+      localStorage.setItem(
+        "randomUserCurrentScore",
+        JSON.stringify(userCurrentScore)
+      );
+      localStorage.setItem(
+        "randomUserPrevScore",
+        JSON.stringify(userPrevScore)
+      );
+      localStorage.setItem(
+        "randomUserTotalScore",
+        JSON.stringify(userTotalScore)
+      );
+      localStorage.setItem(
+        "randomUserPrevTotalScore",
+        JSON.stringify(userPrevTotalScore)
+      );
+
+      localStorage.setItem("randomOneJarScore", JSON.stringify(oneJarScore));
+    }
+    localStorage.setItem("jarsFilled", JSON.stringify(jarsFilledHistory));
+  }, [
+    gameCenterLetter,
+    gameLetters,
+    gameLettersRegex,
+    gameType,
+    inputWord,
+    jarsFilledHistory,
+    oneJarScore,
+    solutionsArray,
+    totalScore,
+    userCurrentScore,
+    userPrevScore,
+    userPrevTotalScore,
+    userSubmitedWords,
+    userTotalScore,
+  ]);
 
   // fetch current date from wordldtimeapi wrapped in a useEffect
   // useEffect(() => {
@@ -569,7 +695,13 @@ function App() {
   return (
     <div className={darkMode ? "dark app-container" : "light app-container"}>
       <div className="app">
-        {isIntro && <Intro dispatch={dispatch} />}
+        {isIntro && (
+          <Intro
+            yearDay={yearDay}
+            todayYearDay={todayYearDay}
+            dispatch={dispatch}
+          />
+        )}
         {endOfGame && (
           <EndOfGame
             solutionsArray={solutionsArray}
