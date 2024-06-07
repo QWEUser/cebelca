@@ -1,6 +1,6 @@
 import styles from "./BeeIcon.module.css";
 
-function BeeIcon() {
+function BeeIcon({ dispatch }) {
   return (
     <button className={styles.container}>
       <svg
@@ -17,6 +17,7 @@ function BeeIcon() {
         height="30"
         // height="29.999695"
         transform="scale(1.5)"
+        onClick={() => dispatch({ type: "showIntro" })}
       >
         <g id="Layer_2" transform="translate(-342,-264)">
           {/* <g id="Layer_2" transform="translate(-342.29092,-263.79767)"> */}

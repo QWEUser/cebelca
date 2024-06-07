@@ -15,6 +15,8 @@ import Intro from "./Intro";
 //TODO: get rid of words that contain letter w and y!!
 //TODO: get rid of bad words (including "pedofil", "fafati", "citroen"?, "engineering"?, "ziza")!!
 
+//TODO: add "continue / new" game when user starts a random game
+
 // create daily game data
 
 // get a "day of year number", e.g. 1.1.2024 = 1, 2.6.2024 = 154, 31.12.2024 = 366 (leap year);
@@ -305,8 +307,6 @@ function reducer(state, action) {
       return {
         ...initialState,
         yearDay: todayYearDay,
-        // yearDay: yearDay,
-        gameType: action.payload.sourcePangram,
         solutionsArray: solutionsArray,
         gameCenterLetter: gameCenterLetter,
         totalScore: totalScore,
@@ -314,21 +314,23 @@ function reducer(state, action) {
         gameLettersRegex: gameLettersRegex,
         oneJarScore: oneJarScore,
         isIntro: false,
+        gameType: action.payload.sourcePangram,
       };
     }
-    //TODO: continue here:
-    case "continueDailyGame":
+    case "continueDailyGame": {
+      const gameCenterLetter = JSON.parse(
+        localStorage.getItem("dailyGameCenterLetter")
+      );
+      const gameLetters = JSON.parse(localStorage.getItem("dailyGameLetters"));
+      const allGameLetters = [gameCenterLetter].concat(gameLetters);
+      const gameLettersRegex = new RegExp(`[${allGameLetters.join("")}]`, "i");
       return {
         ...state,
-        gameCenterLetter: JSON.parse(
-          localStorage.getItem("dailyGameCenterLetter")
-        ),
+        gameCenterLetter: gameCenterLetter,
         solutionsArray: JSON.parse(localStorage.getItem("dailySolutionsArray")),
         totalScore: Number(localStorage.getItem("dailyTotalScore")),
-        gameLettersRegex: JSON.parse(
-          localStorage.getItem("dailyGameLettersRegex")
-        ),
-        gameLetters: JSON.parse(localStorage.getItem("dailyGameLetters")),
+        gameLettersRegex: gameLettersRegex,
+        gameLetters: gameLetters,
         inputWord: JSON.parse(localStorage.getItem("dailyInputWord")),
         userSubmitedWords: JSON.parse(
           localStorage.getItem("dailyUserSubmitedWords")
@@ -341,7 +343,42 @@ function reducer(state, action) {
         ),
         oneJarScore: Number(localStorage.getItem("dailyOneJarScore")),
         isIntro: false,
+        gameType: "daily",
       };
+    }
+    case "continueRandomGame": {
+      const gameCenterLetter = JSON.parse(
+        localStorage.getItem("randomGameCenterLetter")
+      );
+      const gameLetters = JSON.parse(localStorage.getItem("randomGameLetters"));
+      const allGameLetters = [gameCenterLetter].concat(gameLetters);
+      const gameLettersRegex = new RegExp(`[${allGameLetters.join("")}]`, "i");
+      return {
+        ...state,
+        gameCenterLetter: gameCenterLetter,
+        solutionsArray: JSON.parse(
+          localStorage.getItem("randomSolutionsArray")
+        ),
+        totalScore: Number(localStorage.getItem("randomTotalScore")),
+        gameLettersRegex: gameLettersRegex,
+        gameLetters: gameLetters,
+        inputWord: JSON.parse(localStorage.getItem("randomInputWord")),
+        userSubmitedWords: JSON.parse(
+          localStorage.getItem("randomUserSubmitedWords")
+        ),
+        userCurrentScore: Number(
+          localStorage.getItem("randomUserCurrentScore")
+        ),
+        userPrevScore: Number(localStorage.getItem("randomUserPrevScore")),
+        userTotalScore: Number(localStorage.getItem("randomUserTotalScore")),
+        userPrevTotalScore: Number(
+          localStorage.getItem("randomUserPrevTotalScore")
+        ),
+        oneJarScore: Number(localStorage.getItem("randomOneJarScore")),
+        isIntro: false,
+        gameType: "random",
+      };
+    }
     case "shuffleGameLetters":
       // shuffle the gameLetters randomly
       return {
@@ -469,6 +506,9 @@ function reducer(state, action) {
     case "resetApp": {
       return { ...state };
     }
+    case "showIntro": {
+      return { ...state, isIntro: true };
+    }
     case "resetStatistics": {
       return {
         ...state,
@@ -573,10 +613,10 @@ function App() {
         JSON.stringify(solutionsArray)
       );
       localStorage.setItem("dailyTotalScore", JSON.stringify(totalScore));
-      localStorage.setItem(
-        "dailyGameLettersRegex",
-        JSON.stringify(gameLettersRegex)
-      );
+      // localStorage.setItem(
+      //   "dailyGameLettersRegex",
+      //   JSON.stringify(gameLettersRegex)
+      // );
       localStorage.setItem("dailyGameLetters", JSON.stringify(gameLetters));
 
       localStorage.setItem("dailyInputWord", JSON.stringify(inputWord));
@@ -612,15 +652,15 @@ function App() {
         JSON.stringify(solutionsArray)
       );
       localStorage.setItem("randomTotalScore", JSON.stringify(totalScore));
-      localStorage.setItem(
-        "randomGameLettersRegex",
-        JSON.stringify(gameLettersRegex)
-      );
+      // localStorage.setItem(
+      //   "randomGameLettersRegex",
+      //   JSON.stringify(gameLettersRegex)
+      // );
       localStorage.setItem("randomGameLetters", JSON.stringify(gameLetters));
 
       localStorage.setItem("randomInputWord", JSON.stringify(inputWord));
       localStorage.setItem(
-        "randomuserSubmitedWords",
+        "randomUserSubmitedWords",
         JSON.stringify(userSubmitedWords)
       );
       localStorage.setItem(
@@ -718,48 +758,52 @@ function App() {
             dispatch={dispatch}
           />
         )}
-        <Navbar dispatch={dispatch} />
-        <GameLevel
-          totalScore={totalScore}
-          userTotalScore={userTotalScore}
-          userCurrentScore={userCurrentScore}
-          userPrevScore={userPrevScore}
-          userPrevTotalScore={userPrevTotalScore}
-          jarsFilledHistory={jarsFilledHistory}
-          solutionsArray={solutionsArray}
-          userSubmitedWords={userSubmitedWords}
-          oneJarScore={oneJarScore}
-          dispatch={dispatch}
-        />
-        <UserWords
-          userSubmitedWords={userSubmitedWords}
-          showUserWords={showUserWords}
-          dispatch={dispatch}
-        />
-        <GameMessage
-          // check all words submited by user; if there are no words, pass on an empty string, otherwise pass on the last submited word
-          lastSubmitedWord={
-            userSubmitedWords.length > 0
-              ? userSubmitedWords[userSubmitedWords.length - 1]
-              : ""
-          }
-          randomCongratulationsWord={randomCongratulationsWord}
-          wrongInputMessage={wrongInputMessage}
-          toggle={toggle}
-        />
-        <InputWord
-          inputWord={inputWord}
-          gameCenterLetter={gameCenterLetter}
-          isWordShaking={isWordShaking}
-          toggle={toggle}
-          dispatch={dispatch}
-        />
-        <HexagonGroup
-          gameLetters={gameLetters}
-          gameCenterLetter={gameCenterLetter}
-          dispatch={dispatch}
-        />
-        <GameButtons dispatch={dispatch} inputWord={inputWord} />
+        {!isIntro && (
+          <>
+            <Navbar dispatch={dispatch} />
+            <GameLevel
+              totalScore={totalScore}
+              userTotalScore={userTotalScore}
+              userCurrentScore={userCurrentScore}
+              userPrevScore={userPrevScore}
+              userPrevTotalScore={userPrevTotalScore}
+              jarsFilledHistory={jarsFilledHistory}
+              solutionsArray={solutionsArray}
+              userSubmitedWords={userSubmitedWords}
+              oneJarScore={oneJarScore}
+              dispatch={dispatch}
+            />
+            <UserWords
+              userSubmitedWords={userSubmitedWords}
+              showUserWords={showUserWords}
+              dispatch={dispatch}
+            />
+            <GameMessage
+              // check all words submited by user; if there are no words, pass on an empty string, otherwise pass on the last submited word
+              lastSubmitedWord={
+                userSubmitedWords.length > 0
+                  ? userSubmitedWords[userSubmitedWords.length - 1]
+                  : ""
+              }
+              randomCongratulationsWord={randomCongratulationsWord}
+              wrongInputMessage={wrongInputMessage}
+              toggle={toggle}
+            />
+            <InputWord
+              inputWord={inputWord}
+              gameCenterLetter={gameCenterLetter}
+              isWordShaking={isWordShaking}
+              toggle={toggle}
+              dispatch={dispatch}
+            />
+            <HexagonGroup
+              gameLetters={gameLetters}
+              gameCenterLetter={gameCenterLetter}
+              dispatch={dispatch}
+            />
+            <GameButtons dispatch={dispatch} inputWord={inputWord} />
+          </>
+        )}
       </div>
     </div>
   );

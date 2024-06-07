@@ -8,7 +8,7 @@ function Navbar({ dispatch }) {
   return (
     <div className={sytles.container}>
       <div className={sytles.beeContainer}>
-        <BeeIcon />
+        <BeeIcon dispatch={dispatch} />
       </div>
       <div className={sytles.buttonsContainer}>
         <StatisticsIcon dispatch={dispatch} />
