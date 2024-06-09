@@ -1,7 +1,7 @@
 import styles from "./EndOfGame.module.css";
 import BeeIcon from "./NavbarIcons/BeeIcon";
 
-function EndOfGame({ solutionsArray, userSubmitedWords }) {
+function EndOfGame({ solutionsArray, userSubmitedWords, dispatch }) {
   const allWordsFound =
     solutionsArray.length === userSubmitedWords.length ? true : false;
 
@@ -42,7 +42,7 @@ function EndOfGame({ solutionsArray, userSubmitedWords }) {
     <div className={styles.background}>
       <div className={styles.container}>
         <h1>Zmaga!</h1>
-        <BeeIcon />
+        <BeeIcon dispatch={dispatch} />
 
         {allWordsFound && (
           <p>

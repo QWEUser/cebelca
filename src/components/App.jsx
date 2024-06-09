@@ -29,7 +29,7 @@ const diff =
   (startOfYear.getTimezoneOffset() - now.getTimezoneOffset()) * 60 * 1000;
 const oneDay = 1000 * 60 * 60 * 24;
 const dayOfYear = Math.floor(diff / oneDay);
-console.log("Day of year: " + dayOfYear);
+// console.log("Day of year: " + dayOfYear);
 
 // yearDay is a string made from current year and current day in year, for example "2024" (year) + "141" (current day in year) = "2024141"
 const todayYearDay = Number(
@@ -184,6 +184,10 @@ const initialState = {
       ? 0
       : Number(localStorage.getItem("jarsFilled")),
   endOfGame: false,
+  isDailyGameFinished:
+    JSON.parse(localStorage.getItem("isDailyGameFinished")) || false,
+  isRandomGameFinished:
+    JSON.parse(localStorage.getItem("isRandomGameFinished")) || false,
 };
 
 console.log("oneJarScore: " + initialState.oneJarScore);
@@ -346,6 +350,9 @@ function reducer(state, action) {
         isIntro: false,
         showOverlay: false,
         gameType: "daily",
+        isDailyGameFinished: JSON.parse(
+          localStorage.getItem("isDailyGameFinished")
+        ),
       };
     }
     case "continueRandomGame": {
@@ -380,6 +387,9 @@ function reducer(state, action) {
         isIntro: false,
         showOverlay: false,
         gameType: "random",
+        isRandomGameFinished: JSON.parse(
+          localStorage.getItem("isRandomGameFinished")
+        ),
       };
     }
     case "shuffleGameLetters":
@@ -525,7 +535,15 @@ function reducer(state, action) {
       return { ...state, darkMode: !state.darkMode };
     }
     case "gameOver": {
-      return { ...state, endOfGame: true, showOverlay: false };
+      return {
+        ...state,
+        endOfGame: true,
+        showOverlay: false,
+        isDailyGameFinished:
+          state.gameType === "daily" ? true : state.isDailyGameFinished,
+        isRandomGameFinished:
+          state.gameType === "random" ? true : state.isRandomGameFinished,
+      };
     }
     default:
       throw new Error("Action unknown");
@@ -561,7 +579,9 @@ function App() {
       randomCongratulationsWord,
       wrongInputMessage,
       jarsFilledHistory,
-      endOfGame,
+      // endOfGame,
+      isDailyGameFinished,
+      isRandomGameFinished,
     },
     dispatch,
   ] = useReducer(reducer, initialState);
@@ -640,8 +660,11 @@ function App() {
         "dailyUserPrevTotalScore",
         JSON.stringify(userPrevTotalScore)
       );
-
       localStorage.setItem("dailyOneJarScore", JSON.stringify(oneJarScore));
+      localStorage.setItem(
+        "isDailyGameFinished",
+        JSON.stringify(isDailyGameFinished)
+      );
     }
 
     // random game localStorage sync
@@ -684,6 +707,10 @@ function App() {
       );
 
       localStorage.setItem("randomOneJarScore", JSON.stringify(oneJarScore));
+      localStorage.setItem(
+        "isRandomGameFinished",
+        JSON.stringify(isRandomGameFinished)
+      );
     }
     localStorage.setItem("jarsFilled", JSON.stringify(jarsFilledHistory));
   }, [
@@ -692,6 +719,8 @@ function App() {
     gameLettersRegex,
     gameType,
     inputWord,
+    isDailyGameFinished,
+    isRandomGameFinished,
     jarsFilledHistory,
     oneJarScore,
     solutionsArray,
@@ -745,13 +774,21 @@ function App() {
             dispatch={dispatch}
           />
         )}
-        {endOfGame && (
+        {/* TODO: this is not working right now */}
+        {((gameType === "random" && isRandomGameFinished === true) ||
+          (gameType === "daily" && isDailyGameFinished === true)) && (
+          <EndOfGame
+            solutionsArray={solutionsArray}
+            userSubmitedWords={userSubmitedWords}
+            dispatch={dispatch}
+          />
+        )}
+        {/* {endOfGame && (
           <EndOfGame
             solutionsArray={solutionsArray}
             userSubmitedWords={userSubmitedWords}
           />
-        )}
-
+        )} */}
         {showOverlay && (
           <Overlay
             overlayText={overlayText}
