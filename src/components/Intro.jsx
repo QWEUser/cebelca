@@ -18,11 +18,15 @@ function Intro({ yearDay, todayYearDay, dispatch }) {
       </h1>
       <button
         onClick={() => {
-          dispatch({
-            type: "createNewGame",
-            payload: { sourcePangram: "random" },
-            // payload: { sourcePangram: null, yearDay: null },
-          });
+          localStorage.getItem("randomGameCenterLetter")
+            ? dispatch({
+                type: "openOverlay",
+                payload: "randomGamePrompt",
+              })
+            : dispatch({
+                type: "createNewGame",
+                payload: { sourcePangram: "random" },
+              });
         }}
       >
         Naključna igra
@@ -37,7 +41,6 @@ function Intro({ yearDay, todayYearDay, dispatch }) {
             : dispatch({
                 type: "createNewGame",
                 payload: { sourcePangram: "daily" },
-                // payload: { sourcePangram: null, yearDay: null },
               });
           console.log(yearDay);
           console.log(todayYearDay);

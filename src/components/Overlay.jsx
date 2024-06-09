@@ -6,6 +6,7 @@ import GameSettings from "./OverlayMessages/GameSettings";
 import FullJarWindow from "./OverlayMessages/FullJarWindow";
 import GameStatisticsDefaultConfirmation from "./OverlayMessages/GameStatisticsDefaultConfirmation";
 import GameStatisticsDefaultMessage from "./OverlayMessages/GameStatisticsDefaultMessage";
+import RandomGamePrompt from "./OverlayMessages/RandomGamePrompt";
 
 function Overlay({
   dispatch,
@@ -55,6 +56,10 @@ function Overlay({
             }
             case "resetStatisticsText": {
               return <GameStatisticsDefaultMessage dispatch={dispatch} />;
+            }
+            //TODO: add prompt to contine or start new game for random game
+            case "randomGamePrompt": {
+              return <RandomGamePrompt dispatch={dispatch} />;
             }
             default:
               return null;

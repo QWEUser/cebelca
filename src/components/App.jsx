@@ -16,6 +16,7 @@ import Intro from "./Intro";
 //TODO: get rid of bad words (including "pedofil", "fafati", "citroen"?, "engineering"?, "ziza")!!
 
 //TODO: add "continue / new" game when user starts a random game
+//TODO: randomize gameLetters sequence
 
 // create daily game data
 
@@ -343,6 +344,7 @@ function reducer(state, action) {
         ),
         oneJarScore: Number(localStorage.getItem("dailyOneJarScore")),
         isIntro: false,
+        showOverlay: false,
         gameType: "daily",
       };
     }
@@ -376,6 +378,7 @@ function reducer(state, action) {
         ),
         oneJarScore: Number(localStorage.getItem("randomOneJarScore")),
         isIntro: false,
+        showOverlay: false,
         gameType: "random",
       };
     }
@@ -493,7 +496,7 @@ function reducer(state, action) {
         ...state,
         showOverlay: true,
         overlayText: action.payload,
-        isIntro: false,
+        // isIntro: false,
       };
     }
     case "closeOverlay": {
