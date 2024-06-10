@@ -45,7 +45,6 @@ function ScoreJar({
   // dispatch function is wrapped inside a useEffect hook to prevent "Cannot update a component (`App`) while rendering a different component (`ScoreJar`)" error
   useEffect(() => {
     if (displayScore == oneJarScore) {
-      console.log("Jar full!");
       setJarFilled(true);
       setDisplayScore(userCurrentScore);
       dispatch({ type: "openOverlay", payload: "fullJar" });

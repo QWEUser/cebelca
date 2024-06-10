@@ -183,6 +183,9 @@ const initialState = {
     localStorage.getItem("jarsFilled") === null
       ? 0
       : Number(localStorage.getItem("jarsFilled")),
+  //TODO: continue here
+  randomGameJarsLeft: 0,
+  dailyGameJarsLeft: 0,
   endOfGame: false,
   isDailyGameFinished:
     JSON.parse(localStorage.getItem("isDailyGameFinished")) || false,
@@ -288,22 +291,6 @@ function reducer(state, action) {
 
       const oneJarScore = Math.floor(totalScore / amountOfJars);
 
-      // if (action.payload.sourcePangram === "daily") {
-      //   localStorage.setItem("dailyGameCenterLetter", gameCenterLetter);
-      //   localStorage.setItem("dailySolutionsArray", solutionsArray);
-      //   localStorage.setItem("dailyTotalScore", totalScore);
-      //   localStorage.setItem("dailyGameLettersRegex", gameLettersRegex);
-      //   localStorage.setItem("dailyGameLetters", gameLetters);
-      //   localStorage.setItem("dailyOneJarScore", oneJarScore);
-      // } else if (action.payload.sourcePangram === "random") {
-      //   localStorage.setItem("randomGameCenterLetter", gameCenterLetter);
-      //   localStorage.setItem("randomSolutionsArray", solutionsArray);
-      //   localStorage.setItem("randomTotalScore", totalScore);
-      //   localStorage.setItem("randomGameLettersRegex", gameLettersRegex);
-      //   localStorage.setItem("randomGameLetters", gameLetters);
-      //   localStorage.setItem("randomOneJarScore", oneJarScore);
-      // }
-
       if (action.payload.sourcePangram === "daily") {
         localStorage.setItem("yearDay", JSON.stringify(todayYearDay));
         // localStorage.setItem("yearDay", JSON.stringify(yearDay));
@@ -320,6 +307,8 @@ function reducer(state, action) {
         oneJarScore: oneJarScore,
         isIntro: false,
         gameType: action.payload.sourcePangram,
+        isDailyGameFinished: false,
+        isRandomGameFinished: false,
       };
     }
     case "continueDailyGame": {
@@ -555,14 +544,12 @@ function App() {
     {
       isIntro,
       darkMode,
-      //TODO: new
       yearDay,
       gameType,
       solutionsArray,
       gameCenterLetter,
       totalScore,
       gameLettersRegex,
-      // end new
       gameLetters,
       inputWord,
       isWordShaking,
@@ -589,7 +576,7 @@ function App() {
   // TODO: if possible, change keyHandler and useEffect in the future to optimize performance; currently, any change in inputWord causes keyHandler to update, consequently triggering useEffect to dismount and mount .addEventListeners every time.
   const keyHandler = useCallback(
     (e) => {
-      if (showOverlay === false) {
+      if (showOverlay === false && isIntro === false) {
         if (e.key == "Enter" || e.key == "Return") {
           console.log(userSubmitedWords);
 
@@ -608,7 +595,7 @@ function App() {
         }
       }
     },
-    [gameLettersRegex, inputWord, showOverlay, userSubmitedWords]
+    [gameLettersRegex, inputWord, isIntro, showOverlay, userSubmitedWords]
   );
 
   // add event listener to window object
