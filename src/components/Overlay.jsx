@@ -14,6 +14,7 @@ function Overlay({
   solutionsArray,
   userSubmitedWords,
   darkMode,
+  amountOfJars,
 }) {
   return (
     <>
@@ -45,6 +46,7 @@ function Overlay({
                 <GameWordsLeft
                   solutionsArray={solutionsArray}
                   userSubmitedWords={userSubmitedWords}
+                  amountOfJars={amountOfJars}
                 />
               );
             }
@@ -57,7 +59,6 @@ function Overlay({
             case "resetStatisticsText": {
               return <GameStatisticsDefaultMessage dispatch={dispatch} />;
             }
-            //TODO: add prompt to contine or start new game for random game
             case "randomGamePrompt": {
               return <RandomGamePrompt dispatch={dispatch} />;
             }

@@ -15,11 +15,6 @@ import Intro from "./Intro";
 //TODO: get rid of words that contain letter w and y!!
 //TODO: get rid of bad words (including "pedofil", "fafati", "citroen"?, "engineering"?, "ziza")!!
 
-//TODO: add "continue / new" game when user starts a random game
-//TODO: randomize gameLetters sequence
-
-// create daily game data
-
 // get a "day of year number", e.g. 1.1.2024 = 1, 2.6.2024 = 154, 31.12.2024 = 366 (leap year);
 const now = new Date();
 const startOfYear = new Date(now.getFullYear(), 0, 0);
@@ -219,13 +214,26 @@ function reducer(state, action) {
         (letter) => !vowelRegex.test(letter)
       );
       // pick a center letter of the game
-      const gameCenterLetter =
-        vowelFilteredPangram[
-          // Math.floor(Math.random() * vowelFilteredPangram.length)
-          todayYearDay % vowelFilteredPangram.length ||
-            // yearDay % vowelFilteredPangram.length ||
-            Math.floor(Math.random() * vowelFilteredPangram.length)
-        ];
+
+      // determine which element at index (default = 0) will be chosen for either the daily or random game
+      let gameCenterLetterChooser = 0;
+      if (action.payload.sourcePangram === "daily") {
+        gameCenterLetterChooser = todayYearDay % vowelFilteredPangram.length;
+      } else if (action.payload.sourcePangram === "random") {
+        gameCenterLetterChooser = Math.floor(
+          Math.random() * vowelFilteredPangram.length
+        );
+      }
+      console.log("gameCenterLetterChooser: " + gameCenterLetterChooser);
+
+      const gameCenterLetter = vowelFilteredPangram[gameCenterLetterChooser];
+      // vowelFilteredPangram[
+      //   // Math.floor(Math.random() * vowelFilteredPangram.length)
+      //   todayYearDay % vowelFilteredPangram.length ||
+      //     // yearDay % vowelFilteredPangram.length ||
+      //     //TODO: this is causing the daily game to have different solutions!!!
+      //     Math.floor(Math.random() * vowelFilteredPangram.length)
+      // ];
       console.log(initialPangram);
 
       //create regex to check whether a letter is part of puzzle letters
@@ -302,7 +310,7 @@ function reducer(state, action) {
         solutionsArray: solutionsArray,
         gameCenterLetter: gameCenterLetter,
         totalScore: totalScore,
-        gameLetters: gameLetters,
+        gameLetters: gameLetters.sort(() => Math.random() - 0.5),
         gameLettersRegex: gameLettersRegex,
         oneJarScore: oneJarScore,
         isIntro: false,
@@ -589,6 +597,9 @@ function App() {
         if (e.key.match(gameLettersRegex) && e.key.length == 1) {
           dispatch({ type: "userInputWord", payload: e.key });
         }
+        if (e.key == "Escape") {
+          dispatch({ type: "showIntro" });
+        }
       } else {
         if (e.key == "Escape") {
           dispatch({ type: "closeOverlay" });
@@ -776,15 +787,19 @@ function App() {
             userSubmitedWords={userSubmitedWords}
           />
         )} */}
-        {showOverlay && (
-          <Overlay
-            overlayText={overlayText}
-            solutionsArray={solutionsArray}
-            userSubmitedWords={userSubmitedWords}
-            darkMode={darkMode}
-            dispatch={dispatch}
-          />
-        )}
+        {((gameType === "random" && isRandomGameFinished === false) ||
+          (gameType === "daily" && isDailyGameFinished === false) ||
+          isIntro === true) &&
+          showOverlay && (
+            <Overlay
+              overlayText={overlayText}
+              solutionsArray={solutionsArray}
+              userSubmitedWords={userSubmitedWords}
+              darkMode={darkMode}
+              dispatch={dispatch}
+              amountOfJars={amountOfJars}
+            />
+          )}
         {!isIntro && (
           <>
             <Navbar dispatch={dispatch} />
