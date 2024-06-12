@@ -38,7 +38,7 @@ function GameWordsLeft({ solutionsArray, userSubmitedWords, amountOfJars }) {
   return (
     <div className={styles.container}>
       <h1>Preostali kozarci</h1>
-      <p>V trenutni igri lahko napolniš še toliko kozarcev:</p>
+      <p>V trenutni igri lahko napolniš največ {amountOfJars} kozarcev.</p>
       <br></br>
       <div className={styles.jarContainer}>
         <div className={styles.jarCounter}>{amountOfJars}&times;</div>
