@@ -59,7 +59,8 @@ function EndOfGame({ solutionsArray, userSubmitedWords, dispatch }) {
         )}
         <button
           className={styles.newGameButton}
-          onClick={() => window.location.reload(false)}
+          // onClick={() => window.location.reload(false)}
+          onClick={() => dispatch({ type: "showIntro" })}
         >
           Nova igra?
         </button>

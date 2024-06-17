@@ -1,7 +1,7 @@
 import styles from "./Intro.module.css";
 import BeeIcon from "./NavbarIcons/BeeIcon";
 
-function Intro({ yearDay, todayYearDay, dispatch }) {
+function Intro({ yearDay, todayYearDay, isRandomGameFinished, dispatch }) {
   return (
     <div className={styles.container}>
       <div className={styles.beeContainer}>
@@ -18,7 +18,8 @@ function Intro({ yearDay, todayYearDay, dispatch }) {
       </h1>
       <button
         onClick={() => {
-          localStorage.getItem("randomGameCenterLetter")
+          localStorage.getItem("randomGameCenterLetter") &&
+          !isRandomGameFinished
             ? dispatch({
                 type: "openOverlay",
                 payload: "randomGamePrompt",

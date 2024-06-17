@@ -12,7 +12,6 @@ import Overlay from "./Overlay";
 import EndOfGame from "./EndOfGame";
 import Intro from "./Intro";
 
-//TODO: get rid of words that contain letter w and y!!
 //TODO: get rid of bad words (including "pedofil", "fafati", "citroen"?, "engineering"?, "ziza")!!
 
 // get a "day of year number", e.g. 1.1.2024 = 1, 2.6.2024 = 154, 31.12.2024 = 366 (leap year);
@@ -769,6 +768,7 @@ function App() {
           <Intro
             yearDay={yearDay}
             todayYearDay={todayYearDay}
+            isRandomGameFinished={isRandomGameFinished}
             dispatch={dispatch}
           />
         )}
