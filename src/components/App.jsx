@@ -516,7 +516,7 @@ function reducer(state, action) {
       return { ...state };
     }
     case "showIntro": {
-      return { ...state, isIntro: true };
+      return { ...state, isIntro: true, showOverlay: false };
     }
     case "resetStatistics": {
       return {

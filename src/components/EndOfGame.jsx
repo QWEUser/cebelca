@@ -12,12 +12,18 @@ function EndOfGame({ solutionsArray, userSubmitedWords, dispatch }) {
   const renderedUserSubmitedWords = userSubmitedWords
     .map((word, index) => {
       // display words in block elements with links
+      let isPangram = false;
+      const wordArray = Array.from(new Set([...word]));
+      if (wordArray.length === 7) {
+        isPangram = true;
+      }
       return (
         <a
           key={index}
           href={`https://www.fran.si/iskanje?View=1&Query=${word}`}
           target={"_blank"}
           rel="noopener noreferrer"
+          className={isPangram ? styles.pangram : ""}
         >
           {word}
         </a>
@@ -27,12 +33,18 @@ function EndOfGame({ solutionsArray, userSubmitedWords, dispatch }) {
 
   const renderedNotFoundWords = notFoundWords.map((word, index) => {
     // display words in block elements with links
+    let isPangram = false;
+    const wordArray = Array.from(new Set([...word]));
+    if (wordArray.length === 7) {
+      isPangram = true;
+    }
     return (
       <a
         key={index}
         href={`https://www.fran.si/iskanje?View=1&Query=${word}`}
         target={"_blank"}
         rel="noopener noreferrer"
+        className={isPangram ? styles.pangram : ""}
       >
         {word}
       </a>
