@@ -15,6 +15,8 @@ function Overlay({
   userSubmitedWords,
   darkMode,
   amountOfJars,
+  userTotalScore,
+  totalScore,
 }) {
   return (
     <>
@@ -47,6 +49,8 @@ function Overlay({
                   solutionsArray={solutionsArray}
                   userSubmitedWords={userSubmitedWords}
                   amountOfJars={amountOfJars}
+                  userTotalScore={userTotalScore}
+                  totalScore={totalScore}
                 />
               );
             }

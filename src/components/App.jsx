@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useReducer } from "react";
 import "./App.css";
 import allWordsJSON from "../assets/words-data.json";
+import badWordsJSON from "../assets/bad-words-data.json";
 import GameButtons from "./GameButtons";
 import GameLevel from "./GameLevel";
 import GameMessage from "./GameMessage";
@@ -11,8 +12,6 @@ import Navbar from "./Navbar";
 import Overlay from "./Overlay";
 import EndOfGame from "./EndOfGame";
 import Intro from "./Intro";
-
-//TODO: get rid of bad words (including "pedofil", "fafati", "citroen"?, "engineering"?, "ziza")!!
 
 // get a "day of year number", e.g. 1.1.2024 = 1, 2.6.2024 = 154, 31.12.2024 = 366 (leap year);
 const now = new Date();
@@ -36,83 +35,19 @@ console.log(todayYearDay);
 // define amount of jars that need to be filled to reach total score
 const amountOfJars = 10;
 
-//TODO: add an OR operator to define hard coded input in case "allWordsJSON is unavailable"
-const pangrams = allWordsJSON.pangrams.split(" ");
-const notPangrams = allWordsJSON.notPangrams.split(" ");
-console.log(pangrams.length);
-const allWords = pangrams.concat(notPangrams).sort();
-
-// // create a random new game on page load
-// // randomly choose a pangram
-// const initialPangram = pangrams[Math.floor(Math.random() * pangrams.length)];
-
-// // pick a consonant from the word and make it the center letter
-// const pangramArray = [...initialPangram];
-// const vowelRegex = new RegExp(/[aeiou]/);
-// const pangramSetArray = Array.from(new Set(pangramArray));
-// const vowelFilteredPangram = pangramSetArray.filter(
-//   (letter) => !vowelRegex.test(letter)
-// );
-// const gameCenterLetter =
-//   vowelFilteredPangram[Math.floor(Math.random() * vowelFilteredPangram.length)];
-// console.log(initialPangram);
-
-// //create regex to check whether a letter is part of puzzle letters
-// const gameLettersRegex = new RegExp(`[${pangramSetArray.join("")}]`, "i");
-
-// // create a solutions array from all words
-// const containsCenterLetter = allWords.filter((word) =>
-//   word.includes(gameCenterLetter)
-// );
-// const solutionsArray = containsCenterLetter.filter((word) => {
-//   const wordArray = [...word];
-//   for (let i = 0; i < wordArray.length; i++) {
-//     if (!gameLettersRegex.test(wordArray[i])) {
-//       return false;
-//     }
-//     if (i === wordArray.length - 1) {
-//       return true;
-//     }
-//   }
-// });
-
-// // calculate total score possible
-
-// let totalScore = 0;
-// let countPangrams = 0;
-// for (const word of solutionsArray) {
-//   totalScore = totalScore + word.length - 3;
-//   const wordUniqueLetters = Array.from(new Set([...word]));
-//   if (wordUniqueLetters.length == 7) {
-//     totalScore = totalScore + 7;
-//     countPangrams++;
-//     console.log(
-//       "initial page load: pangram: " +
-//         word +
-//         " , number of pangrams found: " +
-//         countPangrams
-//     );
-//   }
-// }
-
-// console.log(solutionsArray);
-// console.log(totalScore);
-
-// // devide the totalScore to predetermined amount of jars and save the score to an array. For example, if totalScore = 101 and amountOfJars = 5, totalJarsScore should be [20,40,60,80,101] (all elements are rounded down, except the last element, which is orunded up)
-// const amountOfJars = 10;
-
-// const totalJarScoresArray = Array.from(
-//   { length: amountOfJars },
-//   (_e, index) => {
-//     if (index !== amountOfJars - 1) {
-//       return Math.floor(((index + 1) * totalScore) / amountOfJars);
-//     } else {
-//       return Math.ceil(((index + 1) * totalScore) / amountOfJars);
-//     }
-//   }
-// );
-
-// console.log(totalJarScoresArray);
+const badWords = badWordsJSON.bad_words.split(" ");
+const pangrams = allWordsJSON.pangrams
+  .split(" ")
+  .filter((word) => !badWords.includes(word));
+const notPangrams = allWordsJSON.notPangrams
+  .split(" ")
+  .filter((word) => !badWords.includes(word));
+console.log("bad words: " + badWords.length);
+const allWords = pangrams
+  .concat(notPangrams)
+  // .filter((word) => !badWords.includes(word))
+  .sort();
+console.log("all words: " + allWords.length);
 
 // words that are displayed when user successfuly enters a new word
 const congratulationsWords = [
@@ -150,19 +85,15 @@ const initialState = {
   gameType: null,
 
   gameLetters: [],
-  // gameLetters: pangramSetArray.filter((letter) => letter != gameCenterLetter),
   inputWord: "",
   isWordShaking: false,
   userSubmitedWords: [],
-  // showWordsLeft: false,
   showUserWords: false,
   userCurrentScore: 0,
   userPrevScore: 0,
   userTotalScore: 0,
   userPrevTotalScore: 0,
   oneJarScore: 1,
-  // oneJarScore: Math.floor(totalScore / amountOfJars),
-  // jarFilled: false,
   showOverlay: false,
   // toggle is used to force rerender a component -> its value changes between true and false, so the component using key={toggle} forcefully rerenders
   toggle: false,
@@ -177,7 +108,6 @@ const initialState = {
     localStorage.getItem("jarsFilled") === null
       ? 0
       : Number(localStorage.getItem("jarsFilled")),
-  //TODO: continue here
   randomGameJarsLeft: 0,
   dailyGameJarsLeft: 0,
   endOfGame: false,
@@ -200,7 +130,6 @@ function reducer(state, action) {
       let initialPangram = "čebelica";
       if (action.payload.sourcePangram === "daily") {
         initialPangram = pangrams[todayYearDay % pangrams.length];
-        // initialPangram = pangrams[yearDay % pangrams.length];
       } else if (action.payload.sourcePangram === "random") {
         initialPangram = pangrams[Math.floor(Math.random() * pangrams.length)];
       }
@@ -276,7 +205,7 @@ function reducer(state, action) {
       console.log(solutionsArray);
       console.log(totalScore);
 
-      // devide the totalScore to predetermined amount of jars and save the score to an array. For example, if totalScore = 101 and amountOfJars = 5, totalJarsScore should be [20,40,60,80,101] (all elements are rounded down, except the last element, which is orunded up)
+      // devide the totalScore to predetermined amount of jars and save the score to an array. For example, if totalScore = 101 and amountOfJars = 5, totalJarsScore should be [20,40,60,80,101] (all elements are rounded down, except the last element, which is runded up)
       // const amountOfJars = 10;
 
       const totalJarScoresArray = Array.from(
@@ -300,7 +229,6 @@ function reducer(state, action) {
 
       if (action.payload.sourcePangram === "daily") {
         localStorage.setItem("yearDay", JSON.stringify(todayYearDay));
-        // localStorage.setItem("yearDay", JSON.stringify(yearDay));
       }
 
       return {
@@ -432,7 +360,6 @@ function reducer(state, action) {
           userSubmitedWords: [...state.userSubmitedWords, action.payload],
           inputWord: initialState.inputWord,
           isWordShaking: false,
-          // TODO: ISSUE: this implemetation will add only 1 extra filled jar, even if your input is worth 2+ full new jars
           userCurrentScore:
             // newScore >= state.oneJarScore
             //   ? newScore % state.oneJarScore
@@ -440,7 +367,8 @@ function reducer(state, action) {
             //     newScore,
             newScore % state.oneJarScore,
           userPrevScore: state.userCurrentScore,
-          userTotalScore: newScore,
+          userTotalScore: state.userTotalScore + score,
+          // userTotalScore: newScore,
           userPrevTotalScore: state.userTotalScore,
           oneJarScore:
             // state.userTotalScore is reading the previous state, so we need to add newScore
@@ -458,11 +386,6 @@ function reducer(state, action) {
               Math.floor(Math.random() * congratulationsWords.length)
             ],
           wrongInputMessage: "",
-          // TODO: ISSUE: this implemetation will add only 1 extra filled jar, even if your input is worth 2+ full new jars
-          // jarsFilledHistory:
-          //   newScore >= state.oneJarScore
-          //     ? state.jarsFilledHistory + 1
-          //     : state.jarsFilledHistory,
           jarsFilledHistory:
             newScore >= state.oneJarScore
               ? state.jarsFilledHistory +
@@ -471,7 +394,6 @@ function reducer(state, action) {
           // jarFilled: false,
           endOfGame:
             state.userTotalScore + newScore === state.totalScore ? true : false,
-          // state.userTotalScore + newScore === totalScore ? true : false,
         };
       }
       if (state.userSubmitedWords.includes(state.inputWord)) {
@@ -488,6 +410,7 @@ function reducer(state, action) {
         isWordShaking: true,
         toggle: !state.toggle,
         wrongInputMessage:
+          //TODO: use a different expression for "Napačna beseda!"
           state.inputWord.length < 4 ? "Prekratka beseda!" : "Napačna beseda!",
       };
     }
@@ -573,7 +496,6 @@ function App() {
       randomCongratulationsWord,
       wrongInputMessage,
       jarsFilledHistory,
-      // endOfGame,
       isDailyGameFinished,
       isRandomGameFinished,
     },
@@ -633,10 +555,6 @@ function App() {
         JSON.stringify(solutionsArray)
       );
       localStorage.setItem("dailyTotalScore", JSON.stringify(totalScore));
-      // localStorage.setItem(
-      //   "dailyGameLettersRegex",
-      //   JSON.stringify(gameLettersRegex)
-      // );
       localStorage.setItem("dailyGameLetters", JSON.stringify(gameLetters));
 
       localStorage.setItem("dailyInputWord", JSON.stringify(inputWord));
@@ -675,10 +593,6 @@ function App() {
         JSON.stringify(solutionsArray)
       );
       localStorage.setItem("randomTotalScore", JSON.stringify(totalScore));
-      // localStorage.setItem(
-      //   "randomGameLettersRegex",
-      //   JSON.stringify(gameLettersRegex)
-      // );
       localStorage.setItem("randomGameLetters", JSON.stringify(gameLetters));
 
       localStorage.setItem("randomInputWord", JSON.stringify(inputWord));
@@ -772,7 +686,6 @@ function App() {
             dispatch={dispatch}
           />
         )}
-        {/* TODO: this is not working right now */}
         {((gameType === "random" && isRandomGameFinished === true) ||
           (gameType === "daily" && isDailyGameFinished === true)) && (
           <EndOfGame
@@ -781,12 +694,6 @@ function App() {
             dispatch={dispatch}
           />
         )}
-        {/* {endOfGame && (
-          <EndOfGame
-            solutionsArray={solutionsArray}
-            userSubmitedWords={userSubmitedWords}
-          />
-        )} */}
         {((gameType === "random" && isRandomGameFinished === false) ||
           (gameType === "daily" && isDailyGameFinished === false) ||
           isIntro === true) &&
@@ -798,6 +705,8 @@ function App() {
               darkMode={darkMode}
               dispatch={dispatch}
               amountOfJars={amountOfJars}
+              userTotalScore={userTotalScore}
+              totalScore={totalScore}
             />
           )}
         {!isIntro && (

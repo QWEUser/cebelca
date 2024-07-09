@@ -1,6 +1,17 @@
 import styles from "./GameWordsLeft.module.css";
 
-function GameWordsLeft({ solutionsArray, userSubmitedWords, amountOfJars }) {
+function GameWordsLeft({
+  solutionsArray,
+  userSubmitedWords,
+  amountOfJars,
+  userTotalScore,
+  totalScore,
+}) {
+  // calculate how many jars can still be filled in the current game
+  const jarsLeft =
+    amountOfJars -
+    Math.floor(userTotalScore / Math.floor(totalScore / amountOfJars));
+
   // create an array of all the words that are still the solution, but the player has not yet entered
   const wordsLeft = solutionsArray.filter(
     (word) => !userSubmitedWords.includes(word)
@@ -38,10 +49,12 @@ function GameWordsLeft({ solutionsArray, userSubmitedWords, amountOfJars }) {
   return (
     <div className={styles.container}>
       <h1>Preostali kozarci</h1>
-      <p>V trenutni igri lahko napolniš največ {amountOfJars} kozarcev.</p>
+      <p>V trenutni igri lahko napolniš še {jarsLeft} kozarcev.</p>
+      {/* <p>V trenutni igri lahko napolniš največ {amountOfJars} kozarcev.</p> */}
       <br></br>
       <div className={styles.jarContainer}>
-        <div className={styles.jarCounter}>{amountOfJars}&times;</div>
+        <div className={styles.jarCounter}>{jarsLeft}&times;</div>
+        {/* <div className={styles.jarCounter}>{amountOfJars}&times;</div> */}
         <svg
           xmlns="http://www.w3.org/2000/svg"
           version="1.1"
