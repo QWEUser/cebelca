@@ -7,6 +7,7 @@ import FullJarWindow from "./OverlayMessages/FullJarWindow";
 import GameStatisticsDefaultConfirmation from "./OverlayMessages/GameStatisticsDefaultConfirmation";
 import GameStatisticsDefaultMessage from "./OverlayMessages/GameStatisticsDefaultMessage";
 import RandomGamePrompt from "./OverlayMessages/RandomGamePrompt";
+import GameOverPrompt from "./OverlayMessages/GameOverPrompt";
 
 function Overlay({
   dispatch,
@@ -51,6 +52,7 @@ function Overlay({
                   amountOfJars={amountOfJars}
                   userTotalScore={userTotalScore}
                   totalScore={totalScore}
+                  dispatch={dispatch}
                 />
               );
             }
@@ -65,6 +67,9 @@ function Overlay({
             }
             case "randomGamePrompt": {
               return <RandomGamePrompt dispatch={dispatch} />;
+            }
+            case "gameOverPrompt": {
+              return <GameOverPrompt dispatch={dispatch} />;
             }
             default:
               return null;

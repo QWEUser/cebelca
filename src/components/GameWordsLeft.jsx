@@ -6,6 +6,7 @@ function GameWordsLeft({
   amountOfJars,
   userTotalScore,
   totalScore,
+  dispatch,
 }) {
   // calculate how many jars can still be filled in the current game
   const jarsLeft =
@@ -46,10 +47,24 @@ function GameWordsLeft({
       );
     }
   });
+  const jarWord = () => {
+    if (jarsLeft === 1) {
+      return "kozarec";
+    } else if (jarsLeft === 2) {
+      return "kozarca";
+    } else if (jarsLeft === 3 || jarsLeft === 4) {
+      return "kozarce";
+    } else {
+      return "kozarcev";
+    }
+  };
   return (
     <div className={styles.container}>
       <h1>Preostali kozarci</h1>
-      <p>V trenutni igri lahko napolniš še {jarsLeft} kozarcev.</p>
+      <p>
+        V trenutni igri lahko napolniš še {jarsLeft} {jarWord()}.
+      </p>
+      {/* <p>V trenutni igri lahko napolniš še {jarsLeft} kozarcev.</p> */}
       {/* <p>V trenutni igri lahko napolniš največ {amountOfJars} kozarcev.</p> */}
       <br></br>
       <div className={styles.jarContainer}>
@@ -89,6 +104,13 @@ function GameWordsLeft({
       </div>
       <h1>Preostale besede</h1>
       <div>{renderWordCounts}</div>
+      <button
+        onClick={() =>
+          dispatch({ type: "openOverlay", payload: "gameOverPrompt" })
+        }
+      >
+        Zaključi igro?
+      </button>
     </div>
   );
 }

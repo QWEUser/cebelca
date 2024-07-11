@@ -5,18 +5,17 @@ function GameInstructions() {
     <div className={sytles.container}>
       <h1>Navodila</h1>
       <h2>
-        Sestavljajte besede s črkami iz satovja in poskusite doseči čim več
-        točk.
+        Sestavljaj besede s črkami iz satovja in poskusi doseči čim več točk.
       </h2>
       <ul>
         <li>Besede morajo imeti vsaj štiri črke.</li>
         <li>Besede morajo vsebovati srednjo črko.</li>
-        <li>Črke lahko uporabite večkrat.</li>
-        <li>Besede s pomišljaji in kletvice niso na seznamu besed.</li>
+        <li>Črke lahko uporabiš večkrat.</li>
+        {/* <li>Besede z vezaji in kletvice niso na seznamu besed.</li> */}
       </ul>
-      <h2>Zbirajte točke in napolnite kozarec medu.</h2>
+      <h2>Zbiraj točke in napolni kozarec medu.</h2>
       <ul>
-        <li>Besede s štirimi črkami so vredne po 1 točko.</li>
+        <li>Besede s štirimi črkami so vredne 1 točko.</li>
         <li>Daljše besede so vredne 1 točko na dodatno črko.</li>
         <li>
           Vsaka uganka vsebuje vsaj en &#34;pangram&#34;, ki vsebuje vse črke.

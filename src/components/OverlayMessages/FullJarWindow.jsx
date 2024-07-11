@@ -1,20 +1,21 @@
 import styles from "./FullJarWindow.module.css";
+import GameOverPrompt from "./GameOverPrompt";
 
 function FullJarWindow({ dispatch }) {
   return (
     <div className={styles.container}>
       <h1>Kozarec napolnjen!</h1>
       <p>
-        Bravo, kozarec je poln medu! Želiš nadaljevati z igro in napolniti še
-        več kozarcev medu, ali želiš zaključiti z igro? Ob zaključku igre se
-        razkrijejo vse besede, ki niso bile najdene.
+        Bravo, kozarec je poln medu! Želiš nadaljevati igro in napolniti še več
+        kozarcev medu, ali želiš igro zaključiti?
       </p>
-      <div className={styles.buttonContainer}>
+      <GameOverPrompt dispatch={dispatch} />
+      {/* <div className={styles.buttonContainer}>
         <button onClick={() => dispatch({ type: "closeOverlay" })}>
           Nadaljuj
         </button>
         <button onClick={() => dispatch({ type: "gameOver" })}>Končaj</button>
-      </div>
+      </div> */}
     </div>
   );
 }

@@ -65,7 +65,7 @@ function EndOfGame({ solutionsArray, userSubmitedWords, dispatch }) {
           <div>
             <p>Najdene so bile sledeče besede: </p>
             <div className={styles.words}>{renderedUserSubmitedWords}</div>
-            <p>Te besede pa niso bile odkrite: </p>
+            <p>Te besede pa niso bile najdene: </p>
             <div className={styles.words}>{renderedNotFoundWords}</div>
           </div>
         )}
