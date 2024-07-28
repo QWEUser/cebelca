@@ -20,7 +20,12 @@
   align-items: center;
   scale: 3;
   margin-bottom: 3rem;
+  transition: transform 1s ease-in-out;
 }
+
+/* .beeContainer:hover {
+  transform: rotate(360deg);
+} */
 
 .container > button {
   background-color: var(--background-color);
@@ -34,7 +39,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: large;
+  font-size: 0.9rem;
+  /* font-size: large; */
   border-radius: 5px;
   font-weight: medium;
   cursor: pointer;
@@ -43,4 +49,22 @@
 
 .container > button:hover {
   background-color: var(--background-color-secondary);
+}
+
+.container .about {
+  border: none;
+  position: absolute;
+  bottom: 10%;
+  /* justify-content: start; */
+  font-size: 0.6rem;
+}
+
+.container .about:hover {
+  background-color: inherit;
+  text-decoration: underline;
+}
+
+.container .about > span {
+  font-size: 2.5rem;
+  margin-right: 0.2rem;
 }

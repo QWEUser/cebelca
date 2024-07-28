@@ -8,6 +8,15 @@ function Intro({ yearDay, todayYearDay, isRandomGameFinished, dispatch }) {
         <BeeIcon />
       </div>
       <h1>
+        bu
+        <span
+          style={{ color: "var(--font-color-secondary)", fontWeight: "bold" }}
+        >
+          č
+        </span>
+        ela
+      </h1>
+      {/* <h1>
         č
         <span
           style={{ color: "var(--font-color-secondary)", fontWeight: "bold" }}
@@ -15,7 +24,7 @@ function Intro({ yearDay, todayYearDay, isRandomGameFinished, dispatch }) {
           &apos;
         </span>
         belica
-      </h1>
+      </h1> */}
       <button
         onClick={() => {
           localStorage.getItem("randomGameCenterLetter") &&
@@ -43,8 +52,8 @@ function Intro({ yearDay, todayYearDay, isRandomGameFinished, dispatch }) {
                 type: "createNewGame",
                 payload: { sourcePangram: "daily" },
               });
-          console.log(yearDay);
-          console.log(todayYearDay);
+          // console.log(yearDay);
+          // console.log(todayYearDay);
         }}
       >
         Dnevni izziv
@@ -57,6 +66,13 @@ function Intro({ yearDay, todayYearDay, isRandomGameFinished, dispatch }) {
       >
         Dnevni izziv
       </button> */}
+      <button
+        className={styles.about}
+        onClick={() => dispatch({ type: "openOverlay", payload: "about" })}
+      >
+        {/* <span>* </span>  */}
+        Kaj je bučela?
+      </button>
     </div>
   );
 }

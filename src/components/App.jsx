@@ -28,7 +28,7 @@ const dayOfYear = Math.floor(diff / oneDay);
 const todayYearDay = Number(
   now.getFullYear().toString() + dayOfYear.toString()
 );
-console.log(todayYearDay);
+// console.log(todayYearDay);
 // const yearDay = Number(now.getFullYear().toString() + dayOfYear.toString());
 // console.log(yearDay);
 
@@ -42,12 +42,12 @@ const pangrams = allWordsJSON.pangrams
 const notPangrams = allWordsJSON.notPangrams
   .split(" ")
   .filter((word) => !badWords.includes(word));
-console.log("bad words: " + badWords.length);
+// console.log("bad words: " + badWords.length);
 const allWords = pangrams
   .concat(notPangrams)
   // .filter((word) => !badWords.includes(word))
   .sort();
-console.log("all words: " + allWords.length);
+// console.log("all words: " + allWords.length);
 
 // words that are displayed when user successfuly enters a new word
 const congratulationsWords = [
@@ -117,7 +117,7 @@ const initialState = {
     JSON.parse(localStorage.getItem("isRandomGameFinished")) || false,
 };
 
-console.log("oneJarScore: " + initialState.oneJarScore);
+// console.log("oneJarScore: " + initialState.oneJarScore);
 
 // reducer function
 function reducer(state, action) {
@@ -152,7 +152,7 @@ function reducer(state, action) {
           Math.random() * vowelFilteredPangram.length
         );
       }
-      console.log("gameCenterLetterChooser: " + gameCenterLetterChooser);
+      // console.log("gameCenterLetterChooser: " + gameCenterLetterChooser);
 
       const gameCenterLetter = vowelFilteredPangram[gameCenterLetterChooser];
       // vowelFilteredPangram[
@@ -162,7 +162,7 @@ function reducer(state, action) {
       //     //TODO: this is causing the daily game to have different solutions!!!
       //     Math.floor(Math.random() * vowelFilteredPangram.length)
       // ];
-      console.log(initialPangram);
+      // console.log(initialPangram);
 
       //create regex to check whether a letter is part of puzzle letters
       const gameLettersRegex = new RegExp(`[${pangramSetArray.join("")}]`, "i");
@@ -203,23 +203,23 @@ function reducer(state, action) {
       }
 
       console.log(solutionsArray);
-      console.log(totalScore);
+      // console.log(totalScore);
 
       // devide the totalScore to predetermined amount of jars and save the score to an array. For example, if totalScore = 101 and amountOfJars = 5, totalJarsScore should be [20,40,60,80,101] (all elements are rounded down, except the last element, which is runded up)
       // const amountOfJars = 10;
 
-      const totalJarScoresArray = Array.from(
-        { length: amountOfJars },
-        (_e, index) => {
-          if (index !== amountOfJars - 1) {
-            return Math.floor(((index + 1) * totalScore) / amountOfJars);
-          } else {
-            return Math.ceil(((index + 1) * totalScore) / amountOfJars);
-          }
-        }
-      );
+      // const totalJarScoresArray = Array.from(
+      //   { length: amountOfJars },
+      //   (_e, index) => {
+      //     if (index !== amountOfJars - 1) {
+      //       return Math.floor(((index + 1) * totalScore) / amountOfJars);
+      //     } else {
+      //       return Math.ceil(((index + 1) * totalScore) / amountOfJars);
+      //     }
+      //   }
+      // );
 
-      console.log(totalJarScoresArray);
+      // console.log(totalJarScoresArray);
 
       const gameLetters = pangramSetArray.filter(
         (letter) => letter != gameCenterLetter
@@ -507,7 +507,7 @@ function App() {
     (e) => {
       if (showOverlay === false && isIntro === false) {
         if (e.key == "Enter" || e.key == "Return") {
-          console.log(userSubmitedWords);
+          // console.log(userSubmitedWords);
 
           dispatch({ type: "userSubmitWord", payload: inputWord });
         }
@@ -527,7 +527,7 @@ function App() {
         }
       }
     },
-    [gameLettersRegex, inputWord, isIntro, showOverlay, userSubmitedWords]
+    [gameLettersRegex, inputWord, isIntro, showOverlay]
   );
 
   // add event listener to window object

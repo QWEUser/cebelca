@@ -49,6 +49,7 @@
 }
 
 .userWords__content__text__darker:after {
+  background: var(--background-color);
   content: ", ";
 }
 
@@ -84,4 +85,8 @@
   stroke-width: 13;
   /* stroke-miterlimit: 10; */
   /* display: inline; */
+}
+
+.pangram {
+  background-color: var(--font-color-secondary);
 }

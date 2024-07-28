@@ -17,15 +17,24 @@ function GameMessage({
 
   const congratulationsWord = isPangram ? (
     <span>
-      Č
+      Bu
       <span
         style={{ color: "var(--font-color-secondary)", fontWeight: "bold" }}
       >
-        &apos;
+        č
       </span>
-      belica!
+      ela!
     </span>
   ) : (
+    // <span>
+    //   Č
+    //   <span
+    //     style={{ color: "var(--font-color-secondary)", fontWeight: "bold" }}
+    //   >
+    //     &apos;
+    //   </span>
+    //   belica!
+    // </span>
     randomCongratulationsWord
   );
 

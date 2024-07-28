@@ -4,10 +4,26 @@ function UserWords({ userSubmitedWords, showUserWords, dispatch }) {
   // create an array of JSX elements with user words
   const renderedUserSubmitedWords = userSubmitedWords
     .map((word, index) => {
+      let isPangram = false;
+      const wordArray = Array.from(new Set([...word]));
+      if (wordArray.length === 7) {
+        isPangram = true;
+      }
       // if user did not click "show all words" button, display single words in one line
       if (!showUserWords) {
         return (
-          <span className={styles.userWords__content__text__darker} key={index}>
+          <span
+            // className={styles.userWords__content__text__darker}
+            // className={
+            //   isPangram
+            //     ? `${styles.userWords__content__text__darker} ${styles.pangram}`
+            //     : styles.userWords__content__text__darker
+            // }
+            className={`${styles.userWords__content__text__darker} ${
+              isPangram ? styles.pangram : ""
+            }`}
+            key={index}
+          >
             {word}
           </span>
         );
@@ -15,7 +31,10 @@ function UserWords({ userSubmitedWords, showUserWords, dispatch }) {
         // if user clicked on "show all words" button, display words in block elements with links
         return (
           <a
-            className={styles.userWords__content__blocks__block}
+            // className={styles.userWords__content__blocks__block}
+            className={`${styles.userWords__content__blocks__block} ${
+              isPangram ? styles.pangram : ""
+            }`}
             key={index}
             href={`https://www.fran.si/iskanje?View=1&Query=${word}`}
             target={"_blank"}

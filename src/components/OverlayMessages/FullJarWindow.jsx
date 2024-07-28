@@ -10,12 +10,6 @@ function FullJarWindow({ dispatch }) {
         kozarcev medu, ali želiš igro zaključiti?
       </p>
       <GameOverPrompt dispatch={dispatch} />
-      {/* <div className={styles.buttonContainer}>
-        <button onClick={() => dispatch({ type: "closeOverlay" })}>
-          Nadaljuj
-        </button>
-        <button onClick={() => dispatch({ type: "gameOver" })}>Končaj</button>
-      </div> */}
     </div>
   );
 }

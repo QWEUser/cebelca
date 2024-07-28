@@ -18,8 +18,8 @@ function GameInstructions() {
         <li>Besede s štirimi črkami so vredne 1 točko.</li>
         <li>Daljše besede so vredne 1 točko na dodatno črko.</li>
         <li>
-          Vsaka uganka vsebuje vsaj en &#34;pangram&#34;, ki vsebuje vse črke.
-          Ti so vredni 7 dodatnih točk!
+          Vsaka uganka vsebuje vsaj eno <b>&#34;bučelo&#34;</b>, ki vsebuje vse
+          črke. Bučela je vredna 7 dodatnih točk!
         </li>
       </ul>
     </div>

@@ -8,6 +8,7 @@ import GameStatisticsDefaultConfirmation from "./OverlayMessages/GameStatisticsD
 import GameStatisticsDefaultMessage from "./OverlayMessages/GameStatisticsDefaultMessage";
 import RandomGamePrompt from "./OverlayMessages/RandomGamePrompt";
 import GameOverPrompt from "./OverlayMessages/GameOverPrompt";
+import About from "./OverlayMessages/About";
 
 function Overlay({
   dispatch,
@@ -70,6 +71,9 @@ function Overlay({
             }
             case "gameOverPrompt": {
               return <GameOverPrompt dispatch={dispatch} />;
+            }
+            case "about": {
+              return <About />;
             }
             default:
               return null;

@@ -63,9 +63,14 @@ function EndOfGame({ solutionsArray, userSubmitedWords, dispatch }) {
         )}
         {!allWordsFound && (
           <div>
-            <p>Najdene so bile sledeče besede: </p>
+            <br></br>
+            <p>
+              <b>Najdene so bile sledeče besede: </b>
+            </p>
             <div className={styles.words}>{renderedUserSubmitedWords}</div>
-            <p>Te besede pa niso bile najdene: </p>
+            <p>
+              <b>Te besede pa niso bile najdene: </b>
+            </p>
             <div className={styles.words}>{renderedNotFoundWords}</div>
           </div>
         )}

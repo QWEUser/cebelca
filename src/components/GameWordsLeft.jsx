@@ -17,7 +17,7 @@ function GameWordsLeft({
   const wordsLeft = solutionsArray.filter(
     (word) => !userSubmitedWords.includes(word)
   );
-  console.log(wordsLeft);
+  // console.log(wordsLeft);
 
   // create an array of 100 elements with value 0. This array serves as counter for how many words have how many letters
   let countArray = new Array(100).fill(0);
@@ -109,7 +109,7 @@ function GameWordsLeft({
           dispatch({ type: "openOverlay", payload: "gameOverPrompt" })
         }
       >
-        Zaključi igro?
+        Končaj igro?
       </button>
     </div>
   );
