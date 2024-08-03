@@ -186,19 +186,19 @@ function reducer(state, action) {
       // calculate total score possible
 
       let totalScore = 0;
-      let countPangrams = 0;
+      // let countPangrams = 0;
       for (const word of solutionsArray) {
         totalScore = totalScore + word.length - 3;
         const wordUniqueLetters = Array.from(new Set([...word]));
         if (wordUniqueLetters.length == 7) {
           totalScore = totalScore + 7;
-          countPangrams++;
-          console.log(
-            "initial page load: pangram: " +
-              word +
-              " , number of pangrams found: " +
-              countPangrams
-          );
+          // countPangrams++;
+          // console.log(
+          //   "initial page load: pangram: " +
+          //     word +
+          //     " , number of pangrams found: " +
+          //     countPangrams
+          // );
         }
       }
 
