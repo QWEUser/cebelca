@@ -35,7 +35,7 @@ function About() {
         <a href="https://www.prostorskeprakse.si">prostorskeprakse.si</a>
       </p>
       <p className={styles.contact}>
-        Kontakt | <a href="mailto:cebela@bucela.si">cebela@bucela.si</a>
+        Kontakt | <a href="mailto:info@bucela.si">info@bucela.si</a>
       </p>
     </div>
   );
