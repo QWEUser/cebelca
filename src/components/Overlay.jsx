@@ -26,59 +26,69 @@ function Overlay({
         className={styles.background}
         onClick={() => dispatch({ type: "closeOverlay" })}
       />
-      <div className={styles.container}>
-        <button
-          className={styles.closingButton}
-          onClick={() => dispatch({ type: "closeOverlay" })}
-        >
-          &times;
-        </button>
-        {/* render the appropriate component, depending on which navbar icon the user clicked */}
-        {(() => {
-          switch (overlayText) {
-            case "statistics": {
-              return <GameStatistics dispatch={dispatch} />;
-            }
-            case "settings": {
-              return <GameSettings darkMode={darkMode} dispatch={dispatch} />;
-            }
-            case "instructions": {
-              return <GameInstructions />;
-            }
-            case "wordsLeft": {
-              return (
-                <GameWordsLeft
-                  solutionsArray={solutionsArray}
-                  userSubmitedWords={userSubmitedWords}
-                  amountOfJars={amountOfJars}
-                  userTotalScore={userTotalScore}
-                  totalScore={totalScore}
-                  dispatch={dispatch}
-                />
-              );
-            }
-            case "fullJar": {
-              return <FullJarWindow dispatch={dispatch} />;
-            }
-            case "statisticsDefaultConfirmation": {
-              return <GameStatisticsDefaultConfirmation dispatch={dispatch} />;
-            }
-            case "resetStatisticsText": {
-              return <GameStatisticsDefaultMessage dispatch={dispatch} />;
-            }
-            case "randomGamePrompt": {
-              return <RandomGamePrompt dispatch={dispatch} />;
-            }
-            case "gameOverPrompt": {
-              return <GameOverPrompt dispatch={dispatch} />;
-            }
-            case "about": {
-              return <About />;
-            }
-            default:
-              return null;
-          }
-        })()}
+      <div className={styles.containerFlex}>
+        <div className={styles.containerScroll}>
+          <div className={styles.containerOuter}>
+            <button
+              className={styles.closingButton}
+              onClick={() => dispatch({ type: "closeOverlay" })}
+            >
+              &times;
+            </button>
+            <div className={styles.container}>
+              {/* render the appropriate component, depending on which navbar icon the user clicked */}
+              {(() => {
+                switch (overlayText) {
+                  case "statistics": {
+                    return <GameStatistics dispatch={dispatch} />;
+                  }
+                  case "settings": {
+                    return (
+                      <GameSettings darkMode={darkMode} dispatch={dispatch} />
+                    );
+                  }
+                  case "instructions": {
+                    return <GameInstructions />;
+                  }
+                  case "wordsLeft": {
+                    return (
+                      <GameWordsLeft
+                        solutionsArray={solutionsArray}
+                        userSubmitedWords={userSubmitedWords}
+                        amountOfJars={amountOfJars}
+                        userTotalScore={userTotalScore}
+                        totalScore={totalScore}
+                        dispatch={dispatch}
+                      />
+                    );
+                  }
+                  case "fullJar": {
+                    return <FullJarWindow dispatch={dispatch} />;
+                  }
+                  case "statisticsDefaultConfirmation": {
+                    return (
+                      <GameStatisticsDefaultConfirmation dispatch={dispatch} />
+                    );
+                  }
+                  case "resetStatisticsText": {
+                    return <GameStatisticsDefaultMessage dispatch={dispatch} />;
+                  }
+                  case "randomGamePrompt": {
+                    return <RandomGamePrompt dispatch={dispatch} />;
+                  }
+                  case "gameOverPrompt": {
+                    return <GameOverPrompt dispatch={dispatch} />;
+                  }
+                  case "about": {
+                    return <About />;
+                  }
+                  default:
+                    return null;
+                }
+              })()}
+            </div>
+          </div>
+        </div>
       </div>
     </>
   );

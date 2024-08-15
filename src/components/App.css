@@ -36,6 +36,7 @@
 .app {
   /* height: calc(100% / var(--scale)); */
   --scale: 1;
+  overflow-y: hidden;
 }
 
 .app-container {

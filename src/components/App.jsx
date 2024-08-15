@@ -65,7 +65,7 @@ const congratulationsWords = [
 ];
 
 // check whether user prefers light or dark mode
-const userThemePreference = window.matchMedia("(prefers-color-scheme: dark)");
+// const userThemePreference = window.matchMedia("(prefers-color-scheme: dark)");
 
 // useReducer logic
 
@@ -73,9 +73,12 @@ const userThemePreference = window.matchMedia("(prefers-color-scheme: dark)");
 const initialState = {
   isIntro: true,
   yearDay: localStorage.getItem("yearDay"),
+  // localStorage.getItem("darkMode") === null
+  //   ? userThemePreference
+  //   : localStorage.getItem("darkMode") === "true",
   darkMode:
     localStorage.getItem("darkMode") === null
-      ? userThemePreference
+      ? false
       : localStorage.getItem("darkMode") === "true",
 
   gameCenterLetter: "b",

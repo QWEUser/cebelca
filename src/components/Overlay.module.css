@@ -1,30 +1,60 @@
 .background {
-  position: fixed;
-  min-height: 100%;
+  position: absolute;
+  min-height: max(100vh, 100%);
   width: 100%;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 10000;
+  z-index: 10001;
   top: 0;
   left: 0;
   cursor: pointer;
+  overflow-y: hidden;
+}
+
+.containerFlex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: max(100vh, 100%);
+  height: fit-content;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  overflow: hidden;
+}
+
+.containerScroll {
+  height: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.containerOuter {
+  display: inline-block;
+  position: absolute;
+  margin: auto;
+  overflow: hidden;
+  border: 5px solid var(--font-color);
+  border-radius: 20px;
+  max-width: 25rem;
+  min-width: 16rem;
+  max-height: 90%;
+  background-color: var(--background-color);
+  color: var(--font-color);
+  z-index: 10002;
+  text-align: left;
+  font-size: 0.8rem;
+  /* font-size: smaller; */
+  padding: 2rem 1.2rem 1.2rem;
+  animation: slidedown 1.5s ease-out forwards;
+  overflow-y: auto;
 }
 
 .container {
-  position: fixed;
-  max-width: 22.5rem;
-  background-color: var(--background-color);
-  color: var(--font-color);
-  top: 10%;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 10001;
-  display: block;
-  text-align: left;
-  font-size: smaller;
-  border: 5px solid var(--font-color);
-  padding: 2rem 1.2rem 1.2rem;
-  border-radius: 20px;
-  animation: slidedown 1.5s ease-out forwards;
+  overflow-y: auto;
+  /* height: fit-content; */
+  height: fit-content;
 }
 
 .closingButton {
@@ -49,13 +79,13 @@
 
 @keyframes slidedown {
   0% {
-    transform: translate(-50%, -150%);
+    transform: translate(0, -150%);
   }
   75% {
-    transform: translate(-50%, 5%);
+    transform: translate(0, 5%);
   }
   100% {
-    transform: translate(-50%, 0);
+    transform: translate(0, 0);
   }
 }
 
