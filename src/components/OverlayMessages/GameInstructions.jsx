@@ -23,8 +23,8 @@ function GameInstructions() {
         </li>
       </ul>
       <h2>
-        Igro lahko kadarkoli končaš s klikom na kozarec in gumb &#34;Želiš
-        končati?&#34;.
+        Igro lahko kadarkoli končaš s klikom na kozarec in gumb &#34;Končaj
+        igro?&#34;.
       </h2>
     </div>
   );

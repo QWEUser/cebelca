@@ -67,6 +67,11 @@ const congratulationsWords = [
 // check whether user prefers light or dark mode
 // const userThemePreference = window.matchMedia("(prefers-color-scheme: dark)");
 
+// set body class on render (TODO: find a better solution in the future)
+localStorage.getItem("darkMode") == "false"
+  ? (document.body.className = "light")
+  : (document.body.className = "dark");
+
 // useReducer logic
 
 // reducer function initial state
@@ -453,7 +458,12 @@ function reducer(state, action) {
       };
     }
     case "toggleDarkMode": {
-      localStorage.setItem("darkMode", JSON.stringify(!state.darkMode));
+      let currentDarkMode = state.darkMode;
+      // localStorage.setItem("darkMode", JSON.stringify(!state.darkMode));
+      localStorage.setItem("darkMode", JSON.stringify(!currentDarkMode));
+      currentDarkMode == true
+        ? (document.body.className = "light")
+        : (document.body.className = "dark");
       return { ...state, darkMode: !state.darkMode };
     }
     case "gameOver": {

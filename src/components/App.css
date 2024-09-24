@@ -82,3 +82,9 @@ body * {
     transform-origin: center;
   }
 }
+
+@media (hover: hover) and (pointer: fine) {
+  button:hover {
+    background-color: inherit;
+  }
+}
