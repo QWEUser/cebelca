@@ -83,7 +83,7 @@ body * {
   }
 }
 
-@media (hover: none) and (pointer: coarse) {
+@media (hover: none) {
   button:hover {
     background-color: inherit !important;
   }
