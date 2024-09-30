@@ -252,6 +252,7 @@ function reducer(state, action) {
         gameType: action.payload.sourcePangram,
         isDailyGameFinished: false,
         isRandomGameFinished: false,
+        jarsFilledHistory: state.jarsFilledHistory,
       };
     }
     case "continueDailyGame": {
