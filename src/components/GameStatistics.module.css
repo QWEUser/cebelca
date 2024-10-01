@@ -3,7 +3,7 @@
 }
 
 .container h2 {
-  font-size: small;
+  font-size: 0.8rem;
   text-align: center;
 }
 
@@ -71,22 +71,23 @@
 
 .container button {
   /* .textButton { */
-  background-color: var(--background-color);
+  /* background-color: var(--background-color); */
   border: 2px solid var(--border-color);
-  height: 2.5rem;
-  color: var(--font-color);
   padding: 0px 1rem;
+  /* height: 2.5rem;
+  color: var(--font-color);
   text-align: center;
   text-decoration: none;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: small;
+  font-size: 0.9375rem;
   border-radius: 5px;
   font-weight: medium;
   cursor: pointer;
-  font-family: Poppins, sans-serif;
+  font-family: Poppins, sans-serif; */
   margin-top: 1.2rem;
+  margin-bottom: 1.2rem;
 }
 
 /* .textButton:hover { */

@@ -28,12 +28,12 @@
 } */
 
 .container > button {
-  background-color: var(--background-color);
+  /* background-color: var(--background-color); */
   border: 2px solid var(--background-color-secondary);
+  padding: 2rem 0rem;
   height: 2.5rem;
   width: 10rem;
   color: var(--font-color);
-  padding: 2rem 0rem;
   text-align: center;
   text-decoration: none;
   display: flex;

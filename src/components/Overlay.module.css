@@ -45,7 +45,6 @@
   z-index: 10002;
   text-align: left;
   font-size: 0.8rem;
-  /* font-size: smaller; */
   padding: 2rem 1.2rem 1.2rem;
   animation: slidedown 1.5s ease-out forwards;
   overflow-y: auto;

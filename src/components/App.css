@@ -49,7 +49,24 @@ body * {
   transition: background-color 250ms ease-in-out;
 }
 
-/* TODO: fix meadia queries */
+button {
+  background-color: var(--background-color);
+  border: 0.125rem solid var(--border-color);
+  height: 2.5rem;
+  color: var(--font-color);
+  padding: 0rem 1rem;
+  text-align: center;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9375rem;
+  border-radius: 0.3rem;
+  font-weight: medium;
+  cursor: pointer;
+  font-family: Poppins, sans-serif;
+  /* margin: 1.2rem auto 1.2rem; */
+}
 
 @media (min-width: 600px) {
   .app {
