@@ -721,6 +721,7 @@ function App() {
               amountOfJars={amountOfJars}
               userTotalScore={userTotalScore}
               totalScore={totalScore}
+              oneJarScore={oneJarScore}
             />
           )}
         {!isIntro && (

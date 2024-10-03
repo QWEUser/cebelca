@@ -19,6 +19,7 @@ function Overlay({
   amountOfJars,
   userTotalScore,
   totalScore,
+  oneJarScore,
 }) {
   return (
     <>
@@ -59,6 +60,7 @@ function Overlay({
                         userTotalScore={userTotalScore}
                         totalScore={totalScore}
                         dispatch={dispatch}
+                        oneJarScore={oneJarScore}
                       />
                     );
                   }

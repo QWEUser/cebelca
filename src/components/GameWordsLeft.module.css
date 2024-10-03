@@ -61,23 +61,37 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: 2rem;
 }
 
 .jarInnerContainer {
   position: relative;
+  height: 3rem;
+  width: 77.212006px;
 }
 
 .container .jarScore {
   position: absolute;
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   font-weight: bold;
-  /* transform: translate(-50%, -50%);
-  top: 50%;
-  left: 50%; */
-
-  text-align: center;
+  top: 0%;
   left: 50%;
-  transform: translate(-50%);
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.container svg {
+  /* transform: translate(0, -25%); */
+  transform: matrix(
+    var(--scale),
+    0,
+    0,
+    var(--scale),
+    0,
+    calc(-24 * var(--scale))
+  );
+  /* transform: matrix(var(--scale), 0, 0, var(--scale), 0, -24); */
+  transform-origin: center top;
 }
 
 .jarCounter {
