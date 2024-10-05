@@ -64,6 +64,89 @@ const congratulationsWords = [
   "Uau!",
 ];
 
+// a recursive function that creates an initial pangram puzzle word and insures there are a minimum number of points in the game
+function minPointsGame(pangramNumber, gameType) {
+  console.log("pangramNumber: " + pangramNumber);
+  console.log("todayYearDay: " + todayYearDay);
+  // define minimum points in the game
+  const minimumPoints = 80;
+  // create an initial Pangram either from a daily game or at random
+  let initialPangram = "čebelica";
+  if (gameType === "daily") {
+    initialPangram = pangrams[pangramNumber % pangrams.length];
+  } else if (gameType === "random") {
+    initialPangram = pangrams[pangramNumber];
+  }
+  // pick a consonant from the word and make it the center letter
+  const pangramArray = [...initialPangram];
+  const vowelRegex = new RegExp(/[aeiou]/);
+  const pangramSetArray = Array.from(new Set(pangramArray));
+  const vowelFilteredPangram = pangramSetArray.filter(
+    (letter) => !vowelRegex.test(letter)
+  );
+  // pick a center letter of the game
+
+  // determine which element at index (default = 0) will be chosen for either the daily or random game
+  let gameCenterLetterChooser = 0;
+  if (gameType === "daily") {
+    gameCenterLetterChooser = pangramNumber % vowelFilteredPangram.length;
+  } else if (gameType === "random") {
+    gameCenterLetterChooser = Math.floor(
+      Math.random() * vowelFilteredPangram.length
+    );
+  }
+  const gameCenterLetter = vowelFilteredPangram[gameCenterLetterChooser];
+
+  //create regex to check whether a letter is part of puzzle letters
+  const gameLettersRegex = new RegExp(`[${pangramSetArray.join("")}]`, "i");
+
+  // create a solutions array from all words
+  const containsCenterLetter = allWords.filter((word) =>
+    word.includes(gameCenterLetter)
+  );
+  const solutionsArray = containsCenterLetter.filter((word) => {
+    const wordArray = [...word];
+    for (let i = 0; i < wordArray.length; i++) {
+      if (!gameLettersRegex.test(wordArray[i])) {
+        return false;
+      }
+      if (i === wordArray.length - 1) {
+        return true;
+      }
+    }
+  });
+
+  // calculate total score possible
+
+  let totalScore = 0;
+  for (const word of solutionsArray) {
+    totalScore = totalScore + word.length - 3;
+    const wordUniqueLetters = Array.from(new Set([...word]));
+    if (wordUniqueLetters.length == 7) {
+      totalScore = totalScore + 7;
+    }
+  }
+  if (gameType === "daily" && totalScore < minimumPoints) {
+    minPointsGame(pangramNumber + 10000, "daily");
+  } else {
+    console.log({
+      initialPangram: initialPangram,
+      solutionsArray: solutionsArray,
+      gameCenterLetter: gameCenterLetter,
+      totalScore: totalScore,
+    });
+    console.log(solutionsArray);
+    return {
+      initialPangram: initialPangram,
+      solutionsArray: solutionsArray,
+      gameCenterLetter: gameCenterLetter,
+      totalScore: totalScore,
+      gameLettersRegex: gameLettersRegex,
+      pangramSetArray: pangramSetArray,
+    };
+  }
+}
+
 // check whether user prefers light or dark mode
 // const userThemePreference = window.matchMedia("(prefers-color-scheme: dark)");
 
@@ -134,83 +217,83 @@ function reducer(state, action) {
       return { ...state, isIntro: false };
     }
     case "createNewGame": {
-      // create an initial Pangram either from a daily game or at random
-      let initialPangram = "čebelica";
-      if (action.payload.sourcePangram === "daily") {
-        initialPangram = pangrams[todayYearDay % pangrams.length];
-      } else if (action.payload.sourcePangram === "random") {
-        initialPangram = pangrams[Math.floor(Math.random() * pangrams.length)];
-      }
+      // create an object with initial game parameters like initialPangram, solutionsArray, gameCenterLetter, totalScore, gameLettersRegex, pangramSetArray
+      const gameParams =
+        action.payload.sourcePangram === "daily"
+          ? minPointsGame(todayYearDay, "daily")
+          : minPointsGame(
+              Math.floor(Math.random() * pangrams.length),
+              "random"
+            );
 
-      // pick a consonant from the word and make it the center letter
-      const pangramArray = [...initialPangram];
-      const vowelRegex = new RegExp(/[aeiou]/);
-      const pangramSetArray = Array.from(new Set(pangramArray));
-      const vowelFilteredPangram = pangramSetArray.filter(
-        (letter) => !vowelRegex.test(letter)
-      );
-      // pick a center letter of the game
+      // // create an initial Pangram either from a daily game or at random
+      // let initialPangram = "čebelica";
+      // if (action.payload.sourcePangram === "daily") {
+      //   initialPangram = pangrams[todayYearDay % pangrams.length];
+      // } else if (action.payload.sourcePangram === "random") {
+      //   initialPangram = pangrams[Math.floor(Math.random() * pangrams.length)];
+      // }
 
-      // determine which element at index (default = 0) will be chosen for either the daily or random game
-      let gameCenterLetterChooser = 0;
-      if (action.payload.sourcePangram === "daily") {
-        gameCenterLetterChooser = todayYearDay % vowelFilteredPangram.length;
-      } else if (action.payload.sourcePangram === "random") {
-        gameCenterLetterChooser = Math.floor(
-          Math.random() * vowelFilteredPangram.length
-        );
-      }
-      // console.log("gameCenterLetterChooser: " + gameCenterLetterChooser);
+      // // pick a consonant from the word and make it the center letter
+      // const pangramArray = [...initialPangram];
+      // const vowelRegex = new RegExp(/[aeiou]/);
+      // const pangramSetArray = Array.from(new Set(pangramArray));
+      // const vowelFilteredPangram = pangramSetArray.filter(
+      //   (letter) => !vowelRegex.test(letter)
+      // );
+      // // pick a center letter of the game
 
-      const gameCenterLetter = vowelFilteredPangram[gameCenterLetterChooser];
-      // vowelFilteredPangram[
-      //   // Math.floor(Math.random() * vowelFilteredPangram.length)
-      //   todayYearDay % vowelFilteredPangram.length ||
-      //     // yearDay % vowelFilteredPangram.length ||
-      //     //TODO: this is causing the daily game to have different solutions!!!
-      //     Math.floor(Math.random() * vowelFilteredPangram.length)
-      // ];
-      // console.log(initialPangram);
+      // // determine which element at index (default = 0) will be chosen for either the daily or random game
+      // let gameCenterLetterChooser = 0;
+      // if (action.payload.sourcePangram === "daily") {
+      //   gameCenterLetterChooser = todayYearDay % vowelFilteredPangram.length;
+      // } else if (action.payload.sourcePangram === "random") {
+      //   gameCenterLetterChooser = Math.floor(
+      //     Math.random() * vowelFilteredPangram.length
+      //   );
+      // }
 
-      //create regex to check whether a letter is part of puzzle letters
-      const gameLettersRegex = new RegExp(`[${pangramSetArray.join("")}]`, "i");
+      // const gameCenterLetter = vowelFilteredPangram[gameCenterLetterChooser];
 
-      // create a solutions array from all words
-      const containsCenterLetter = allWords.filter((word) =>
-        word.includes(gameCenterLetter)
-      );
-      const solutionsArray = containsCenterLetter.filter((word) => {
-        const wordArray = [...word];
-        for (let i = 0; i < wordArray.length; i++) {
-          if (!gameLettersRegex.test(wordArray[i])) {
-            return false;
-          }
-          if (i === wordArray.length - 1) {
-            return true;
-          }
-        }
-      });
+      // //create regex to check whether a letter is part of puzzle letters
+      // const gameLettersRegex = new RegExp(`[${pangramSetArray.join("")}]`, "i");
 
-      // calculate total score possible
+      // // create a solutions array from all words
+      // const containsCenterLetter = allWords.filter((word) =>
+      //   word.includes(gameCenterLetter)
+      // );
+      // const solutionsArray = containsCenterLetter.filter((word) => {
+      //   const wordArray = [...word];
+      //   for (let i = 0; i < wordArray.length; i++) {
+      //     if (!gameLettersRegex.test(wordArray[i])) {
+      //       return false;
+      //     }
+      //     if (i === wordArray.length - 1) {
+      //       return true;
+      //     }
+      //   }
+      // });
 
-      let totalScore = 0;
-      // let countPangrams = 0;
-      for (const word of solutionsArray) {
-        totalScore = totalScore + word.length - 3;
-        const wordUniqueLetters = Array.from(new Set([...word]));
-        if (wordUniqueLetters.length == 7) {
-          totalScore = totalScore + 7;
-          // countPangrams++;
-          // console.log(
-          //   "initial page load: pangram: " +
-          //     word +
-          //     " , number of pangrams found: " +
-          //     countPangrams
-          // );
-        }
-      }
+      // // calculate total score possible
 
-      console.log(solutionsArray);
+      // let totalScore = 0;
+      // // let countPangrams = 0;
+      // for (const word of solutionsArray) {
+      //   totalScore = totalScore + word.length - 3;
+      //   const wordUniqueLetters = Array.from(new Set([...word]));
+      //   if (wordUniqueLetters.length == 7) {
+      //     totalScore = totalScore + 7;
+      //     // countPangrams++;
+      //     // console.log(
+      //     //   "initial page load: pangram: " +
+      //     //     word +
+      //     //     " , number of pangrams found: " +
+      //     //     countPangrams
+      //     // );
+      //   }
+      // }
+
+      // console.log(solutionsArray);
       // console.log(totalScore);
 
       // devide the totalScore to predetermined amount of jars and save the score to an array. For example, if totalScore = 101 and amountOfJars = 5, totalJarsScore should be [20,40,60,80,101] (all elements are rounded down, except the last element, which is runded up)
@@ -229,24 +312,26 @@ function reducer(state, action) {
 
       // console.log(totalJarScoresArray);
 
-      const gameLetters = pangramSetArray.filter(
-        (letter) => letter != gameCenterLetter
+      const gameLetters = gameParams["pangramSetArray"].filter(
+        (letter) => letter != gameParams["gameCenterLetter"]
       );
 
-      const oneJarScore = Math.floor(totalScore / amountOfJars);
+      const oneJarScore = Math.floor(gameParams["totalScore"] / amountOfJars);
 
       if (action.payload.sourcePangram === "daily") {
         localStorage.setItem("yearDay", JSON.stringify(todayYearDay));
       }
 
+      // minPointsGame(2024112, "daily");
+
       return {
         ...initialState,
         yearDay: todayYearDay,
-        solutionsArray: solutionsArray,
-        gameCenterLetter: gameCenterLetter,
-        totalScore: totalScore,
+        solutionsArray: gameParams["solutionsArray"],
+        gameCenterLetter: gameParams["gameCenterLetter"],
+        totalScore: gameParams["totalScore"],
         gameLetters: gameLetters.sort(() => Math.random() - 0.5),
-        gameLettersRegex: gameLettersRegex,
+        gameLettersRegex: gameParams["gameLettersRegex"],
         oneJarScore: oneJarScore,
         isIntro: false,
         gameType: action.payload.sourcePangram,
@@ -369,12 +454,7 @@ function reducer(state, action) {
           userSubmitedWords: [...state.userSubmitedWords, action.payload],
           inputWord: initialState.inputWord,
           isWordShaking: false,
-          userCurrentScore:
-            // newScore >= state.oneJarScore
-            //   ? newScore % state.oneJarScore
-            //   : // ? newScore - state.oneJarScore
-            //     newScore,
-            newScore % state.oneJarScore,
+          userCurrentScore: newScore % state.oneJarScore,
           userPrevScore: state.userCurrentScore,
           userTotalScore: state.userTotalScore + score,
           // userTotalScore: newScore,
@@ -419,8 +499,9 @@ function reducer(state, action) {
         isWordShaking: true,
         toggle: !state.toggle,
         wrongInputMessage:
-          //TODO: use a different expression for "Napačna beseda!"
-          state.inputWord.length < 4 ? "Prekratka beseda!" : "Napačna beseda!",
+          state.inputWord.length < 4
+            ? "Prekratka beseda!"
+            : "Neveljavna beseda!",
       };
     }
     case "showUserWords": {
@@ -454,13 +535,11 @@ function reducer(state, action) {
       return {
         ...state,
         jarsFilledHistory: 0,
-        // showOverlay: false,
         overlayText: "resetStatisticsText",
       };
     }
     case "toggleDarkMode": {
       let currentDarkMode = state.darkMode;
-      // localStorage.setItem("darkMode", JSON.stringify(!state.darkMode));
       localStorage.setItem("darkMode", JSON.stringify(!currentDarkMode));
       currentDarkMode == true
         ? (document.body.className = "light")
