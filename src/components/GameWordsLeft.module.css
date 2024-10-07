@@ -72,16 +72,17 @@
 
 .container .jarScore {
   position: absolute;
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   font-weight: bold;
-  top: 0%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
+  padding: 0;
+  margin: 0;
 }
 
 .container svg {
-  /* transform: translate(0, -25%); */
   transform: matrix(
     var(--scale),
     0,
@@ -90,7 +91,6 @@
     0,
     calc(-24 * var(--scale))
   );
-  /* transform: matrix(var(--scale), 0, 0, var(--scale), 0, -24); */
   transform-origin: center top;
 }
 

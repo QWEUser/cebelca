@@ -20,6 +20,7 @@ function Overlay({
   userTotalScore,
   totalScore,
   oneJarScore,
+  appVersion,
 }) {
   return (
     <>
@@ -82,7 +83,7 @@ function Overlay({
                     return <GameOverPrompt dispatch={dispatch} />;
                   }
                   case "about": {
-                    return <About />;
+                    return <About appVersion={appVersion} />;
                   }
                   default:
                     return null;

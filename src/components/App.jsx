@@ -13,6 +13,9 @@ import Overlay from "./Overlay";
 import EndOfGame from "./EndOfGame";
 import Intro from "./Intro";
 
+// app version
+const appVersion = "1.0.0";
+
 // get a "day of year number", e.g. 1.1.2024 = 1, 2.6.2024 = 154, 31.12.2024 = 366 (leap year);
 const now = new Date();
 const startOfYear = new Date(now.getFullYear(), 0, 0);
@@ -150,7 +153,6 @@ function minPointsGame(pangramNumber, gameType) {
 // check whether user prefers light or dark mode
 // const userThemePreference = window.matchMedia("(prefers-color-scheme: dark)");
 
-// set body class on render (TODO: find a better solution in the future)
 localStorage.getItem("darkMode") == "false"
   ? (document.body.className = "light")
   : (document.body.className = "dark");
@@ -320,6 +322,8 @@ function reducer(state, action) {
 
       if (action.payload.sourcePangram === "daily") {
         localStorage.setItem("yearDay", JSON.stringify(todayYearDay));
+      } else {
+        console.log(gameParams["solutionsArray"]);
       }
 
       // minPointsGame(2024112, "daily");
@@ -801,6 +805,7 @@ function App() {
               userTotalScore={userTotalScore}
               totalScore={totalScore}
               oneJarScore={oneJarScore}
+              appVersion={appVersion}
             />
           )}
         {!isIntro && (

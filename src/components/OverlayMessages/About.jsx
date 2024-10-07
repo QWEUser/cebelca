@@ -1,7 +1,7 @@
 import BeeIcon from "../NavbarIcons/BeeIcon";
 import styles from "./About.module.css";
 
-function About() {
+function About({ appVersion }) {
   return (
     <div className={styles.container}>
       <h1>Kaj je bučela?</h1>
@@ -37,6 +37,7 @@ function About() {
       <p className={styles.contact}>
         Kontakt | <a href="mailto:info@bucela.si">info@bucela.si</a>
       </p>
+      <p className={styles.contact}>v {appVersion}</p>
     </div>
   );
 }

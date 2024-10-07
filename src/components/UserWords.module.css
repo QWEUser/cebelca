@@ -3,10 +3,10 @@
   width: 100%;
   margin: 0.6rem auto 0px;
   position: relative;
-  /* z-index: 100; */
+  z-index: 100;
   user-select: none;
   cursor: pointer;
-  /* padding: 1rem; */
+  height: auto;
 }
 
 .userWords__content {
@@ -15,6 +15,8 @@
   background-color: var(--background-color);
   border: 0.125rem solid var(--border-color);
   position: relative;
+  position: absolute;
+  top: 0;
   padding: 0.6rem 2.5rem 0.6rem 1rem;
   min-height: 2.5rem;
   white-space: nowrap;
@@ -78,13 +80,10 @@
 }
 
 .svgArrow {
-  /* position: absolute; */
   float: right;
   fill: none;
   stroke: var(--fill-color-secondary);
   stroke-width: 13;
-  /* stroke-miterlimit: 10; */
-  /* display: inline; */
 }
 
 .pangram {
