@@ -1,6 +1,14 @@
 {
   "name": "Bučela",
   "short_name": "Bučela",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "lang": "en",
+  "scope": "/",
+  "includeAssets": ["cebelica.svg", "assets/*"],
+  "theme_color": "#ffffff",
+  "description": "Bučela je brezplačna, neprofitna igra namenjena nabiranju znanja slovenskega jezika.",
   "icons": [
     {
       "src": "/pwa-192x192.png",
@@ -26,10 +34,5 @@
       "type": "image/png",
       "purpose": "maskable"
     }
-  ],
-  "start_url": "/",
-  "display": "standalone",
-  "background_color": "#FFFFFF",
-  "theme_color": "#FFFFFF",
-  "description": "Bučela je brezplačna, neprofitna igra namenjena nabiranju znanja slovenskega jezika."
+  ]
 }
