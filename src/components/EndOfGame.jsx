@@ -55,6 +55,12 @@ function EndOfGame({ solutionsArray, userSubmitedWords, dispatch }) {
       <div className={styles.container}>
         <h1>Zmaga!</h1>
         <BeeIcon dispatch={dispatch} />
+        <button
+          className={styles.closingButton}
+          onClick={() => dispatch({ type: "showIntro" })}
+        >
+          &times;
+        </button>
 
         {allWordsFound && (
           <p>

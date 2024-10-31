@@ -11,7 +11,7 @@ function GameSettings({ dispatch, darkMode }) {
           onChange={() => dispatch({ type: "toggleDarkMode" })}
         />
         <label htmlFor="check">
-          {darkMode ? "Svetli način" : "Temni Način"}
+          {darkMode ? "Svetli način" : "Temni način"}
         </label>
       </div>
     </div>

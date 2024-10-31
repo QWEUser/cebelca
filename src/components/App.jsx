@@ -14,7 +14,7 @@ import EndOfGame from "./EndOfGame";
 import Intro from "./Intro";
 
 // app version
-const appVersion = "1.1.0";
+const appVersion = "1.1.1.p60";
 
 // get a "day of year number", e.g. 1.1.2024 = 1, 2.6.2024 = 154, 31.12.2024 = 366 (leap year);
 const now = new Date();
@@ -28,12 +28,14 @@ const dayOfYear = Math.floor(diff / oneDay);
 // console.log("Day of year: " + dayOfYear);
 
 // yearDay is a string made from current year and current day in year, for example "2024" (year) + "141" (current day in year) = "2024141"
-const todayYearDay = Number(
-  now.getFullYear().toString() + dayOfYear.toString()
-);
-// console.log(todayYearDay);
-// const yearDay = Number(now.getFullYear().toString() + dayOfYear.toString());
-// console.log(yearDay);
+function createTodayYearDay() {
+  return Number(now.getFullYear().toString() + dayOfYear.toString());
+}
+let todayYearDay = createTodayYearDay();
+// const todayYearDay = Number(
+//   now.getFullYear().toString() + dayOfYear.toString()
+// );
+console.log(todayYearDay);
 
 // define amount of jars that need to be filled to reach total score
 const amountOfJars = 10;
@@ -72,7 +74,7 @@ function minPointsGame(pangramNumber, gameType) {
   console.log("pangramNumber: " + pangramNumber);
   console.log("todayYearDay: " + todayYearDay);
   // define minimum points in the game
-  const minimumPoints = 80;
+  const minimumPoints = 60;
   // create an initial Pangram either from a daily game or at random
   let initialPangram = "čebelica";
   if (gameType === "daily") {
@@ -219,6 +221,8 @@ function reducer(state, action) {
       return { ...state, isIntro: false };
     }
     case "createNewGame": {
+      // // recreate todayYearDay as it is not updated in a PWA
+      // todayYearDay = createTodayYearDay();
       // create an object with initial game parameters like initialPangram, solutionsArray, gameCenterLetter, totalScore, gameLettersRegex, pangramSetArray
       const gameParams =
         action.payload.sourcePangram === "daily"
@@ -227,92 +231,6 @@ function reducer(state, action) {
               Math.floor(Math.random() * pangrams.length),
               "random"
             );
-
-      // // create an initial Pangram either from a daily game or at random
-      // let initialPangram = "čebelica";
-      // if (action.payload.sourcePangram === "daily") {
-      //   initialPangram = pangrams[todayYearDay % pangrams.length];
-      // } else if (action.payload.sourcePangram === "random") {
-      //   initialPangram = pangrams[Math.floor(Math.random() * pangrams.length)];
-      // }
-
-      // // pick a consonant from the word and make it the center letter
-      // const pangramArray = [...initialPangram];
-      // const vowelRegex = new RegExp(/[aeiou]/);
-      // const pangramSetArray = Array.from(new Set(pangramArray));
-      // const vowelFilteredPangram = pangramSetArray.filter(
-      //   (letter) => !vowelRegex.test(letter)
-      // );
-      // // pick a center letter of the game
-
-      // // determine which element at index (default = 0) will be chosen for either the daily or random game
-      // let gameCenterLetterChooser = 0;
-      // if (action.payload.sourcePangram === "daily") {
-      //   gameCenterLetterChooser = todayYearDay % vowelFilteredPangram.length;
-      // } else if (action.payload.sourcePangram === "random") {
-      //   gameCenterLetterChooser = Math.floor(
-      //     Math.random() * vowelFilteredPangram.length
-      //   );
-      // }
-
-      // const gameCenterLetter = vowelFilteredPangram[gameCenterLetterChooser];
-
-      // //create regex to check whether a letter is part of puzzle letters
-      // const gameLettersRegex = new RegExp(`[${pangramSetArray.join("")}]`, "i");
-
-      // // create a solutions array from all words
-      // const containsCenterLetter = allWords.filter((word) =>
-      //   word.includes(gameCenterLetter)
-      // );
-      // const solutionsArray = containsCenterLetter.filter((word) => {
-      //   const wordArray = [...word];
-      //   for (let i = 0; i < wordArray.length; i++) {
-      //     if (!gameLettersRegex.test(wordArray[i])) {
-      //       return false;
-      //     }
-      //     if (i === wordArray.length - 1) {
-      //       return true;
-      //     }
-      //   }
-      // });
-
-      // // calculate total score possible
-
-      // let totalScore = 0;
-      // // let countPangrams = 0;
-      // for (const word of solutionsArray) {
-      //   totalScore = totalScore + word.length - 3;
-      //   const wordUniqueLetters = Array.from(new Set([...word]));
-      //   if (wordUniqueLetters.length == 7) {
-      //     totalScore = totalScore + 7;
-      //     // countPangrams++;
-      //     // console.log(
-      //     //   "initial page load: pangram: " +
-      //     //     word +
-      //     //     " , number of pangrams found: " +
-      //     //     countPangrams
-      //     // );
-      //   }
-      // }
-
-      // console.log(solutionsArray);
-      // console.log(totalScore);
-
-      // devide the totalScore to predetermined amount of jars and save the score to an array. For example, if totalScore = 101 and amountOfJars = 5, totalJarsScore should be [20,40,60,80,101] (all elements are rounded down, except the last element, which is runded up)
-      // const amountOfJars = 10;
-
-      // const totalJarScoresArray = Array.from(
-      //   { length: amountOfJars },
-      //   (_e, index) => {
-      //     if (index !== amountOfJars - 1) {
-      //       return Math.floor(((index + 1) * totalScore) / amountOfJars);
-      //     } else {
-      //       return Math.ceil(((index + 1) * totalScore) / amountOfJars);
-      //     }
-      //   }
-      // );
-
-      // console.log(totalJarScoresArray);
 
       const gameLetters = gameParams["pangramSetArray"].filter(
         (letter) => letter != gameParams["gameCenterLetter"]
@@ -330,6 +248,7 @@ function reducer(state, action) {
 
       return {
         ...initialState,
+        darkMode: state.darkMode,
         yearDay: todayYearDay,
         solutionsArray: gameParams["solutionsArray"],
         gameCenterLetter: gameParams["gameCenterLetter"],

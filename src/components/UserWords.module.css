@@ -1,12 +1,13 @@
 .userWords {
   max-width: 15rem;
   width: 100%;
-  margin: 0.6rem auto 2.5rem;
+  margin: 0.6rem auto 0.6rem;
   position: relative;
   z-index: 100;
   user-select: none;
   cursor: pointer;
-  height: auto;
+  min-height: 2.5rem;
+  /* height: auto; */
 }
 
 .userWords__content {

@@ -19,6 +19,7 @@
   align-items: center;
   flex-direction: column;
   color: var(--font-color);
+  position: relative;
 }
 
 .container h1 {
@@ -77,4 +78,18 @@
 
 .newGameButton:hover {
   background-color: var(--fill-color-secondary);
+}
+
+.closingButton {
+  position: absolute;
+  right: 0rem;
+  top: 0.5rem;
+  float: right;
+  font-size: 3rem;
+  transition: transform 1.5s;
+}
+
+.closingButton:hover {
+  transform: rotate(360deg);
+  color: var(--background-color-secondary);
 }
