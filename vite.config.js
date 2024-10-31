@@ -68,6 +68,6 @@ export default defineConfig({
       },
     }),
   ],
-  base: "/",
-  // base: "/cebelca/",
+  // base: "/",
+  base: "/cebelca/",
 });
