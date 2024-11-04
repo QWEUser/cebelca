@@ -1,11 +1,13 @@
 import styles from "./GameButtons.module.css";
+import DeleteButton from "./DeleteButton";
 
 function GameButtons({ inputWord, dispatch }) {
   return (
     <div className={styles.gameButtons}>
-      <button onClick={() => dispatch({ type: "deleteLastLetter" })}>
+      {/* <button onClick={() => dispatch({ type: "deleteLastLetter" })}>
         Briši
-      </button>
+      </button> */}
+      <DeleteButton dispatch={dispatch} />
       <button onClick={() => dispatch({ type: "shuffleGameLetters" })}>
         <svg
           className="shuffle-icon"

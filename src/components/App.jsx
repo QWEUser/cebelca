@@ -14,7 +14,7 @@ import EndOfGame from "./EndOfGame";
 import Intro from "./Intro";
 
 // app version
-const appVersion = "1.1.1.p60 (rollback)";
+const appVersion = "1.1.2.p60";
 
 // get a "day of year number", e.g. 1.1.2024 = 1, 2.6.2024 = 154, 31.12.2024 = 366 (leap year);
 const now = new Date();

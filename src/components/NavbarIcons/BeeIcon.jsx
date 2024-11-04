@@ -8,7 +8,7 @@ function BeeIcon({ dispatch }) {
         version="1.1"
         x="0px"
         y="0px"
-        viewBox="0 0 34 30"
+        viewBox="0 0 34 29"
         // viewBox="0 0 33.978001 29.999694"
         xmlSpace="preserve"
         id="svg301"

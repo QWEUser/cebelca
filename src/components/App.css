@@ -60,7 +60,8 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.9375rem;
+  font-size: 0.9rem;
+  /* font-size: 0.9375rem; */
   border-radius: 0.3rem;
   font-weight: 400;
   cursor: pointer;
