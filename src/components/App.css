@@ -67,6 +67,11 @@ button {
   cursor: pointer;
   font-family: Poppins, sans-serif;
   /* margin: 1.2rem auto 1.2rem; */
+  -webkit-touch-callout: none; /* Safari */
+  -webkit-user-select: none; /* Chrome */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none;
 }
 
 @media (min-width: 600px) {
