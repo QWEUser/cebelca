@@ -1,7 +1,13 @@
 import styles from "./Intro.module.css";
 import BeeIcon from "./NavbarIcons/BeeIcon";
 
-function Intro({ yearDay, todayYearDay, isRandomGameFinished, dispatch }) {
+// function Intro({ yearDay, todayYearDay, isRandomGameFinished, dispatch }) {
+function Intro({
+  yearDay,
+  isRandomGameFinished,
+  dispatch,
+  createTodayYearDay,
+}) {
   return (
     <div className={styles.container}>
       <div className={styles.beeContainer}>
@@ -46,11 +52,12 @@ function Intro({ yearDay, todayYearDay, isRandomGameFinished, dispatch }) {
           backgroundColor: "var(--background-color-secondary)",
         }}
         onClick={() => {
+          const todayYearDay = createTodayYearDay();
           Number(yearDay) === Number(todayYearDay)
             ? dispatch({ type: "continueDailyGame" })
             : dispatch({
                 type: "createNewGame",
-                payload: { sourcePangram: "daily" },
+                payload: { sourcePangram: "daily", todayYearDay: todayYearDay },
               });
           // console.log(yearDay);
           // console.log(todayYearDay);

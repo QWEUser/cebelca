@@ -14,28 +14,26 @@ import EndOfGame from "./EndOfGame";
 import Intro from "./Intro";
 
 // app version
-const appVersion = "1.1.2.p60";
-
-// get a "day of year number", e.g. 1.1.2024 = 1, 2.6.2024 = 154, 31.12.2024 = 366 (leap year);
-const now = new Date();
-const startOfYear = new Date(now.getFullYear(), 0, 0);
-const diff =
-  now -
-  startOfYear +
-  (startOfYear.getTimezoneOffset() - now.getTimezoneOffset()) * 60 * 1000;
-const oneDay = 1000 * 60 * 60 * 24;
-const dayOfYear = Math.floor(diff / oneDay);
-// console.log("Day of year: " + dayOfYear);
+const appVersion = "1.1.3.p60";
 
 // yearDay is a string made from current year and current day in year, for example "2024" (year) + "141" (current day in year) = "2024141"
-function createTodayYearDay() {
+const createTodayYearDay = () => {
+  // get a "day of year number", e.g. 1.1.2024 = 1, 2.6.2024 = 154, 31.12.2024 = 366 (leap year);
+  const now = new Date();
+  const startOfYear = new Date(now.getFullYear(), 0, 0);
+  const diff =
+    now -
+    startOfYear +
+    (startOfYear.getTimezoneOffset() - now.getTimezoneOffset()) * 60 * 1000;
+  const oneDay = 1000 * 60 * 60 * 24;
+  const dayOfYear = Math.floor(diff / oneDay);
   return Number(now.getFullYear().toString() + dayOfYear.toString());
-}
-let todayYearDay = createTodayYearDay();
+};
+// const todayYearDay = createTodayYearDay();
 // const todayYearDay = Number(
 //   now.getFullYear().toString() + dayOfYear.toString()
 // );
-console.log(todayYearDay);
+// console.log(todayYearDay);
 
 // define amount of jars that need to be filled to reach total score
 const amountOfJars = 10;
@@ -47,12 +45,10 @@ const pangrams = allWordsJSON.pangrams
 const notPangrams = allWordsJSON.notPangrams
   .split(" ")
   .filter((word) => !badWords.includes(word));
-// console.log("bad words: " + badWords.length);
 const allWords = pangrams
   .concat(notPangrams)
   // .filter((word) => !badWords.includes(word))
   .sort();
-// console.log("all words: " + allWords.length);
 
 // words that are displayed when user successfuly enters a new word
 const congratulationsWords = [
@@ -71,8 +67,7 @@ const congratulationsWords = [
 
 // a recursive function that creates an initial pangram puzzle word and insures there are a minimum number of points in the game
 function minPointsGame(pangramNumber, gameType) {
-  console.log("pangramNumber: " + pangramNumber);
-  console.log("todayYearDay: " + todayYearDay);
+  // console.log("pangramNumber: " + pangramNumber);
   // define minimum points in the game
   const minimumPoints = 60;
   // create an initial Pangram either from a daily game or at random
@@ -212,8 +207,6 @@ const initialState = {
     JSON.parse(localStorage.getItem("isRandomGameFinished")) || false,
 };
 
-// console.log("oneJarScore: " + initialState.oneJarScore);
-
 // reducer function
 function reducer(state, action) {
   switch (action.type) {
@@ -223,6 +216,7 @@ function reducer(state, action) {
     case "createNewGame": {
       // // recreate todayYearDay as it is not updated in a PWA
       // todayYearDay = createTodayYearDay();
+      const todayYearDay = action.payload.todayYearDay;
       // create an object with initial game parameters like initialPangram, solutionsArray, gameCenterLetter, totalScore, gameLettersRegex, pangramSetArray
       const gameParams =
         action.payload.sourcePangram === "daily"
@@ -696,8 +690,9 @@ function App() {
       <div className="app">
         {isIntro && (
           <Intro
+            createTodayYearDay={createTodayYearDay}
             yearDay={yearDay}
-            todayYearDay={todayYearDay}
+            // todayYearDay={todayYearDay}
             isRandomGameFinished={isRandomGameFinished}
             dispatch={dispatch}
           />

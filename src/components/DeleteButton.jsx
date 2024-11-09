@@ -3,7 +3,7 @@ import styles from "./DeleteButton.module.css";
 
 const clickAndHold = (btnEl) => {
   let timerId;
-  const DURATION = 125;
+  const DURATION = 150;
 
   //handle when clicking down
   const onMouseDown = () => {
@@ -19,8 +19,10 @@ const clickAndHold = (btnEl) => {
 
   //handle when mouse is clicked
   btnEl.addEventListener("mousedown", onMouseDown);
+  btnEl.addEventListener("touchstart", onMouseDown);
   //handle when mouse is raised
   btnEl.addEventListener("mouseup", clearTimer);
+  btnEl.addEventListener("touchend", clearTimer);
   //handle mouse leaving the clicked button
   btnEl.addEventListener("mouseout", clearTimer);
 
@@ -28,7 +30,9 @@ const clickAndHold = (btnEl) => {
   // when component or element is unmounted
   return () => {
     btnEl.removeEventListener("mousedown", onMouseDown);
+    btnEl.addEventListener("touchstart", onMouseDown);
     btnEl.removeEventListener("mouseup", clearTimer);
+    btnEl.addEventListener("touchend", clearTimer);
     btnEl.removeEventListener("mouseout", clearTimer);
   };
 };
