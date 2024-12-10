@@ -14,7 +14,7 @@ import EndOfGame from "./EndOfGame";
 import Intro from "./Intro";
 
 // app version
-const appVersion = "1.1.3.p60";
+const appVersion = "1.1.4.p60";
 
 // yearDay is a string made from current year and current day in year, for example "2024" (year) + "141" (current day in year) = "2024141"
 const createTodayYearDay = () => {
@@ -29,11 +29,6 @@ const createTodayYearDay = () => {
   const dayOfYear = Math.floor(diff / oneDay);
   return Number(now.getFullYear().toString() + dayOfYear.toString());
 };
-// const todayYearDay = createTodayYearDay();
-// const todayYearDay = Number(
-//   now.getFullYear().toString() + dayOfYear.toString()
-// );
-// console.log(todayYearDay);
 
 // define amount of jars that need to be filled to reach total score
 const amountOfJars = 10;
@@ -76,6 +71,8 @@ function minPointsGame(pangramNumber, gameType) {
     initialPangram = pangrams[pangramNumber % pangrams.length];
   } else if (gameType === "random") {
     initialPangram = pangrams[pangramNumber];
+  } else if (gameType === "cebelica") {
+    initialPangram = "čebelica";
   }
   // pick a consonant from the word and make it the center letter
   const pangramArray = [...initialPangram];
@@ -85,7 +82,6 @@ function minPointsGame(pangramNumber, gameType) {
     (letter) => !vowelRegex.test(letter)
   );
   // pick a center letter of the game
-
   // determine which element at index (default = 0) will be chosen for either the daily or random game
   let gameCenterLetterChooser = 0;
   if (gameType === "daily") {
@@ -94,8 +90,15 @@ function minPointsGame(pangramNumber, gameType) {
     gameCenterLetterChooser = Math.floor(
       Math.random() * vowelFilteredPangram.length
     );
+  } else if (gameType === "cebelica") {
+    gameCenterLetterChooser = 0;
   }
-  const gameCenterLetter = vowelFilteredPangram[gameCenterLetterChooser];
+  // const gameCenterLetter = vowelFilteredPangram[gameCenterLetterChooser];
+  const gameCenterLetter =
+    gameType === "cebelica"
+      ? "a"
+      : vowelFilteredPangram[gameCenterLetterChooser];
+  console.log(gameCenterLetter);
 
   //create regex to check whether a letter is part of puzzle letters
   const gameLettersRegex = new RegExp(`[${pangramSetArray.join("")}]`, "i");
@@ -205,6 +208,7 @@ const initialState = {
     JSON.parse(localStorage.getItem("isDailyGameFinished")) || false,
   isRandomGameFinished:
     JSON.parse(localStorage.getItem("isRandomGameFinished")) || false,
+  isCebelicaGameFinished: false,
 };
 
 // reducer function
@@ -218,14 +222,28 @@ function reducer(state, action) {
       // todayYearDay = createTodayYearDay();
       const todayYearDay = action.payload.todayYearDay;
       // create an object with initial game parameters like initialPangram, solutionsArray, gameCenterLetter, totalScore, gameLettersRegex, pangramSetArray
-      const gameParams =
-        action.payload.sourcePangram === "daily"
-          ? minPointsGame(todayYearDay, "daily")
-          : minPointsGame(
-              Math.floor(Math.random() * pangrams.length),
-              "random"
-            );
-
+      // const gameParams =
+      //   action.payload.sourcePangram === "daily"
+      //     ? minPointsGame(todayYearDay, "daily")
+      //     : minPointsGame(
+      //         Math.floor(Math.random() * pangrams.length),
+      //         "random"
+      //       );
+      const gameParams = (() => {
+        if (action.payload.sourcePangram === "daily") {
+          return minPointsGame(todayYearDay, "daily");
+        } else if (action.payload.sourcePangram === "random") {
+          return minPointsGame(
+            Math.floor(Math.random() * pangrams.length),
+            "random"
+          );
+        } else if (action.payload.sourcePangram === "cebelica") {
+          return minPointsGame(
+            Math.floor(Math.random() * pangrams.length),
+            "cebelica"
+          );
+        }
+      })();
       const gameLetters = gameParams["pangramSetArray"].filter(
         (letter) => letter != gameParams["gameCenterLetter"]
       );
@@ -238,8 +256,6 @@ function reducer(state, action) {
         console.log(gameParams["solutionsArray"]);
       }
 
-      // minPointsGame(2024112, "daily");
-
       return {
         ...initialState,
         darkMode: state.darkMode,
@@ -247,13 +263,17 @@ function reducer(state, action) {
         solutionsArray: gameParams["solutionsArray"],
         gameCenterLetter: gameParams["gameCenterLetter"],
         totalScore: gameParams["totalScore"],
-        gameLetters: gameLetters.sort(() => Math.random() - 0.5),
+        gameLetters:
+          action.payload.sourcePangram === "cebelica"
+            ? gameLetters
+            : gameLetters.sort(() => Math.random() - 0.5),
         gameLettersRegex: gameParams["gameLettersRegex"],
         oneJarScore: oneJarScore,
         isIntro: false,
         gameType: action.payload.sourcePangram,
         isDailyGameFinished: false,
         isRandomGameFinished: false,
+        isCebelicaGameFinished: false,
         jarsFilledHistory: state.jarsFilledHistory,
       };
     }
@@ -374,7 +394,6 @@ function reducer(state, action) {
           userCurrentScore: newScore % state.oneJarScore,
           userPrevScore: state.userCurrentScore,
           userTotalScore: state.userTotalScore + score,
-          // userTotalScore: newScore,
           userPrevTotalScore: state.userTotalScore,
           oneJarScore:
             // state.userTotalScore is reading the previous state, so we need to add newScore
@@ -382,11 +401,6 @@ function reducer(state, action) {
             (state.totalScore * (amountOfJars - 1)) / amountOfJars
               ? state.oneJarScore
               : Math.ceil(state.totalScore / amountOfJars),
-          // state.userTotalScore + newScore <
-          // (totalScore * (amountOfJars - 1)) / amountOfJars
-          //   ? state.oneJarScore
-          //   : Math.ceil(totalScore / amountOfJars),
-          // showGameMessage: true,
           randomCongratulationsWord:
             congratulationsWords[
               Math.floor(Math.random() * congratulationsWords.length)
@@ -397,7 +411,6 @@ function reducer(state, action) {
               ? state.jarsFilledHistory +
                 Math.floor(newScore / state.oneJarScore)
               : state.jarsFilledHistory,
-          // jarFilled: false,
           endOfGame:
             state.userTotalScore + newScore === state.totalScore ? true : false,
         };
@@ -432,7 +445,6 @@ function reducer(state, action) {
         ...state,
         showOverlay: true,
         overlayText: action.payload,
-        // isIntro: false,
       };
     }
     case "closeOverlay": {
@@ -472,6 +484,8 @@ function reducer(state, action) {
           state.gameType === "daily" ? true : state.isDailyGameFinished,
         isRandomGameFinished:
           state.gameType === "random" ? true : state.isRandomGameFinished,
+        isCebelicaGameFinished:
+          state.gameType === "cebelica" ? true : state.isCebelicaGameFinished,
       };
     }
     default:
@@ -508,11 +522,11 @@ function App() {
       jarsFilledHistory,
       isDailyGameFinished,
       isRandomGameFinished,
+      isCebelicaGameFinished,
     },
     dispatch,
   ] = useReducer(reducer, initialState);
 
-  // TODO: if possible, change keyHandler and useEffect in the future to optimize performance; currently, any change in inputWord causes keyHandler to update, consequently triggering useEffect to dismount and mount .addEventListeners every time.
   const keyHandler = useCallback(
     (e) => {
       if (showOverlay === false && isIntro === false) {
@@ -548,7 +562,6 @@ function App() {
   }, [keyHandler]);
 
   // localStorage sync
-  //TODO: useEffect should not run on first render!!
   useEffect(() => {
     if (localStorage.getItem("jarsFilled") === null) {
       localStorage.setItem("jarsFilled", JSON.stringify(0));
@@ -653,38 +666,6 @@ function App() {
     userTotalScore,
   ]);
 
-  // fetch current date from wordldtimeapi wrapped in a useEffect
-  // useEffect(() => {
-  //   const fetchDate = async () => {
-  //     await fetch("http://worldtimeapi.org/api/timezone/Europe/Ljubljana")
-  //       .then((response) => {
-  //         //handle response
-  //         // console.log(response);
-  //         return response.json();
-  //       })
-  //       .then((data) => {
-  //         //handle data
-  //         console.log(data);
-  //         console.log(data["day_of_year"]);
-  //         // yearDay is a string made from current year and current day in year, for example "2024" (year) + "141" (current day in year) = "2024141"
-  //         const yearDay = Number(
-  //           data["datetime"].slice(0, 4) + data["day_of_year"].toString()
-  //         );
-  //         // choose daily pangram
-  //         const dailyPangram = pangrams[yearDay % pangrams.length];
-  //         dispatch({
-  //           type: "createNewGame",
-  //           payload: { sourcePangram: dailyPangram, yearDay: yearDay },
-  //         });
-  //       })
-  //       .catch((error) => {
-  //         //handle error
-  //         throw new Error(error);
-  //       });
-  //   };
-  //   fetchDate();
-  // }, []);
-
   return (
     <div className={darkMode ? "dark app-container" : "light app-container"}>
       <div className="app">
@@ -692,13 +673,13 @@ function App() {
           <Intro
             createTodayYearDay={createTodayYearDay}
             yearDay={yearDay}
-            // todayYearDay={todayYearDay}
             isRandomGameFinished={isRandomGameFinished}
             dispatch={dispatch}
           />
         )}
         {((gameType === "random" && isRandomGameFinished === true) ||
-          (gameType === "daily" && isDailyGameFinished === true)) && (
+          (gameType === "daily" && isDailyGameFinished === true) ||
+          (gameType === "cebelica" && isCebelicaGameFinished === true)) && (
           <EndOfGame
             solutionsArray={solutionsArray}
             userSubmitedWords={userSubmitedWords}
@@ -707,6 +688,7 @@ function App() {
         )}
         {((gameType === "random" && isRandomGameFinished === false) ||
           (gameType === "daily" && isDailyGameFinished === false) ||
+          (gameType === "cebelica" && isCebelicaGameFinished === false) ||
           isIntro === true) &&
           showOverlay && (
             <Overlay

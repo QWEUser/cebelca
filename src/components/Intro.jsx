@@ -65,14 +65,16 @@ function Intro({
       >
         Dnevni izziv
       </button>
-      {/* <button
-        style={{
-          backgroundColor: "var(--background-color-secondary)",
-        }}
-        onClick={() => dispatch({ type: "closeIntro" })}
+      <button
+        onClick={() =>
+          dispatch({
+            type: "createNewGame",
+            payload: { sourcePangram: "cebelica" },
+          })
+        }
       >
-        Dnevni izziv
-      </button> */}
+        Čebelica
+      </button>
       <button
         className={styles.about}
         onClick={() => dispatch({ type: "openOverlay", payload: "about" })}
