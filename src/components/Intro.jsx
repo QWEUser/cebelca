@@ -65,7 +65,7 @@ function Intro({
       >
         Dnevni izziv
       </button>
-      <button
+      {/* <button
         onClick={() =>
           dispatch({
             type: "createNewGame",
@@ -74,7 +74,7 @@ function Intro({
         }
       >
         Čebelica
-      </button>
+      </button> */}
       <button
         className={styles.about}
         onClick={() => dispatch({ type: "openOverlay", payload: "about" })}

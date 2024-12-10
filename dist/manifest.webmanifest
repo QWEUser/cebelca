@@ -7,7 +7,7 @@
   "lang": "en",
   "scope": "/",
   "includeAssets": ["cebelica.svg", "assets/*"],
-  "theme_color": "#ffffff",
+  "theme_color": "##ffffff",
   "description": "Bučela je brezplačna, neprofitna igra namenjena nabiranju znanja slovenskega jezika.",
   "icons": [
     {
