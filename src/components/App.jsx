@@ -14,7 +14,7 @@ import EndOfGame from "./EndOfGame";
 import Intro from "./Intro";
 
 // app version
-const appVersion = "1.1.4.p60";
+const appVersion = "1.1.4.p0";
 
 // yearDay is a string made from current year and current day in year, for example "2024" (year) + "141" (current day in year) = "2024141"
 const createTodayYearDay = () => {
@@ -64,7 +64,7 @@ const congratulationsWords = [
 function minPointsGame(pangramNumber, gameType) {
   // console.log("pangramNumber: " + pangramNumber);
   // define minimum points in the game
-  const minimumPoints = 60;
+  const minimumPoints = 0;
   // create an initial Pangram either from a daily game or at random
   let initialPangram = "čebelica";
   if (gameType === "daily") {
