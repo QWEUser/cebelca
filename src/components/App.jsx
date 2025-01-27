@@ -14,7 +14,7 @@ import EndOfGame from "./EndOfGame";
 import Intro from "./Intro";
 
 // app version
-const appVersion = "1.1.4.p0";
+const appVersion = "1.1.5.p60";
 
 // yearDay is a string made from current year and current day in year, for example "2024" (year) + "141" (current day in year) = "2024141"
 const createTodayYearDay = () => {
@@ -64,7 +64,7 @@ const congratulationsWords = [
 function minPointsGame(pangramNumber, gameType) {
   // console.log("pangramNumber: " + pangramNumber);
   // define minimum points in the game
-  const minimumPoints = 0;
+  const minimumPoints = 60;
   // create an initial Pangram either from a daily game or at random
   let initialPangram = "čebelica";
   if (gameType === "daily") {
@@ -98,7 +98,7 @@ function minPointsGame(pangramNumber, gameType) {
     gameType === "cebelica"
       ? "a"
       : vowelFilteredPangram[gameCenterLetterChooser];
-  console.log(gameCenterLetter);
+  // console.log(gameCenterLetter);
 
   //create regex to check whether a letter is part of puzzle letters
   const gameLettersRegex = new RegExp(`[${pangramSetArray.join("")}]`, "i");
@@ -130,15 +130,15 @@ function minPointsGame(pangramNumber, gameType) {
     }
   }
   if (gameType === "daily" && totalScore < minimumPoints) {
-    minPointsGame(pangramNumber + 10000, "daily");
+    return minPointsGame(pangramNumber + 10000, "daily");
   } else {
-    console.log({
-      initialPangram: initialPangram,
-      solutionsArray: solutionsArray,
-      gameCenterLetter: gameCenterLetter,
-      totalScore: totalScore,
-    });
-    console.log(solutionsArray);
+    // console.log({
+    //   initialPangram: initialPangram,
+    //   solutionsArray: solutionsArray,
+    //   gameCenterLetter: gameCenterLetter,
+    //   totalScore: totalScore,
+    // });
+    // console.log(solutionsArray);
     return {
       initialPangram: initialPangram,
       solutionsArray: solutionsArray,
