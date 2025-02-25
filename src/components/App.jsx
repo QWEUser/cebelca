@@ -14,7 +14,7 @@ import EndOfGame from "./EndOfGame";
 import Intro from "./Intro";
 
 // app version
-const appVersion = "1.1.6.p100";
+const appVersion = "1.1.6.p200";
 
 // yearDay is a string made from current year and current day in year, for example "2024" (year) + "141" (current day in year) = "2024141"
 const createTodayYearDay = () => {
@@ -27,6 +27,7 @@ const createTodayYearDay = () => {
     (startOfYear.getTimezoneOffset() - now.getTimezoneOffset()) * 60 * 1000;
   const oneDay = 1000 * 60 * 60 * 24;
   const dayOfYear = Math.floor(diff / oneDay);
+  // console.log(Number(now.getFullYear().toString() + dayOfYear.toString()));
   return Number(now.getFullYear().toString() + dayOfYear.toString());
 };
 
@@ -64,7 +65,7 @@ const congratulationsWords = [
 function minPointsGame(pangramNumber, gameType) {
   // console.log("pangramNumber: " + pangramNumber);
   // define minimum points in the game
-  const minimumPoints = 100;
+  const minimumPoints = 200;
   // create an initial Pangram either from a daily game or at random
   let initialPangram = "čebelica";
   if (gameType === "daily") {
@@ -135,7 +136,7 @@ function minPointsGame(pangramNumber, gameType) {
     // console.log({
     //   initialPangram: initialPangram,
     //   solutionsArray: solutionsArray,
-    //   gameCenterLetter: gameCenterLetter,
+    //   // gameCenterLetter: gameCenterLetter,
     //   totalScore: totalScore,
     // });
     // console.log(solutionsArray);
@@ -231,6 +232,9 @@ function reducer(state, action) {
       //       );
       const gameParams = (() => {
         if (action.payload.sourcePangram === "daily") {
+          // for (let i = 0; i < 10; i++) {
+          //   minPointsGame(todayYearDay + i, "daily");
+          // }
           return minPointsGame(todayYearDay, "daily");
         } else if (action.payload.sourcePangram === "random") {
           return minPointsGame(
